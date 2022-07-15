@@ -51,8 +51,8 @@ Dotfiles for my common Arch Linux setup.
 | arc-gtk-theme | Arc themes | APKG |
 | adobe-source-han-sans-jp-fonts, adobe-source-han-serif-jp-fonts, otf-ipafont, ttf-hanazono | Japanese fonts | APKG |
 | ttf-monapo | Japanese fonts | AUR |
-| fcitx5, mozc | IME | APKG |
-| fcitx5-mozc-ut, fcitx5-skin-arc, fcitx5 | IME | AUR |
+| fcitx5-im | IME | APKG |
+| fcitx5-mozc-ut, fcitx5-skin-arc | IME | AUR |
 | anki-bin | SRS Learning Tool | AUR |
 | brave-bin | Brave browser | AUR |
 | discord | VoIP and chat clients | APKG |
