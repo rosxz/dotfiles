@@ -4,12 +4,6 @@
 
 { config, pkgs, ... }:
 
-let
-  unstableTarball = 
-    fetchTarball
-      https://github.com/NixOS/nixpkgs/archive/nixos-unstable.tar.gz;
-  # FIXME need to remove these in favor of urls later on
-in
 {
   imports =
     [ 
@@ -41,14 +35,6 @@ in
       LC_TELEPHONE = "pt_PT.utf8";
       LC_TIME = "pt_PT.utf8";
     };
-    inputMethod = {
-      enabled = "fcitx5";
-      fcitx5.addons = with pkgs; [
-        fcitx5-mozc
-        fcitx5-gtk
-	fcitx5-configtool
-      ];
-    };
   };
 
   services.xserver.enable = true;
@@ -60,10 +46,7 @@ in
   };
 
   console.keyMap = "pt-latin1";
-
-  # Enable CUPS to print documents.
-  services.printing.enable = true;
-
+  
   # Enable sound with pipewire.
   sound.enable = true;
   hardware.pulseaudio.enable = false;
@@ -75,9 +58,6 @@ in
     pulse.enable = true;
   };
 
-  # Enable touchpad support (enabled default in most desktopManager).
-  # services.xserver.libinput.enable = true;
-
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.crea = {
     isNormalUser = true;
@@ -86,42 +66,18 @@ in
     shell = pkgs.zsh;
   };
 
-  # Allow unfree packages
-  nixpkgs.config = {
-    packageOverrides = pkgs: {
-      unstable = import unstableTarball {
-        config = config.nixpkgs.config;
-      };
-    };
-    allowUnfree = true;
-  };
-
-  fonts.fonts = with pkgs; [
-    noto-fonts
-    noto-fonts-cjk
-    noto-fonts-emoji
-    liberation_ttf
-    fira-code
-    fira-code-symbols
-    font-awesome
-    source-han-sans
-    source-han-sans-japanese
-    source-han-serif-japanese
-  ];
-
-  environment.sessionVariables = rec {
-    # environment variables go here
-    # export GDK_SCALE=2
-    # export QT_AUTO_SCREEN_SCALE_FACTOR=2
-  };
-
   environment.systemPackages = with pkgs; [
-  	networkmanagerapplet
+	networkmanagerapplet
+	qbittorrent
+	yt-dlp
+	fzf
+	exa
+	gettext
+	mpv
+	mpd
+	ncmpcpp
 	git
   	alacritty
-	flameshot
-	# transmission-gtk
-	qbittorrent
 	neovim
 	lf
 	wget
@@ -135,62 +91,31 @@ in
 	htop
 	python3
 	neofetch
-	yt-dlp
-	fzf
-	exa
-	gettext
-	unstable.discord
-	spotify
-	anki-bin
 	xsettingsd
 	pavucontrol
-	mpv
-	mpd
-	ncmpcpp
+	home-manager
+	spotify
+	unstable.discord
   ];
-  
+
   nixpkgs.overlays = [
     (self: super: {
       unstable.discord = super.unstable.discord.override { withOpenASAR = true; };
-    }) 
+    })
   ];
 
   services.gnome.gnome-keyring.enable = true;
   
   # Enable Flakes
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
-
-  # Some programs need SUID wrappers, can be configured further or are
-  # started in user sessions.
-  # programs.mtr.enable = true;
-  # programs.gnupg.agent = {
-  #   enable = true;
-  #   enableSSHSupport = true;
-  # };
+  
   programs.zsh = {
   	enable = true;
 	shellAliases = {
 		update = "sudo nixos-rebuild switch";
 	};
   };
-  # List services that you want to enable:
 
-
-  # Enable the OpenSSH daemon.
-  # services.openssh.enable = true;
-
-  # Open ports in the firewall.
-  # networking.firewall.allowedTCPPorts = [ ... ];
-  # networking.firewall.allowedUDPPorts = [ ... ];
-  # Or disable the firewall altogether.
-  # networking.firewall.enable = false;
-
-  # This value determines the NixOS release from which the default
-  # settings for stateful data, like file locations and database versions
-  # on your system were taken. It‘s perfectly fine and recommended to leave
-  # this value at the release version of the first install of this system.
-  # Before changing this value read the documentation for this option
-  # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
   system.stateVersion = "22.05"; # Did you read the comment?
 
 }

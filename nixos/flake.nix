@@ -1,46 +1,55 @@
 {
-  description = "My epic nixos flake config with sunglasses";
+  description = "An example NixOS configuration";
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-22.05";
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
-
-    home-manager = {
-      url = "github:nix-community/home-manager";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
+    home-manager.url = "github:nix-community/home-manager/release-22.05";
+    home-manager.inputs.nixpkgs.follows = "nixpkgs";
   };
 
-  outputs = { self, nixpkgs, nixpkgs-unstable, home-manager, ... }: {
-  let
-    system = "x86_64-linux";
-    
-    pkgs = import nixpkgs {
-      inherit system;
-      config = { allowUnfree = true; };
-    };
+  outputs = inputs@{ nixpkgs, nixpkgs-unstable, home-manager, ... }:
+    let
+      system = "x86_64-linux";
+      lib = nixpkgs.lib;
 
-    overlay-unstable = final: prev: {
+      pkgs = import nixpkgs {
+        inherit system;
+        config.allowUnfree = true;
+	overlays = [ overlay-unstable ];
+      };
+      
+      overlay-unstable = final: prev: {
         unstable = import nixpkgs-unstable {
           inherit system;
           config.allowUnfree = true;
         };
-    };
+      };
 
-    lib = nixpkgs.lib;
+    in
+    {
+      homeConfigurations = {
+	crea = home-manager.lib.homeManagerConfiguration {
+	  # When switching to 22.11, just use these two lines:
+	  # pkgs = nixpkgs.legacyPackages.${system};
+	  # modules = [ ./users/crea/home.nix ];
+	  inherit system pkgs;
 
-  in {
-    nixosConfigurations = {
-      
-      # Main system
-      nixos = lib.nixosSystem {
-        inherit system;
+	  username = "crea";
+	  homeDirectory = "/home/crea";
+	  configuration = {
+	    imports = [ ./users/crea/home.nix ];
+	  };
+	};
+      };
 
-	modules = [
-	  ({config, pkgs, ...}: { nixpkgs.overlays = [ overlay-unstable ]; })
-	  ./hosts/configuration.nix
-	];
+      nixosConfigurations = {
+	nixos = lib.nixosSystem {
+          inherit system pkgs;
+
+          modules = [ ./hosts/configuration.nix ];
+        };
       };
     };
-  };
 }
+
