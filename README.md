@@ -1,5 +1,5 @@
 # .navifiles
-Dotfiles for my common Arch Linux setup.
+Martim Moniz's dotfiles
 
 - [.navifiles](#.navifiles)
   - [How-to](#how-to-install)
