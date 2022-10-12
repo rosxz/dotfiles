@@ -44,10 +44,10 @@
       };
 
       nixosConfigurations = {
-	nixos = lib.nixosSystem {
+	ebisu = lib.nixosSystem {
           inherit system pkgs;
 
-          modules = [ ./hosts/configuration.nix ];
+          modules = [ ./hosts/ebisu/configuration.nix ];
         };
       };
     };

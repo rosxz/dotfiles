@@ -8,7 +8,7 @@
   imports =
     [ 
       ./hardware-configuration.nix
-      ../modules/sway.nix
+      ../../modules/sway.nix
     ];
 
   # Bootloader.
@@ -16,7 +16,7 @@
   boot.loader.efi.canTouchEfiVariables = true;
   boot.loader.efi.efiSysMountPoint = "/boot/efi";
 
-  networking.hostName = "nixos"; # Define your hostname.
+  networking.hostName = "ebisu"; # Define your hostname.
 
   networking.networkmanager.enable = true;
 
@@ -35,7 +35,17 @@
       LC_TELEPHONE = "pt_PT.utf8";
       LC_TIME = "pt_PT.utf8";
     };
+    inputMethod = {
+      enabled = "fcitx5";
+      fcitx5.addons = with pkgs; [
+        fcitx5-mozc
+        fcitx5-gtk
+        fcitx5-configtool
+      ];
+    };
   };
+
+  services.printing.enable = true;
 
   services.xserver.enable = true;
 
@@ -58,12 +68,34 @@
     pulse.enable = true;
   };
 
+  # Enable touchpad support (enabled default in most desktopManager).
+  # services.xserver.libinput.enable = true;
+
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.crea = {
     isNormalUser = true;
     description = "Martim Moniz";
     extraGroups = [ "networkmanager" "video" "scanner" "qemu-libvirtd" "wheel" ];
     shell = pkgs.zsh;
+  };
+
+  fonts.fonts = with pkgs; [
+    noto-fonts
+    noto-fonts-cjk
+    noto-fonts-emoji
+    liberation_ttf
+    fira-code
+    fira-code-symbols
+    font-awesome
+    source-han-sans
+    source-han-sans-japanese
+    source-han-serif-japanese
+  ];
+
+  environment.sessionVariables = rec {
+    # environment variables go here
+    # export GDK_SCALE=2
+    # export QT_AUTO_SCREEN_SCALE_FACTOR=2
   };
 
   environment.systemPackages = with pkgs; [
@@ -109,6 +141,16 @@
   # Enable Flakes
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
   
+
+  # Enable the OpenSSH daemon.
+  # services.openssh.enable = true;
+
+  # Open ports in the firewall.
+  # networking.firewall.allowedTCPPorts = [ ... ];
+  # networking.firewall.allowedUDPPorts = [ ... ];
+  # Or disable the firewall altogether.
+  # networking.firewall.enable = false;
+
   programs.zsh = {
   	enable = true;
 	shellAliases = {
@@ -116,6 +158,6 @@
 	};
   };
 
-  system.stateVersion = "22.05"; # Did you read the comment?
+  system.stateVersion = "22.05"; 
 
 }
