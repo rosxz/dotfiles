@@ -1,5 +1,5 @@
 {
-  description = "An example NixOS configuration";
+  description = "My simple NixOS configuration";
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-22.05";
@@ -12,6 +12,10 @@
     let
       system = "x86_64-linux";
       lib = nixpkgs.lib;
+
+      sshKeys = [
+	"ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJcUMSSFZQheROdhFVmIUwBTbAVBv9YUm/Ib3ED3O0gv crea@pasokon"
+      ];
 
       pkgs = import nixpkgs {
         inherit system;
@@ -47,7 +51,15 @@
 	ebisu = lib.nixosSystem {
           inherit system pkgs;
 
+          specialArgs = { inherit sshKeys; };
           modules = [ ./hosts/ebisu/configuration.nix ];
+        };
+	
+	tsukuyomi = lib.nixosSystem {
+          inherit system pkgs;
+
+          specialArgs = { inherit sshKeys; };
+          modules = [ ./hosts/tsukuyomi/configuration.nix ];
         };
       };
     };

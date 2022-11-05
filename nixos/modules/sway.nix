@@ -1,5 +1,7 @@
 { config, pkgs, lib, ... }:
 
+
+
 let
   dbus-sway-environment = pkgs.writeTextFile {
     name = "dbus-sway-environment";
@@ -30,6 +32,7 @@ let
 
 in
 {
+
   environment.systemPackages = with pkgs; [
     sway
     dbus-sway-environment
@@ -44,11 +47,11 @@ in
     wl-clipboard # wl-copy and wl-paste for copy/paste from stdin / stdout
     qt6.qtwayland
 
+    xwayland
     waybar
     imv
     sirula
     mako
-    xwayland
     firefox-wayland
   ];
 

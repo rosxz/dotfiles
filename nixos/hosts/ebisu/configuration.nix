@@ -2,7 +2,7 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ config, pkgs, ... }:
+{ config, pkgs, sshKeys, ... }:
 
 {
   imports =
@@ -77,6 +77,7 @@
     description = "Martim Moniz";
     extraGroups = [ "networkmanager" "video" "scanner" "qemu-libvirtd" "wheel" ];
     shell = pkgs.zsh;
+    openssh.authorizedKeys.keys = sshKeys;
   };
 
   fonts.fonts = with pkgs; [

@@ -15,8 +15,9 @@ input "type:keyboard" {
     xkb_layout pt
 }
 
-output DP-2 res 3840x2160 scale 1.5
-output DP-2 bg ~/Pictures/w.png fill
+# output DP-2 res 3840x2160 scale 1.5 # 4K display
+output DP-2 res 1920x1080
+output DP-2 bg ~/Pictures/Wallpapers/okinawa1.jpg fill
 
 # xwayland force scale 2
 
@@ -24,6 +25,8 @@ output DP-2 bg ~/Pictures/w.png fill
 exec dbus-sway-environment
 exec configure-gtk
 exec waybar
+exec gammastep
+# exec systemctl start --user gammastep
 # exec mpd
 
 # Font for window titles. Will also be used by the bar unless a different font
@@ -87,6 +90,7 @@ bindsym $mod+o exec $lock
 bindsym $mod+c kill
 
 # start dmenu (a program launcher)
+
 # A more modern dmenu replacement is rofi:
 # bindcode $mod+40 exec "rofi -modi drun,run -show drun"
 # There also is i3-dmenu-desktop which only displays applications shipping a
