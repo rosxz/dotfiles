@@ -14,7 +14,6 @@
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
-  boot.loader.efi.efiSysMountPoint = "/boot/efi";
 
   networking.hostName = "ebisu"; # Define your hostname.
 
@@ -116,8 +115,6 @@
 	wget
 	curl
 	tmux
-	unzip
-	zip
 	pciutils
 	killall
 	ripgrep
@@ -129,7 +126,27 @@
 	home-manager
 	spotify
 	unstable.discord
+
+	brightnessctl
+	xfce.thunar
+	xarchiver
+	p7zip
+	rar
+	unrar
+	zip
+	unzip
+	pamixer
+
+	grim
+	slurp
   ];
+
+  services.xserver.desktopManager.xfce.thunarPlugins = with pkgs.xfce; [
+    thunar-archive-plugin
+    thunar-volman
+  ];
+  services.gvfs.enable = true; # Mount, trash, and other functionalities
+  services.tumbler.enable = true; # Thumbnail support for images
 
   nixpkgs.overlays = [
     (self: super: {

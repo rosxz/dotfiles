@@ -13,11 +13,17 @@
   # Packages that should be installed to the user profile.
   home.packages = with pkgs; [
     anki-bin
+    sonixd
   ];
 
   xdg.desktopEntries.Anki = {
     name = "Anki";
     exec = "ANKI_WAYLAND=1 DISABLE_QT5_COMPAT=1 anki";
+  };
+
+  xdg.desktopEntries.Sonixd = {
+    name = "Sonixd";
+    exec = "sonixd";
   };
 
   # This value determines the Home Manager release that your
