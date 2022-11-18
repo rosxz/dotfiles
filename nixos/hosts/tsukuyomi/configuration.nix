@@ -197,12 +197,14 @@
     # extraConfig = '' ''; # dont need this for now
   };
 
-  #system.autoUpgrade = {
-  #  enable = true;
-  #  allowReboot = true;
-  #  # Daily 00:00
-  #  dates = "daily UTC";
-  #};
+  system.autoUpgrade = {
+    enable = true;
+    flake = "{config.users.users.crea.home}/.navifiles/nixos";
+    allowReboot = true;
+    flags = ["--update-input" "nixpkgs" "--update-input" "nixpkgs-unstable" "--commit-lock-file"];
+    # Daily 00:00
+    dates = "daily UTC";
+  };
 
   ## Optional: Clear >1 month-old logs
   systemd = {
