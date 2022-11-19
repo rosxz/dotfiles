@@ -18,6 +18,8 @@ exec dbus-sway-environment
 exec configure-gtk
 exec waybar
 exec gammastep
+exec nm-applet --indicator
+exec fcitx5
 
 exec swayidle -w before-sleep $lock
 

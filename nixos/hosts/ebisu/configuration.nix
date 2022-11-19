@@ -6,18 +6,52 @@
 
 {
   imports =
-    [ 
+    [
       ./hardware-configuration.nix
       ../../modules/sway.nix
     ];
 
   # Bootloader.
-  boot.loader.systemd-boot.enable = true;
-  boot.loader.efi.canTouchEfiVariables = true;
+  boot = {
+    kernelParams = [ "quiet" ];
+    loader.efi.canTouchEfiVariables = true;
+    loader.systemd-boot = {
+      enable = true;
+      editor = false;
+      configurationLimit = 6;
+    };
+  };
 
-  networking.hostName = "ebisu"; # Define your hostname.
+  networking = {
+    hostName = "ebisu"; # Define your hostname.
+    networkmanager.enable = true;
+    nameservers = [ "1.1.1.1" ];
+    networkmanager.dns = "none";
+  };
 
-  networking.networkmanager.enable = true;
+  services.dnscrypt-proxy2 = {
+    enable = true;
+    settings = {
+      ipv6_servers = true;
+      require_dnssec = true;
+
+      sources.public-resolvers = {
+        urls = [
+          "https://raw.githubusercontent.com/DNSCrypt/dnscrypt-resolvers/master/v3/public-resolvers.md"
+          "https://download.dnscrypt.info/resolvers-list/v3/public-resolvers.md"
+        ];
+        cache_file = "/var/lib/dnscrypt-proxy2/public-resolvers.md";
+        minisign_key = "RWQf6LRCGA9i53mlYecO4IzT51TGPpvWucNSCh1CBM0QTaLn73Y7GFO3";
+      };
+
+      # You can choose a specific set of servers from https://github.com/DNSCrypt/dnscrypt-resolvers/blob/master/v3/public-resolvers.md
+      server_names = [ "cloudflare" ];
+    };
+  };
+
+  systemd.services.dnscrypt-proxy2.serviceConfig = {
+    StateDirectory = "dnscrypt-proxy";
+  };
 
   time.timeZone = "Europe/Lisbon";
 
@@ -55,7 +89,7 @@
   };
 
   console.keyMap = "pt-latin1";
-  
+
   # Enable sound with pipewire.
   sound.enable = true;
   hardware.pulseaudio.enable = false;
@@ -99,47 +133,53 @@
   };
 
   environment.systemPackages = with pkgs; [
-	networkmanagerapplet
-	qbittorrent
-	yt-dlp
-	fzf
-	exa
-	gettext
-	mpv
-	mpd
-	ncmpcpp
-	git
-  	alacritty
-	neovim
-	lf
-	wget
-	curl
-	tmux
-	pciutils
-	killall
-	ripgrep
-	htop
-	python3
-	neofetch
-	xsettingsd
-	pavucontrol
-	home-manager
-	spotify
-	unstable.discord
-
-	brightnessctl
-	xfce.thunar
-	xarchiver
-	p7zip
-	rar
-	unrar
-	zip
-	unzip
-	pamixer
-
-	grim
-	slurp
+	  networkmanagerapplet
+	  qbittorrent
+	  yt-dlp
+	  fzf
+	  exa
+	  gettext
+	  mpv
+	  mpd
+	  ncmpcpp
+	  git
+    alacritty
+	  lf
+	  wget
+	  curl
+	  tmux
+	  pciutils
+	  killall
+	  ripgrep
+	  htop
+	  python3
+	  neofetch
+	  xsettingsd
+	  pavucontrol
+	  home-manager
+	  tor-browser-bundle-bin
+	  spotify
+	  unstable.discord
+	  brightnessctl
+	  xfce.thunar
+	  xarchiver
+	  p7zip
+	  rar
+	  unrar
+	  zip
+	  unzip
+	  pamixer
+	  grim
+	  slurp
+	  thefuck
   ];
+
+  powerManagement = {
+    powertop.enable = true;
+  };
+  services.auto-cpufreq.enable = true;
+  # services.throttled.enable = true;
+  services.thermald.enable = true;
 
   services.xserver.desktopManager.xfce.thunarPlugins = with pkgs.xfce; [
     thunar-archive-plugin
@@ -155,10 +195,10 @@
   ];
 
   services.gnome.gnome-keyring.enable = true;
-  
+
   # Enable Flakes
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
-  
+
 
   # Enable the OpenSSH daemon.
   # services.openssh.enable = true;
@@ -170,12 +210,41 @@
   # networking.firewall.enable = false;
 
   programs.zsh = {
-  	enable = true;
-	shellAliases = {
-		update = "sudo nixos-rebuild switch";
-	};
+    enable = true;
+    syntaxHighlighting.enable = true;
+    autosuggestions.enable = true;
+    interactiveShellInit = ''
+   export ZSH=${pkgs.oh-my-zsh}/share/oh-my-zsh/
+   export FZF_BASE=${pkgs.fzf}/share/fzf/
+   # Customize your oh-my-zsh options here
+   plugins=(git fzf thefuck)
+   HISTFILESIZE=500000
+   HISTSIZE=500000
+   setopt SHARE_HISTORY
+   setopt HIST_IGNORE_ALL_DUPS
+   setopt HIST_IGNORE_DUPS
+   setopt INC_APPEND_HISTORY
+   autoload -U compinit && compinit
+   unsetopt menu_complete
+   setopt completealiases
+
+   if [ -f ~/.aliases ]; then
+     source ~/.aliases
+   fi
+
+   alias poweroff="poweroff --no-wall"
+   alias reboot="reboot --no-wall"
+
+   alias ls="exa --color=always --icons --group-directories-first"
+
+   alias update="nix flake update"
+   alias rebuild="sudo nixos-rebuild switch --flake ."
+
+   source $ZSH/oh-my-zsh.sh
+ '';
+    promptInit = "source ${pkgs.zsh-powerlevel10k}/share/zsh-powerlevel10k/powerlevel10k.zsh-theme";
   };
 
-  system.stateVersion = "22.05"; 
+  system.stateVersion = "22.05";
 
 }

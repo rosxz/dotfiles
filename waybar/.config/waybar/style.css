@@ -1,14 +1,14 @@
-@define-color bg #000000;
-@define-color fg #FFFFFF;
-@define-color fg-unfocused #93959B;
+@define-color bg #282a36;
+@define-color fg #f8f8f2;
+@define-color fg-unfocused #6272a4;
 
 @define-color bg-alt #181A20;
 @define-color fg-alt #A8A8A8;
 
-@define-color bg-active #2F2F2F;
-@define-color fg-active #F5F5F5;
-@define-color bg-inactive #202020;
-@define-color fg-inactive #BEBEBE;
+@define-color bg-active #44475a;
+@define-color fg-active #ff79c6;
+@define-color bg-inactive #282a36;
+@define-color fg-inactive #bd93f9;
 
 /* styles for main constructs
  *
@@ -69,7 +69,7 @@ window {
 }
 
 window#waybar {
-	background-color: rgba(0,0,0,0.8);
+	background-color: rgba(40, 42, 54, 0.8);
 	/*border-bottom: 3px solid @bg-alt;*/
 	color: @fg;
 	transition-property: background-color;

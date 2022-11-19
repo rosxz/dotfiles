@@ -3,6 +3,7 @@
 {
   imports = [
     ../../modules/gammastep.nix
+    ../../modules/neovim.nix
   ];
  
   # Home Manager needs a bit of information about you and the
