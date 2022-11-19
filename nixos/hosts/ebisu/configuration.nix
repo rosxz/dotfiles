@@ -9,6 +9,8 @@
     [
       ./hardware-configuration.nix
       ../../modules/sway.nix
+      ../../modules/syncthing.nix
+      ../../modules/tailscale.nix
     ];
 
   # Bootloader.
@@ -239,6 +241,8 @@
 
    alias update="nix flake update"
    alias rebuild="sudo nixos-rebuild switch --flake ."
+
+   alias ssh="TERM=xterm-256color ssh"
 
    source $ZSH/oh-my-zsh.sh
  '';

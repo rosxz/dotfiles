@@ -53,6 +53,8 @@ in
     sirula
     mako
     firefox-wayland
+
+    wlogout
   ];
 
   services.dbus.enable = true;

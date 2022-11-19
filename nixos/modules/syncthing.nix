@@ -6,8 +6,8 @@
     user = "crea";
     systemService = true;
     openDefaultPorts = true;
-    dataDir = "/home/crea/syncthing";
-    configDir = "/home/crea/.config/syncthing";
+    dataDir = "/home/crea/Documents";    # Default folder for new synced folders
+    configDir = "/home/crea/.config/syncthing";   # Folder for Syncthing's settings and keys
     overrideFolders = false;
     overrideDevices = false;
     guiAddress = "0.0.0.0:8384";
