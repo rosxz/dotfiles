@@ -14,7 +14,9 @@
       lib = nixpkgs.lib;
 
       sshKeys = [
+  "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILW5ZVdVaKMVlau1wp/JGJpdpE6JUxJ07DEYHi9qOLC8 crea@tsukuyomi"
 	"ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJcUMSSFZQheROdhFVmIUwBTbAVBv9YUm/Ib3ED3O0gv crea@pasokon"
+  "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDYNGP+7GKcUpccWNOAxn5VSDVTzgNkcYisHLEHKpahj crea@fuujin"
       ];
 
       pkgs = import nixpkgs {
@@ -22,7 +24,7 @@
         config.allowUnfree = true;
 	overlays = [ overlay-unstable ];
       };
-      
+
       overlay-unstable = final: prev: {
         unstable = import nixpkgs-unstable {
           inherit system;
@@ -54,12 +56,19 @@
           specialArgs = { inherit sshKeys; };
           modules = [ ./hosts/ebisu/configuration.nix ];
         };
-	
+
 	tsukuyomi = lib.nixosSystem {
           inherit system pkgs;
 
           specialArgs = { inherit sshKeys; };
           modules = [ ./hosts/tsukuyomi/configuration.nix ];
+        };
+
+	fuujin = lib.nixosSystem {
+          inherit system pkgs;
+
+          specialArgs = { inherit sshKeys; };
+          modules = [ ./hosts/fuujin/configuration.nix ];
         };
       };
     };
