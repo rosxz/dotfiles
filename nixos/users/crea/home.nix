@@ -15,6 +15,9 @@
   home.packages = with pkgs; [
     anki-bin
     sonixd
+    unstable.kdenlive
+    zathura
+    gcc
   ];
 
   xdg.desktopEntries.Anki = {
@@ -26,6 +29,28 @@
     name = "Sonixd";
     exec = "sonixd";
   };
+
+  xdg.desktopEntries.visual-studio-code = {
+    type = "Application";
+    name = "Visual Studio Code";
+    exec = "NIXOS_OZONE_WL=1 code"; # Still not working
+  };
+
+  programs.vscode = {
+    enable = true;
+    package = with pkgs; unstable.vscode;
+    extensions = with pkgs.vscode-extensions; [
+      dracula-theme.theme-dracula
+      ms-vscode.cpptools
+      github.copilot
+    ];
+  };
+
+  home.file.".config/gtk-3.0/settings.ini".text = ''
+  [Settings]
+  gtk-cursor-theme-name=Bibata_Ghost
+  '';
+  home.file.".icons/default".source = "${pkgs.bibata-cursors-translucent}/share/icons/Bibata_Ghost";
 
   # This value determines the Home Manager release that your
   # configuration is compatible with. This helps avoid breakage

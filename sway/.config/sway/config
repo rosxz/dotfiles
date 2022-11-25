@@ -11,6 +11,12 @@ input "type:keyboard" {
 # output DP-2 res 3840x2160 scale 1.5 # 4K display
 output eDP-1 bg ~/Pictures/Wallpapers/bulgaria.jpg fill
 
+input "2821:257:Asus_TouchPad" {
+	tap enabled
+	accel_profile "flat"
+	pointer_accel 0.5
+}
+
 # xwayland force scale 2
 
 # exec xsettingsd
@@ -18,8 +24,9 @@ exec dbus-sway-environment
 exec configure-gtk
 exec waybar
 exec gammastep
-exec nm-applet --indicator
 exec fcitx5
+exec nm-applet --indicator
+exec blueman-applet
 
 exec swayidle -w before-sleep $lock
 
@@ -101,6 +108,9 @@ bindsym $mod+c kill
 
 bindsym $mod+Print exec grim -g "$(slurp)" /tmp/$(date +'%H:%M:%S.png')
 bindsym Print exec slurp | grim -g - - | wl-copy
+
+bindsym $mod+w exec firefox
+bindsym $mod+x exec thunar
 
 # change focus
 bindsym $mod+h focus left

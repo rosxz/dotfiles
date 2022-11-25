@@ -55,6 +55,9 @@
     StateDirectory = "dnscrypt-proxy";
   };
 
+  hardware.bluetooth.enable = true;
+  services.blueman.enable = true;
+
   time.timeZone = "Europe/Lisbon";
 
   i18n = {
@@ -89,6 +92,8 @@
     enableHidpi = true;
     theme = "maldives";
   };
+
+  services.xserver.libinput.enable = true;
 
   console.keyMap = "pt-latin1";
 
@@ -155,13 +160,13 @@
 	  ripgrep
 	  htop
 	  python3
+    mpv
 	  neofetch
 	  xsettingsd
 	  pavucontrol
 	  home-manager
-	  tor-browser-bundle-bin
 	  spotify
-	  unstable.discord
+	  (discord.override { nss = pkgs.nss_latest; }) # unlatest breaks nss_latest fix for firefox, but has openasar
 	  brightnessctl
 	  xfce.thunar
 	  xarchiver
@@ -174,6 +179,7 @@
 	  grim
 	  slurp
 	  thefuck
+    # sddm-lain-wired-theme
   ];
 
   powerManagement = {
@@ -190,17 +196,11 @@
   services.gvfs.enable = true; # Mount, trash, and other functionalities
   services.tumbler.enable = true; # Thumbnail support for images
 
-  nixpkgs.overlays = [
-    (self: super: {
-      unstable.discord = super.unstable.discord.override { withOpenASAR = true; };
-    })
-  ];
-
   services.gnome.gnome-keyring.enable = true;
+  security.pam.services.sddm.enableGnomeKeyring = true; # seems like a sddm issue
 
   # Enable Flakes
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
-
 
   # Enable the OpenSSH daemon.
   # services.openssh.enable = true;
@@ -215,13 +215,21 @@
     enable = true;
     syntaxHighlighting.enable = true;
     autosuggestions.enable = true;
+    shellAliases = {
+      poweroff = "poweroff --no-wall";
+      reboot = "reboot --no-wall";
+      update = "nix flake update";
+      rebuild = "sudo nixos-rebuild switch --flake .";
+      ssh = "TERM=xterm-256color ssh";
+      ls = "exa --color=always --icons --group-directories-first";
+    };
     interactiveShellInit = ''
    export ZSH=${pkgs.oh-my-zsh}/share/oh-my-zsh/
    export FZF_BASE=${pkgs.fzf}/share/fzf/
    # Customize your oh-my-zsh options here
    plugins=(git fzf thefuck)
-   HISTFILESIZE=500000
-   HISTSIZE=500000
+   HISTFILESIZE=5000
+   HISTSIZE=5000
    setopt SHARE_HISTORY
    setopt HIST_IGNORE_ALL_DUPS
    setopt HIST_IGNORE_DUPS
@@ -229,25 +237,26 @@
    autoload -U compinit && compinit
    unsetopt menu_complete
    setopt completealiases
-
-   if [ -f ~/.aliases ]; then
-     source ~/.aliases
-   fi
-
-   alias poweroff="poweroff --no-wall"
-   alias reboot="reboot --no-wall"
-
-   alias ls="exa --color=always --icons --group-directories-first"
-
-   alias update="nix flake update"
-   alias rebuild="sudo nixos-rebuild switch --flake ."
-
-   alias ssh="TERM=xterm-256color ssh"
-
    source $ZSH/oh-my-zsh.sh
- '';
+    '';
     promptInit = "source ${pkgs.zsh-powerlevel10k}/share/zsh-powerlevel10k/powerlevel10k.zsh-theme";
   };
+
+  # Clean /tmp on boot
+  environment.etc."tmpfiles.d/tmp.conf".text = ''
+  #  This file is part of systemd.
+#
+#  systemd is free software; you can redistribute it and/or modify it
+#  under the terms of the GNU Lesser General Public License as published by
+#  the Free Software Foundation; either version 2.1 of the License, or
+#  (at your option) any later version.
+
+# See tmpfiles.d(5) for details
+
+# Clear tmp directories separately, to make them easier to override
+D! /tmp 1777 root root 0
+D /var/tmp 1777 root root 30d
+  '';
 
   system.stateVersion = "22.05";
 

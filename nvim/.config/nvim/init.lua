@@ -1,4 +1,4 @@
-vim.cmd[[source /usr/share/nvim/archlinux.vim]]
+-- vim.cmd[[source /usr/share/nvim/archlinux.vim]]
 vim.cmd[[source $HOME/.config/nvim/vim-plug/plugins.vim]]
 vim.opt.showmatch = true
 vim.opt.number = true
@@ -41,7 +41,9 @@ vim.cmd[[let g:airline_theme = 'dark']]
 -- Treesitter Configuration
 require'nvim-treesitter.configs'.setup {
   -- One of "all", "maintained" (parsers with maintainers), or a list of languages
-  ensure_installed = "all",
+  ensure_installed = { "lua", "c", "rust", "nix", "yaml",
+   "vim", "toml", "sql", "python", "markdown", "markdown_inline", "latex",
+   "java", "html", "go", "dockerfile", "css", "cpp", "bash" },
 
   -- Install languages synchronously (only applied to `ensure_installed`)
   sync_install = false,
@@ -184,7 +186,7 @@ cmd[[set completeopt=menu,menuone,noselect]]
 -- })
 
   -- Setup lspconfig.
-local capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
+local capabilities = require('cmp_nvim_lsp').default_capabilities(vim.lsp.protocol.make_client_capabilities())
   -- Replace <YOUR_LSP_SERVER> with each lsp server you've enabled.
 require('lspconfig')['pyright'].setup {
         capabilities = capabilities

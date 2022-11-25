@@ -69,7 +69,7 @@
 	"backlight": {
 		// "device": "acpi_video1",
 		"format": "{icon} {percent}%",
-		"format-icons": ["", ""]
+		"format-icons": ["🔆"]
 	},
 	"battery": {
 		"interval": 2,
@@ -100,8 +100,8 @@
 		// "scroll-step": 1, // %, can be a float
 		"format": "{icon} {volume}% {format_source}",
 		"format-bluetooth": "{icon} {volume}% {format_source}",
-		"format-bluetooth-muted": "{icon}  {format_source}",
-		"format-muted": " {format_source}",
+		"format-bluetooth-muted": "{icon} 🔇 {format_source}",
+		"format-muted": "🔇 {format_source}",
 		"format-source": " {volume}%",
 		"format-source-muted": "",
 		"format-icons": {
