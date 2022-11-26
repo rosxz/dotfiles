@@ -18,6 +18,7 @@
     unstable.kdenlive
     zathura
     gcc
+    gnumake
   ];
 
   xdg.desktopEntries.Anki = {
@@ -39,10 +40,10 @@
   programs.vscode = {
     enable = true;
     package = with pkgs; unstable.vscode;
-    extensions = with pkgs.vscode-extensions; [
-      dracula-theme.theme-dracula
-      ms-vscode.cpptools
-      github.copilot
+    extensions = with pkgs; [
+      vscode-extensions.dracula-theme.theme-dracula
+      vscode-extensions.ms-vscode.cpptools
+      unstable.vscode-extensions.github.copilot
     ];
   };
 
