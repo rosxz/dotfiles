@@ -180,7 +180,8 @@ require 'colorizer'.setup ({ user_default_options = { names = false; }})
       '';
     }
   ];
-  personalPlugins = with pkgs.unstable.vimPlugins; [
+
+ personalPlugins = with pkgs.unstable.vimPlugins; [
     {
       plugin = nvim-lspconfig;
       type = "lua";
@@ -222,7 +223,7 @@ lsp.texlab.setup{
 
     luasnip
     {
-      plugin = pkgs.unstable.luajitPackages.nvim-cmp;
+      plugin = nvim-cmp;
       type = "lua";
       config = ''
 -- Setup nvim-cmp.
@@ -282,6 +283,7 @@ cmp.setup.cmdline(':', {
 })
       '';
     }
+
     cmp_luasnip
     cmp-treesitter
     cmp-nvim-lsp
@@ -406,7 +408,7 @@ in
           with pkgs.unstable.vimPlugins; [
             vim-fugitive
             {
-              plugin = pkgs.unstable.luajitPackages.gitsigns-nvim;
+              plugin = gitsigns-nvim;
               config = "lua require('gitsigns').setup()";
             }
           ]

@@ -115,7 +115,7 @@
   users.users.crea = {
     isNormalUser = true;
     description = "Martim Moniz";
-    extraGroups = [ "networkmanager" "video" "scanner" "qemu-libvirtd" "wheel" ];
+    extraGroups = [ "networkmanager" "video" "scanner" "qemu-libvirtd" "wheel" "wireshark" ];
     shell = pkgs.zsh;
     openssh.authorizedKeys.keys = sshKeys;
   };
@@ -168,7 +168,6 @@
 	  spotify
 	  (discord.override { nss = pkgs.nss_latest; }) # unlatest breaks nss_latest fix for firefox, but has openasar
 	  brightnessctl
-	  xfce.thunar
 	  xarchiver
 	  p7zip
 	  rar
@@ -189,7 +188,8 @@
   # services.throttled.enable = true;
   services.thermald.enable = true;
 
-  services.xserver.desktopManager.xfce.thunarPlugins = with pkgs.xfce; [
+  programs.thunar.enable = true;
+  programs.thunar.plugins = with pkgs.xfce; [
     thunar-archive-plugin
     thunar-volman
   ];
@@ -257,6 +257,10 @@
 D! /tmp 1777 root root 0
 D /var/tmp 1777 root root 30d
   '';
+
+#### Random stuff here ####
+  programs.wireshark.package = pkgs.wireshark;
+  programs.wireshark.enable = true;
 
   system.stateVersion = "22.05";
 

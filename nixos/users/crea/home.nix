@@ -19,6 +19,8 @@
     zathura
     gcc
     gnumake
+    unstable.archi
+    wireshark
   ];
 
   xdg.desktopEntries.Anki = {
@@ -35,6 +37,12 @@
     type = "Application";
     name = "Visual Studio Code";
     exec = "NIXOS_OZONE_WL=1 code"; # Still not working
+  };
+
+  xdg.desktopEntries.archi = {
+    type = "Application";
+    name = "Archimate";
+    exec = "Archi";
   };
 
   programs.vscode = {
