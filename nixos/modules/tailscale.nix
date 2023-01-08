@@ -32,7 +32,7 @@
       fi
 
       # otherwise authenticate with tailscale
-      ${tailscale}/bin/tailscale up -authkey keyhere
+      ${tailscale}/bin/tailscale up -authkey tskey-auth-kj8wXw2CNTRL-cFQcTbMpQTKAWPiHfgKhWK428wsu2oRYb
     '';
   };
   networking.firewall.trustedInterfaces = [ "tailscale0" ];

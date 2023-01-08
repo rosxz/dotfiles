@@ -22,11 +22,22 @@
     { device = "/dev/disk/by-label/NIXBOOT";
       fsType = "vfat";
     };
+  
+  fileSystems."/mnt/Storage" =
+    { device = "/dev/disk/by-label/STORAGE";
+      fsType = "ext4";
+    };
 
-  # fileSystems."/library" =
-  #   { device = "/dev/disk/by-label/MYBOOK1";
+  # fileSystems."/mnt/Storage" =
+  #   { device = "/dev/disk/by-label/MYBOOK2";
   #     fsType = "ext4";
-  #   };
+  #  };
+
+  # Start Unmounted: IDK why yet, but disk is being continuously written to and read from while mounted ??!
+  # fileSystems."/mnt/Backup" = 
+  #   { device = "/dev/disk/by-label/BACKUP";
+  #     fsType = "ext4";
+  #  } ;
 
   swapDevices = [ { device = "/.swapfile"; } ];
 
@@ -37,7 +48,9 @@
   networking.useDHCP = lib.mkDefault true;
   # networking.interfaces.enp2s0.useDHCP = lib.mkDefault true;
 
-  powerManagement.enable = true;
-  powerManagement.cpuFreqGovernor = lib.mkDefault "powersave";
+  powerManagement = {
+    enable = true;
+    cpuFreqGovernor = lib.mkDefault "powersave";
+  };
   hardware.cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
 }

@@ -13,6 +13,8 @@
       ../../modules/docker.nix
       ../../modules/syncthing.nix
       ../../modules/jellyfin.nix
+      ../../modules/tailscale.nix
+      ../../modules/rtorrent.nix
     ];
 
   # Bootloader.
@@ -44,6 +46,7 @@
     }];
     networkmanager.dns = "none";
     dhcpcd.extraConfig = "nohook resolv.conf";
+    firewall.checkReversePath = "loose";
   };
 
   services.dnscrypt-proxy2 = {
@@ -104,11 +107,11 @@
     "net.core.default_qdisc" = "cake";
   };
 
-  nix.trustedUsers = [
+  nix.settings.trusted-users = [
     "crea"
     "root"
   ];
-  nix.allowedUsers = [ "@wheel" ];
+  nix.settings.allowed-users = [ "@wheel" ];
 
   security.sudo.execWheelOnly = true;
   security.pam = {
@@ -155,10 +158,11 @@
       crea = {
         isNormalUser = true;
         description = "Martim Moniz";
-        extraGroups = [ "docker" "video" "scanner" "qemu-libvirtd" "wheel" ];
+        extraGroups = [ "docker" "media" "video" "scanner" "qemu-libvirtd" "wheel" ];
         hashedPassword = "$6$WU1epwfq/D/h8Lny$Tcqfptb0ji/ZRIhB4uHzh1GISz3JegWVb1ZB0ZqfIzF5Vp/FzFVorqwi5npwRxCwzsSpOdLK5tdnlrB2pdz44/";
         openssh.authorizedKeys.keys = sshKeys;
       };
+
     };
   };
 
@@ -177,8 +181,19 @@
 	htop
 	neofetch
 	xsettingsd
-	unstable.miniserve
+	hd-idle
+
+	python310Full
+	python310Packages.requests
+	beets
+	flac
+	lame
+	mp3gain
+	vorbisgain
+	vorbis-tools
   ];
+
+   
 
   services.fstrim = {
     enable = true;
@@ -199,7 +214,7 @@
 
   system.autoUpgrade = {
     enable = true;
-    flake = "{config.users.users.crea.home}/.navifiles/nixos";
+    flake = "/home/crea/.navifiles/nixos";
     allowReboot = true;
     flags = ["--update-input" "nixpkgs" "--update-input" "nixpkgs-unstable" "--commit-lock-file"];
     # Daily 00:00

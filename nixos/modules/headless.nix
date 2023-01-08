@@ -5,6 +5,11 @@
 { config, lib, pkgs, ... }:
 
 {
+
+  imports = [
+	./hdd.nix
+	./restic.nix
+  ];
   
   networking.firewall.logRefusedConnections = false; #This is really spammy w/ pub. IPs. makes desg unreadable
   
@@ -27,6 +32,7 @@
     group = "appuser";
   };
   users.groups.appuser = { };
+  users.groups.media = { };
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
@@ -38,6 +44,9 @@
 
   # Enable the OpenSSH daemon.
   services.openssh.enable = true;
+
+  # Set automatic spin down of hard-drives
+  services.hd-idle.enable = true;
 
   hardware.cpu.intel.updateMicrocode = true;
 }

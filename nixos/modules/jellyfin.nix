@@ -17,7 +17,11 @@
   
   services.jellyfin = {
     enable = true;
+    package = with pkgs; unstable.jellyfin;
     openFirewall = true;
+  };
+  users.users.jellyfin = {
+    extraGroups = [ "media" ];
   };
 
   # 2. override default hardening measure from NixOS - this is default since 22.05
