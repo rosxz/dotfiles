@@ -48,6 +48,7 @@ in
     swaybg
     wl-clipboard # wl-copy and wl-paste for copy/paste from stdin / stdout
     qt6.qtwayland
+    xdg-utils # for opening default programs when clicking links
 
     xwayland
     waybar
@@ -67,8 +68,8 @@ in
     wlr.enable = true;
     # gtk portal needed to make gtk apps happy
     extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
-    gtkUsePortal = true;
   };
+  environment.sessionVariables.GTK_USE_PORTAL = "1"; # /NixOS/nixpkgs/pull/179204
 
   # enable sway window manager
   programs.sway = {

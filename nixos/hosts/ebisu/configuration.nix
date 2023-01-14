@@ -120,18 +120,26 @@
     openssh.authorizedKeys.keys = sshKeys;
   };
 
-  fonts.fonts = with pkgs; [
-    noto-fonts
-    noto-fonts-cjk
-    noto-fonts-emoji
-    liberation_ttf
-    fira-code
-    fira-code-symbols
-    font-awesome
-    source-han-sans
-    source-han-sans-japanese
-    source-han-serif-japanese
-  ];
+  fonts = {
+    fonts = with pkgs; [
+      noto-fonts
+      noto-fonts-cjk
+      noto-fonts-emoji
+      liberation_ttf
+      fira-code
+      fira-code-symbols
+      font-awesome
+      ibm-plex
+      source-han-sans
+      source-han-sans-japanese
+      source-han-serif-japanese
+    ];
+    fontconfig.defaultFonts = {
+      serif = [ "Noto Serif" "Source Han Serif" ];
+      sansSerif = [ "Noto Sans" "Source Han Sans" ];
+      monospace = [ "IBM Plex Mono" ];
+    };
+  };
 
   environment.sessionVariables = rec {
     # environment variables go here
@@ -166,7 +174,7 @@
 	  pavucontrol
 	  home-manager
 	  spotify
-	  (discord.override { nss = pkgs.nss_latest; }) # unlatest breaks nss_latest fix for firefox, but has openasar
+	  (discord.override { nss = pkgs.nss_latest; withOpenASAR = true; }) # unlatest breaks nss_latest fix for firefox, but has openasar
 	  brightnessctl
 	  xarchiver
 	  p7zip
@@ -209,7 +217,7 @@
   # networking.firewall.allowedTCPPorts = [ ... ];
   # networking.firewall.allowedUDPPorts = [ ... ];
   # Or disable the firewall altogether.
-  # networking.firewall.enable = false;
+  networking.firewall.enable = false;
 
   programs.zsh = {
     enable = true;
@@ -257,10 +265,6 @@
 D! /tmp 1777 root root 0
 D /var/tmp 1777 root root 30d
   '';
-
-#### Random stuff here ####
-  programs.wireshark.package = pkgs.wireshark;
-  programs.wireshark.enable = true;
 
   system.stateVersion = "22.05";
 
