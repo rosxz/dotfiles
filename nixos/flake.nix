@@ -18,6 +18,7 @@
 	"ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJcUMSSFZQheROdhFVmIUwBTbAVBv9YUm/Ib3ED3O0gv crea@pasokon"
   "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDYNGP+7GKcUpccWNOAxn5VSDVTzgNkcYisHLEHKpahj crea@fuujin"
   "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINKtzQZmcfn9DS+s8Wx034OaMHthFXrrG/JQyMl2rLXx u0_a225@localhost"
+  "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIK5qplpxonrKYtW8al56XFjOypAbh49LKH9BdakIb6Ie navi@DESKTOP-EMI1M84"
       ];
 
       pkgs = import nixpkgs {
