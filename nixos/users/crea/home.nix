@@ -22,6 +22,7 @@
     man-pages
     libreoffice-qt
     krita
+    unstable.etcher
   ];
 
   xdg.desktopEntries.Anki = {
