@@ -25,37 +25,11 @@
   };
 
   networking = {
-    hostName = "ebisu"; # Define your hostname.
+    hostName = "fuujin"; # Define your hostname.
     networkmanager.enable = true;
-    nameservers = [ "1.1.1.1" ];
-    networkmanager.dns = "none";
   };
 
-  services.dnscrypt-proxy2 = {
-    enable = true;
-    settings = {
-      ipv6_servers = true;
-      require_dnssec = true;
-
-      sources.public-resolvers = {
-        urls = [
-          "https://raw.githubusercontent.com/DNSCrypt/dnscrypt-resolvers/master/v3/public-resolvers.md"
-          "https://download.dnscrypt.info/resolvers-list/v3/public-resolvers.md"
-        ];
-        cache_file = "/var/lib/dnscrypt-proxy2/public-resolvers.md";
-        minisign_key = "RWQf6LRCGA9i53mlYecO4IzT51TGPpvWucNSCh1CBM0QTaLn73Y7GFO3";
-      };
-
-      # You can choose a specific set of servers from https://github.com/DNSCrypt/dnscrypt-resolvers/blob/master/v3/public-resolvers.md
-      server_names = [ "cloudflare" ];
-    };
-  };
-
-  systemd.services.dnscrypt-proxy2.serviceConfig = {
-    StateDirectory = "dnscrypt-proxy";
-  };
-
-  hardware.bluetooth.enable = true;
+  hardware.bluetooth.enable = false;
   services.blueman.enable = true;
 
   time.timeZone = "Europe/Lisbon";
@@ -115,7 +89,7 @@
   users.users.crea = {
     isNormalUser = true;
     description = "Martim Moniz";
-    extraGroups = [ "networkmanager" "video" "scanner" "qemu-libvirtd" "wheel" ];
+    extraGroups = [ "networkmanager" "video" "scanner" "qemu-libvirtd" "wheel" "libvirtd" ];
     shell = pkgs.zsh;
     openssh.authorizedKeys.keys = sshKeys;
   };
@@ -168,7 +142,6 @@
 	  spotify
 	  (discord.override { nss = pkgs.nss_latest; }) # unlatest breaks nss_latest fix for firefox, but has openasar
 	  brightnessctl
-	  xfce.thunar
 	  xarchiver
 	  p7zip
 	  rar
@@ -179,7 +152,10 @@
 	  grim
 	  slurp
 	  thefuck
+    bat
     # sddm-lain-wired-theme
+    virt-manager
+    remmina
   ];
 
   powerManagement = {
@@ -189,7 +165,8 @@
   # services.throttled.enable = true;
   services.thermald.enable = true;
 
-  services.xserver.desktopManager.xfce.thunarPlugins = with pkgs.xfce; [
+  programs.thunar.enable = true;
+  programs.thunar.plugins = with pkgs.xfce; [
     thunar-archive-plugin
     thunar-volman
   ];
@@ -198,6 +175,9 @@
 
   services.gnome.gnome-keyring.enable = true;
   security.pam.services.sddm.enableGnomeKeyring = true; # seems like a sddm issue
+
+  virtualisation.libvirtd.enable = true;
+  programs.dconf.enable = true;
 
   # Enable Flakes
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
@@ -222,6 +202,7 @@
       rebuild = "sudo nixos-rebuild switch --flake .";
       ssh = "TERM=xterm-256color ssh";
       ls = "exa --color=always --icons --group-directories-first";
+      cat = "bat";
     };
     interactiveShellInit = ''
    export ZSH=${pkgs.oh-my-zsh}/share/oh-my-zsh/

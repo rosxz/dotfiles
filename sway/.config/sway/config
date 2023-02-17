@@ -12,13 +12,15 @@ input "type:keyboard" {
 # output eDP-1 bg ~/Pictures/Wallpapers/1J8A7015-2.jpg fill
 # output eDP-1 bg $HOME/Pictures/Wallpapers/1J8A1386.jpg fill pos 3840 0
 # output HDMI-A-2 bg $HOME/Pictures/Wallpapers/1J8A1719.jpg fill scale 1.8 pos 0 0
-exec $HOME/.navifiles/other/.random_bg | xargs -n 1 swaybg -o eDP-1 -i
+# exec $HOME/.navifiles/other/.random_bg | xargs -n 1 swaybg -o eDP-1 -i
+output DP-1 bg ~/Pictures/Wallpapers/bulgaria.jpg fill
+output DP-3 bg ~/Pictures/Wallpapers/blame.jpeg fill
 
-input "2821:257:Asus_TouchPad" {
-	tap enabled
-	accel_profile "flat"
-	pointer_accel 0.5
-}
+#input "2821:257:Asus_TouchPad" {
+#	tap enabled
+#	accel_profile "flat"
+#	pointer_accel 0.5
+#}
 
 # xwayland force scale 2
 
@@ -29,7 +31,7 @@ exec waybar
 exec gammastep
 exec fcitx5
 exec nm-applet --indicator
-exec blueman-applet
+# exec blueman-applet
 
 exec swayidle -w before-sleep $lock
 
