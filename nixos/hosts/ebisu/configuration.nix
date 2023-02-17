@@ -228,7 +228,8 @@
       poweroff = "poweroff --no-wall";
       reboot = "reboot --no-wall";
       update = "nix flake update";
-      rebuild = "sudo nixos-rebuild switch --flake .";
+      rebuild = ''sudo nixos-rebuild switch --flake "github:creaaidev/dotfiles?dir=nixos"
+      '';
       ssh = "TERM=xterm-256color ssh";
       ls = "exa --color=always --icons --group-directories-first";
     };
