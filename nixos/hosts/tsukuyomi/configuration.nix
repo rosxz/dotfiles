@@ -9,7 +9,8 @@
     [ 
       ./hardware-configuration.nix
       ../../modules/headless.nix
-      ../../modules/caddy.nix
+      # ../../modules/caddy.nix
+      ../../modules/nginx.nix
       ../../modules/docker.nix
       ../../modules/syncthing.nix
       ../../modules/jellyfin.nix
@@ -216,7 +217,6 @@
     enable = true;
     flake = "/home/crea/.navifiles/nixos";
     allowReboot = true;
-    flags = ["--update-input" "nixpkgs" "--update-input" "nixpkgs-unstable" "--commit-lock-file"];
     # Daily 00:00
     dates = "daily UTC";
   };

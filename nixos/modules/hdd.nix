@@ -26,7 +26,7 @@ with lib;
       serviceConfig = {
         Type = "simple";
         Restart = "on-failure";
-        ExecStart = "${cfg.package}/bin/hd-idle"; # Send logs to var/lib
+        ExecStart = "${cfg.package}/bin/hd-idle -i 1800"; # Send logs to var/lib
       };
     };
   };

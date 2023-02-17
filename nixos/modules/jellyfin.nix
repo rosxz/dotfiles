@@ -21,7 +21,7 @@
     openFirewall = true;
   };
   users.users.jellyfin = {
-    extraGroups = [ "media" ];
+    extraGroups = [ "media" "render" "video" ];
   };
 
   # 2. override default hardening measure from NixOS - this is default since 22.05

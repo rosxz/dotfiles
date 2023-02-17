@@ -29,6 +29,7 @@
     vim
     git
     wget
+    # intel-gpu-tools # For debugging transcoding
   ];
 
   # Enable the OpenSSH daemon.

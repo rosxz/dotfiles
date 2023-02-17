@@ -30,7 +30,9 @@
   };
 
   hardware.bluetooth.enable = false;
-  services.blueman.enable = true;
+    networkmanager.dns = "none";
+    firewall.checkReversePath = "loose";
+  };
 
   time.timeZone = "Europe/Lisbon";
 
