@@ -11,6 +11,7 @@
       ../../modules/sway.nix
       ../../modules/syncthing.nix
       ../../modules/tailscale.nix
+      ../../modules/docker.nix
     ];
 
   # Bootloader.
@@ -115,7 +116,7 @@
   users.users.crea = {
     isNormalUser = true;
     description = "Martim Moniz";
-    extraGroups = [ "networkmanager" "video" "scanner" "qemu-libvirtd" "wheel" "wireshark" ];
+    extraGroups = [ "networkmanager" "video" "scanner" "qemu-libvirtd" "wheel" ];
     shell = pkgs.zsh;
     openssh.authorizedKeys.keys = sshKeys;
   };
@@ -264,6 +265,19 @@
 # Clear tmp directories separately, to make them easier to override
 D! /tmp 1777 root root 0
 D /var/tmp 1777 root root 30d
+  '';
+
+  ## Garbage collector
+  nix.gc = {
+    automatic = true;
+    #Every Monday 01:00 (UTC)
+    dates = "weekly";
+    options = "--delete-older-than 30d";
+  };
+
+  # Run garbage collection whenever there is less than 500MB free space left, prob better increase this value
+  nix.extraOptions = ''
+    min-free = ${toString (500 * 1024 * 1024)}
   '';
 
   system.stateVersion = "22.05";

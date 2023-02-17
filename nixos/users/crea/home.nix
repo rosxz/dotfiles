@@ -17,11 +17,11 @@
     sonixd
     unstable.kdenlive
     zathura
-    gcc
-    gnumake
     man-pages
     libreoffice-qt
     krita
+    xournalpp
+    libqalculate
   ];
 
   xdg.desktopEntries.Anki = {
@@ -45,7 +45,6 @@
     package = with pkgs; unstable.vscode;
     extensions = with pkgs; [
       vscode-extensions.dracula-theme.theme-dracula
-      vscode-extensions.ms-vscode.cpptools
       unstable.vscode-extensions.github.copilot
     ];
   };
