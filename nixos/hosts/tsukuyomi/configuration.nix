@@ -172,6 +172,7 @@
 	yt-dlp
 	gettext
 	git
+	exa
 	lf
 	wget
 	curl
@@ -238,6 +239,31 @@
       partOf = [ "clear-log.service" ];
       timerConfig.OnCalendar = "weekly UTC";
     };
+  };
+
+  programs.zsh = {
+    enable = true;
+    syntaxHighlighting.enable = true;
+    autosuggestions.enable = true;
+    shellAliases = {
+      poweroff = "poweroff --no-wall";
+      reboot = "reboot --no-wall";
+      update = "nix flake update";
+      rebuild = "sudo nixos-rebuild switch --flake .";
+      ssh = "TERM=xterm-256color ssh";
+      ls = "exa --color=always --icons --group-directories-first";
+    };
+    interactiveShellInit = ''
+   HISTFILESIZE=5000
+   HISTSIZE=5000
+   setopt SHARE_HISTORY
+   setopt HIST_IGNORE_ALL_DUPS
+   setopt HIST_IGNORE_DUPS
+   setopt INC_APPEND_HISTORY
+   autoload -U compinit && compinit
+   unsetopt menu_complete
+   setopt completealiases
+    '';
   };
 
   ## Garbage collector
