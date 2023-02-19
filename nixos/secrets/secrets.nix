@@ -9,5 +9,5 @@ let
   users = [ tsukuyomiUser ebisuUser ];
 in
 {
-  "restic-pass.age".publicKey = [ tsukuyomi tsukuyomiUser ebisuUser ];
+  "restic-pass.age".publicKeys = [ tsukuyomi tsukuyomiUser ebisuUser ];
 }
