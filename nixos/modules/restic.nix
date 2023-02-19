@@ -5,7 +5,7 @@
 age.secrets.restic-pass = {
   file = "${self}/secrets/restic-pass.age";
   # probably should add user and group here
-}
+};
 
 services.restic.backups.STORAGE = {
   timerConfig = { OnCalendar = "weekly"; };
@@ -21,7 +21,7 @@ services.restic.backups.STORAGE = {
    #!/bin/sh
    ${pkgs.mount}/bin/mount /dev/disk/by-label/BACKUP /mnt/Backup
   '';
-  # ${pkgs.transmission}/bin/transmission-remote -N /var/lib/secrets/transmission/.netrc -t all --stop 
+  # ${pkgs.transmission}/bin/transmission-remote -N /var/lib/secrets/transmission/.netrc -t all --stop
   # ${pkgs.killall}/bin/killall -s SIGSTOP qbittorrent-nox
   backupCleanupCommand = ''
    #!/bin/sh
