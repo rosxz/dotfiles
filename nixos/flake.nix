@@ -4,11 +4,15 @@
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-22.11";
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
+
     home-manager.url = "github:nix-community/home-manager/release-22.11";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
+
+    agenix.url = "github:ryantm/agenix";
+    agenix.inputs.nixpkgs.follows = "nixpkgs";
   };
 
-  outputs = inputs@{ nixpkgs, nixpkgs-unstable, home-manager, ... }:
+  outputs = inputs@{ nixpkgs, nixpkgs-unstable, home-manager, agenix, ... }:
     let
       system = "x86_64-linux";
       lib = nixpkgs.lib;
@@ -23,10 +27,11 @@
       pkgs = import nixpkgs {
         inherit system;
         config.allowUnfree = true;
-	overlays = [
-	  overlay-unstable
-	  inputs.agenix.overlay
-	];
+
+        overlays = [
+	        overlay-unstable
+	        inputs.agenix.overlay
+	      ];
       };
 
       overlay-unstable = final: prev: {
@@ -41,24 +46,24 @@
     in
     {
       homeConfigurations = {
-	crea = home-manager.lib.homeManagerConfiguration {
-	  # pkgs = nixpkgs.legacyPackages.${system};
-    	  inherit pkgs;
+	      crea = home-manager.lib.homeManagerConfiguration {
+	        # pkgs = nixpkgs.legacyPackages.${system};
+    	    inherit pkgs;
 
-	  modules = [
-      ./users/crea/home.nix
-      {
-        home = {
-          username = "crea";
-          homeDirectory = "/home/crea";
-          stateVersion = "22.05";
-        };
-      }
-    ];
-	};
+	        modules = [
+            ./users/crea/home.nix
+            {
+              home = {
+                username = "crea";
+                homeDirectory = "/home/crea";
+                stateVersion = "22.05";
+              };
+            }
+          ];
+	      };
       };
 
-      nixosConfigurations = {
+    nixosConfigurations = {
 	ebisu = lib.nixosSystem {
           inherit system pkgs;
 
