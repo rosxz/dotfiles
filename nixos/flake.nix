@@ -30,7 +30,7 @@
 
         overlays = [
 	        overlay-unstable
-	        inputs.agenix.overlays
+	        inputs.agenix.overlays.default
 	      ];
       };
 
