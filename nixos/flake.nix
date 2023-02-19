@@ -23,7 +23,10 @@
       pkgs = import nixpkgs {
         inherit system;
         config.allowUnfree = true;
-	overlays = [ overlay-unstable ];
+	overlays = [
+	  overlay-unstable
+	  inputs.agenix.overlay
+	];
       };
 
       overlay-unstable = final: prev: {
@@ -32,6 +35,8 @@
           config.allowUnfree = true;
         };
       };
+
+      systemModules = [ inputs.agenix.nixosModules.age ];
 
     in
     {
@@ -58,21 +63,21 @@
           inherit system pkgs;
 
           specialArgs = { inherit sshKeys; };
-          modules = [ ./hosts/ebisu/configuration.nix ];
+          modules = [ ./hosts/ebisu/configuration.nix systemModules ];
         };
 
 	tsukuyomi = lib.nixosSystem {
           inherit system pkgs;
 
           specialArgs = { inherit sshKeys; };
-          modules = [ ./hosts/tsukuyomi/configuration.nix ];
+          modules = [ ./hosts/tsukuyomi/configuration.nix systemModules ];
         };
 
 	fuujin = lib.nixosSystem {
           inherit system pkgs;
 
           specialArgs = { inherit sshKeys; };
-          modules = [ ./hosts/fuujin/configuration.nix ];
+          modules = [ ./hosts/fuujin/configuration.nix systemModules ];
         };
       };
     };
