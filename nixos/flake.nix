@@ -41,7 +41,7 @@
         };
       };
 
-      systemModules = [ inputs.agenix.nixosModules.age ];
+      inputs.agenix.nixosModules.age = [  ];
 
     in
     {
@@ -68,21 +68,21 @@
           inherit system pkgs;
 
           specialArgs = { inherit sshKeys; };
-          modules = [ ./hosts/ebisu/configuration.nix systemModules ];
+          modules = [ ./hosts/ebisu/configuration.nix inputs.agenix.nixosModules.age ];
         };
 
 	tsukuyomi = lib.nixosSystem {
           inherit system pkgs;
 
           specialArgs = { inherit sshKeys; };
-          modules = [ ./hosts/tsukuyomi/configuration.nix systemModules ];
+          modules = [ ./hosts/tsukuyomi/configuration.nix inputs.agenix.nixosModules.age ];
         };
 
 	fuujin = lib.nixosSystem {
           inherit system pkgs;
 
           specialArgs = { inherit sshKeys; };
-          modules = [ ./hosts/fuujin/configuration.nix systemModules ];
+          modules = [ ./hosts/fuujin/configuration.nix inputs.agenix.nixosModules.age ];
         };
       };
     };
