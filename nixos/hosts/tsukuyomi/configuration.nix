@@ -193,6 +193,8 @@
 	mp3gain
 	vorbisgain
 	vorbis-tools
+
+	agenix
   ];
 
    
