@@ -2,11 +2,16 @@
 
 {
 
+age.secrets.restic-pass = {
+  file = "${self}/secrets/restic-pass.age";
+  # probably should add user and group here
+}
+
 services.restic.backups.STORAGE = {
   timerConfig = { OnCalendar = "weekly"; };
   repository = "/mnt/Backup/STORAGE";
   paths = [ "/mnt/Storage" ];
-  passwordFile = "/var/lib/secrets/restic/restic";
+  passwordFile = config.age.secrets.restic-pass.path;
   initialize = true;
   pruneOpts = [ "--keep-weekly 3" ];
   extraBackupArgs = [ "--compression=max" ];
