@@ -187,6 +187,7 @@
 	  grim
 	  slurp
 	  thefuck
+    agenix
     # sddm-lain-wired-theme
   ];
 
