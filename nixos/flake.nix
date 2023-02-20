@@ -12,7 +12,7 @@
     agenix.inputs.nixpkgs.follows = "nixpkgs";
   };
 
-  outputs = inputs@{ nixpkgs, nixpkgs-unstable, home-manager, agenix, ... }:
+  outputs = inputs@{ self, nixpkgs, nixpkgs-unstable, home-manager, agenix, ... }:
     let
       system = "x86_64-linux";
       lib = nixpkgs.lib;
@@ -30,7 +30,7 @@
 
         overlays = [
 	        overlay-unstable
-	        inputs.agenix.overlays.default
+	        agenix.overlays.default
 	      ];
       };
 
@@ -66,21 +66,21 @@
         inherit system pkgs;
 
         specialArgs = { inherit sshKeys; };
-        modules = [ ./hosts/ebisu/configuration.nix inputs.agenix.nixosModules.age ];
+        modules = [ ./hosts/ebisu/configuration.nix agenix.nixosModules.age ];
       };
 
 	    tsukuyomi = lib.nixosSystem {
         inherit system pkgs;
 
-        specialArgs = { inherit sshKeys; };
-        modules = [ ./hosts/tsukuyomi/configuration.nix inputs.agenix.nixosModules.age ];
+        specialArgs = { inherit self sshKeys; };
+        modules = [ ./hosts/tsukuyomi/configuration.nix agenix.nixosModules.age ];
       };
 
 	    fuujin = lib.nixosSystem {
         inherit system pkgs;
 
         specialArgs = { inherit sshKeys; };
-        modules = [ ./hosts/fuujin/configuration.nix inputs.agenix.nixosModules.age ];
+        modules = [ ./hosts/fuujin/configuration.nix agenix.nixosModules.age ];
       };
    };
  };
