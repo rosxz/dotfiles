@@ -32,7 +32,7 @@ in {
 
       extraAppsEnable = true;
       extraApps = with pkgs.nextcloud25Packages.apps; {
-        inherit calendar contacts mail news notes tasks;
+        inherit calendar contacts mail news notes tasks deck unsplash;
       };
 
       config = {
