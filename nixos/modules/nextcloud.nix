@@ -8,13 +8,13 @@ let domain = "cloud.moniz.pt";
 in {
 
   age.secrets.nextcloud-db-pass = {
-    file = "${self}/secrets/nextcloud-db-pass.age";
+    file = "${self}/nixos/secrets/nextcloud-db-pass.age";
     owner = "nextcloud";
     group = "nextcloud";
   };
 
   age.secrets.nextcloud-admin-pass = {
-    file = "${self}/secrets/nextcloud-admin-pass.age";
+    file = "${self}/nixos/secrets/nextcloud-admin-pass.age";
     owner = "nextcloud";
     group = "nextcloud";
   };
@@ -42,16 +42,22 @@ in {
         trustedProxies = [ "100.83.228.83" ];
 
         dbtype = "pgsql";
-        dbuser = "nextcloud_user";
-        dbhost = "db";
-        dbname = "nextcloud_db";
+        dbuser = "nextcloud";
+	dbhost = "/run/postgresql"; # nextcloud will add /.s.PGSQL.5432 by itself
+        dbname = "nextcloud_db_pg";
         dbpassFile = config.age.secrets.nextcloud-db-pass.path;
 
         adminpassFile = config.age.secrets.nextcloud-admin-pass.path;
         adminuser = "admin";
       };
     };
+  };
 
-  # At a certain point move everything away from docker i suppose
+  systemd.services."nextcloud-setup" = {
+    requires = [ "postgresql.service" ];
+    after = [ "postgresql.service" ];
+  };
+
+  # At a certain point add impermanence
   # (steal from carjorvaz)
 }

@@ -9,13 +9,15 @@
     [ 
       ./hardware-configuration.nix
       ../../modules/headless.nix
-      # ../../modules/caddy.nix
       ../../modules/nginx.nix
       ../../modules/docker.nix
       ../../modules/syncthing.nix
       ../../modules/jellyfin.nix
       ../../modules/tailscale.nix
       ../../modules/rtorrent.nix
+      ../../modules/nextcloud.nix
+      ../../modules/postgresql.nix
+      ../../modules/invidious.nix
     ];
 
   # Bootloader.
@@ -138,17 +140,6 @@
   };
 
   console.keyMap = "pt-latin1";
-  
-  # Enable sound with pipewire.
-  # sound.enable = true;
-  # hardware.pulseaudio.enable = false;
-  # security.rtkit.enable = true;
-  # services.pipewire = {
-  #  enable = true;
-  #  alsa.enable = true;
-  #  alsa.support32Bit = true;
-  #  pulse.enable = true;
-  #};
 
   users = {
     mutableUsers = false;
@@ -196,8 +187,6 @@
 
 	agenix
   ];
-
-   
 
   services.fstrim = {
     enable = true;

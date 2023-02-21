@@ -70,6 +70,12 @@
       useACMEHost = "moniz.pt";
       locations."/".proxyPass = "http://100.83.228.83:8384";
     };
+
+    "cloud.moniz.pt" = {
+      forceSSL = true;
+      useACMEHost = "moniz.pt";
+      locations."/".proxyPass = "http://100.83.228.83:80";
+    };
   };
 
   networking.firewall.allowedTCPPorts = [ 80 443 ];

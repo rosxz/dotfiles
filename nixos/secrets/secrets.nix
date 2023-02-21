@@ -12,4 +12,5 @@ in
   "restic-pass.age".publicKeys = [ tsukuyomi tsukuyomiUser ebisuUser ];
   "nextcloud-db-pass.age".publicKeys = [ tsukuyomi tsukuyomiUser ebisuUser ];
   "nextcloud-admin-pass.age".publicKeys = [ tsukuyomi tsukuyomiUser ebisuUser ];
+  "invidious-db-pass.age".publicKeys = [ tsukuyomi tsukuyomiUser ebisuUser ];
 }

@@ -3,7 +3,7 @@
 {
 
 age.secrets.restic-pass = {
-  file = "${self}/secrets/restic-pass.age";
+  file = "${self}/nixos/secrets/restic-pass.age";
   # probably should add user and group here
 };
 
