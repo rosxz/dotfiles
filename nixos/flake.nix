@@ -65,7 +65,7 @@
 	    ebisu = lib.nixosSystem {
         inherit system pkgs;
 
-        specialArgs = { inherit sshKeys; };
+        specialArgs = { inherit self sshKeys inputs; };
         modules = [ ./hosts/ebisu/configuration.nix agenix.nixosModules.age ];
       };
 

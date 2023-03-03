@@ -22,6 +22,11 @@
     krita
     xournalpp
     libqalculate
+    jellyfin-media-player
+
+    patchelf
+    jetbrains.idea-community
+    easyrpg-player
   ];
 
   xdg.desktopEntries.Anki = {
@@ -45,6 +50,12 @@
     package = with pkgs; unstable.vscode;
     extensions = with pkgs; [
       vscode-extensions.dracula-theme.theme-dracula
+      vscode-extensions.redhat.java
+      vscode-extensions.vscjava.vscode-maven
+      vscode-extensions.vscjava.vscode-java-test
+      vscode-extensions.vscjava.vscode-java-dependency
+      vscode-extensions.vscjava.vscode-spring-initializr
+      vscode-extensions.vscjava.vscode-java-debug
       unstable.vscode-extensions.github.copilot
     ];
   };

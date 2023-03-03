@@ -2,7 +2,7 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ config, pkgs, sshKeys, ... }:
+{ self, config, pkgs, sshKeys, inputs, ... }:
 
 {
   imports =
@@ -12,6 +12,7 @@
       ../../modules/syncthing.nix
       ../../modules/tailscale.nix
       ../../modules/docker.nix
+      ../../modules/wireguard.nix
     ];
 
   # Bootloader.
@@ -28,33 +29,13 @@
   networking = {
     hostName = "ebisu"; # Define your hostname.
     networkmanager.enable = true;
-    nameservers = [ "1.1.1.1" ];
-    networkmanager.dns = "none";
+    firewall.checkReversePath = "loose";
   };
 
-  services.dnscrypt-proxy2 = {
-    enable = true;
-    settings = {
-      ipv6_servers = true;
-      require_dnssec = true;
-
-      sources.public-resolvers = {
-        urls = [
-          "https://raw.githubusercontent.com/DNSCrypt/dnscrypt-resolvers/master/v3/public-resolvers.md"
-          "https://download.dnscrypt.info/resolvers-list/v3/public-resolvers.md"
-        ];
-        cache_file = "/var/lib/dnscrypt-proxy2/public-resolvers.md";
-        minisign_key = "RWQf6LRCGA9i53mlYecO4IzT51TGPpvWucNSCh1CBM0QTaLn73Y7GFO3";
-      };
-
-      # You can choose a specific set of servers from https://github.com/DNSCrypt/dnscrypt-resolvers/blob/master/v3/public-resolvers.md
-      server_names = [ "cloudflare" ];
-    };
-  };
-
-  systemd.services.dnscrypt-proxy2.serviceConfig = {
-    StateDirectory = "dnscrypt-proxy";
-  };
+  # Open ports in the firewall.
+  # networking.firewall.allowedTCPPorts = [ ... ];
+  # networking.firewall.allowedUDPPorts = [ ... ];
+  # Or disable the firewall altogether.
 
   hardware.bluetooth.enable = true;
   services.blueman.enable = true;
@@ -188,6 +169,7 @@
 	  slurp
 	  thefuck
     agenix
+    wireguard-tools
     # sddm-lain-wired-theme
   ];
 
@@ -212,14 +194,21 @@
   # Enable Flakes
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
-  # Enable the OpenSSH daemon.
-  # services.openssh.enable = true;
+  # Everything follows inputs
+  nix.registry.nixpkgs.flake = inputs.nixpkgs;
 
-  # Open ports in the firewall.
-  # networking.firewall.allowedTCPPorts = [ ... ];
-  # networking.firewall.allowedUDPPorts = [ ... ];
-  # Or disable the firewall altogether.
-  networking.firewall.enable = false;
+  nix.nixPath = [ "nixpkgs=/etc/channels/nixpkgs" "nixos-config=/etc/nixos/configuration.nix" "/nix/var/nix/profiles/per-user/root/channels" ];
+  environment.etc."channels/nixpkgs".source = inputs.nixpkgs.outPath;
+
+  # Enable the OpenSSH daemon.
+  services.openssh = {
+    enable = true;
+    passwordAuthentication = false;
+    openFirewall = false;
+    permitRootLogin = "no";
+    authorizedKeysFiles = pkgs.lib.mkForce [ "/etc/ssh/authorized_keys.d/%u" ];
+    # extraConfig = '' ''; # dont need this for now
+  };
 
   programs.zsh = {
     enable = true;
