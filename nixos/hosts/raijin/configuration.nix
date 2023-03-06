@@ -29,6 +29,22 @@
     hostName = "ebisu"; # Define your hostname.
     networkmanager.enable = true;
     firewall.checkReversePath = "loose";
+    interfaces.enp4s0 = {
+      ipv4 = {
+        addresses = [{
+          address = "193.136.164.197"
+          prefixLength = 27;
+        }];
+      };
+      ipv6 = {
+        addresses = [{
+          address = "2001:690:2100:82::197";
+          prefixLength = 64;
+        }];
+      };
+    };
+    defaultGateway = "193.136.164.222";
+    nameservers = [ "193.136.164.1" "193.136.164.2" ];
   };
 
   # Open ports in the firewall.
@@ -150,7 +166,8 @@
 	  ripgrep
 	  htop
 	  python3
-    mpv
+          vim
+          mpv
 	  neofetch
 	  xsettingsd
 	  pavucontrol
