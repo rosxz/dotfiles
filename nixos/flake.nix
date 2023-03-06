@@ -18,10 +18,11 @@
       lib = nixpkgs.lib;
 
       sshKeys = [
-  "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILW5ZVdVaKMVlau1wp/JGJpdpE6JUxJ07DEYHi9qOLC8 crea@tsukuyomi"
-	"ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJcUMSSFZQheROdhFVmIUwBTbAVBv9YUm/Ib3ED3O0gv crea@pasokon"
-  "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINKtzQZmcfn9DS+s8Wx034OaMHthFXrrG/JQyMl2rLXx u0_a225@localhost"
-  "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIK5qplpxonrKYtW8al56XFjOypAbh49LKH9BdakIb6Ie navi@DESKTOP-EMI1M84"
+  "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILW5ZVdVaKMVlau1wp/JGJpdpE6JUxJ07DEYHi9qOLC8 crea@tsukuyomi" # Tsukuyomi
+	"ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJcUMSSFZQheROdhFVmIUwBTbAVBv9YUm/Ib3ED3O0gv crea@pasokon" # Ebisu
+  "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINKtzQZmcfn9DS+s8Wx034OaMHthFXrrG/JQyMl2rLXx u0_a225@localhost" # Xiaomi 10
+  "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIK5qplpxonrKYtW8al56XFjOypAbh49LKH9BdakIb6Ie navi@DESKTOP-EMI1M84" # NAVI Desktop
+  "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIL7tve12K34nhNgVYZ6VgQBRrJs10v+hClpyzpXTIb/n crea@raijin" # Raijin (RNL)
       ];
 
       pkgs = import nixpkgs {
@@ -76,11 +77,11 @@
         modules = [ ./hosts/tsukuyomi/configuration.nix agenix.nixosModules.age ];
       };
 
-	    fuujin = lib.nixosSystem {
+	    raijin = lib.nixosSystem {
         inherit system pkgs;
 
-        specialArgs = { inherit sshKeys; };
-        modules = [ ./hosts/fuujin/configuration.nix agenix.nixosModules.age ];
+        specialArgs = { inherit self sshKeys inputs; };
+        modules = [ ./hosts/raijin/configuration.nix agenix.nixosModules.age ];
       };
    };
  };
