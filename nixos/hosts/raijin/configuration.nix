@@ -26,13 +26,13 @@
   };
 
   networking = {
-    hostName = "ebisu"; # Define your hostname.
+    hostName = "raijin"; # Define your hostname.
     networkmanager.enable = true;
     firewall.checkReversePath = "loose";
     interfaces.enp4s0 = {
       ipv4 = {
         addresses = [{
-          address = "193.136.164.197"
+          address = "193.136.164.197";
           prefixLength = 27;
         }];
       };
