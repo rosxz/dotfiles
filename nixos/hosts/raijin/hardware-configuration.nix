@@ -33,6 +33,9 @@
   # networking.interfaces.enp2s0.useDHCP = lib.mkDefault true;
   # networking.interfaces.wlp3s0.useDHCP = lib.mkDefault true;
 
+  # services.xserver.videoDrivers = [ "nvidia" ];
+  # hardware.nvidia.package = config.boot.kernelPackages.nvidiaPackages.legacy_470;
+
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
   hardware.video.hidpi.enable = lib.mkDefault true;
   hardware.cpu.amd.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
