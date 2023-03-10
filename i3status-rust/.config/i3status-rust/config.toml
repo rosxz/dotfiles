@@ -19,30 +19,9 @@ format_mem = "{mem_used}({mem_used_percents})"
 format_swap = "{swap_used}/{swap_total}({swap_used_percents})"
 
 [[block]]
-block = "backlight"
-device = "intel_backlight"
-cycle = [25, 50, 75, 100]
-
-[[block]]
 block = "sound"
 on_click = "pavucontrol"
 format = "{volume}"
-
-[[block]]
-block = "pacman"
-interval = 600
-format = "{both}"
-format_up_to_date = "0"
-critical_updates_regex = "(linux|linux-lts|linux-zen)"
-# aur_command should output available updates to stdout (ie behave as echo -ne "update\n")
-aur_command = "paru -Qua"
-
-[[block]]
-block = "custom"
-command = ''' echo $(newsboat -x print-unread | awk '{ print "📰" $1}') '''
-on_click = "setsid $TERMINAL -e newsboat"
-interval = 600
-# signal = 3
 
 [[block]]
 block = "pomodoro"
@@ -52,18 +31,12 @@ message = "Take a break!"
 break_message = "Back to work!"
 notifier = "notifysend"
 
-[[block]]
-block = "weather"
-format = "{weather} ({location}) {temp}"
-service = { name = "openweathermap", api_key = "<openweathermap_api_key>", city_id = "2271772", units = "metric" }
+# [[block]]
+# block = "weather"
+# format = "{weather} ({location}) {temp}"
+# service = { name = "openweathermap", api_key = "<openweathermap_api_key>", city_id = "2271772", units = "metric" }
 
 [[block]]
 block = "time"
 interval = 5
 format = "%a %d/%m %R"
-
-[[block]]
-block = "battery"
-interval = 20
-format = "{percentage} {time}"
-if_command = "test -e /sys/class/power_supply/BAT0"

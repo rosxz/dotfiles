@@ -8,10 +8,12 @@
   imports =
     [
       ./hardware-configuration.nix
-      ../../modules/sway.nix
+      ../../modules/i3.nix
+      # ../../modules/sway.nix
       ../../modules/syncthing.nix
       ../../modules/tailscale.nix
       ../../modules/docker.nix
+      ../../modules/rnl.nix
     ];
 
   # Bootloader.
@@ -166,8 +168,8 @@
 	  ripgrep
 	  htop
 	  python3
-          vim
-          mpv
+    vim
+    mpv
 	  neofetch
 	  xsettingsd
 	  pavucontrol
