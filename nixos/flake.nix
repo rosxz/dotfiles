@@ -15,7 +15,9 @@
   outputs = inputs@{ self, nixpkgs, nixpkgs-unstable, home-manager, agenix, ... }:
     let
       system = "x86_64-linux";
-      lib = nixpkgs.lib;
+      inherit (inputs.nixpkgs) lib;
+      inherit (builtins) listToAttrs concatLists attrValues attrNames readDir;
+      inherit (lib) mapAttrs mapAttrsToList hasSuffix;
 
       sshKeys = [
   "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILW5ZVdVaKMVlau1wp/JGJpdpE6JUxJ07DEYHi9qOLC8 crea@tsukuyomi" # Tsukuyomi
@@ -25,21 +27,27 @@
   "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIL7tve12K34nhNgVYZ6VgQBRrJs10v+hClpyzpXTIb/n crea@raijin" # Raijin (RNL)
       ];
 
-      pkgs = import nixpkgs {
-        inherit system;
-        config.allowUnfree = true;
+      overlaysDir = ./overlays;
 
-        overlays = [
-	        overlay-unstable
-	        agenix.overlays.default
-	      ];
-      };
+      myOverlays = mapAttrsToList
+        (name: _: import "${overlaysDir}/${name}" { inherit inputs; })
+        (readDir overlaysDir);
 
       overlay-unstable = final: prev: {
         unstable = import nixpkgs-unstable {
           inherit system;
           config.allowUnfree = true;
         };
+      };
+
+      overlays = [
+	        overlay-unstable
+	        agenix.overlays.default
+	    ] ++ myOverlays;
+
+      pkgs = import nixpkgs {
+        inherit system overlays;
+        config.allowUnfree = true;
       };
 
     in
