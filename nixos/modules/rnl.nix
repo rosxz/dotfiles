@@ -16,6 +16,7 @@
     remmina
     virt-manager
     # realvnc-vnc-viewer
+    thunderbird
   ];
 
   virtualisation.libvirtd.enable = true;
