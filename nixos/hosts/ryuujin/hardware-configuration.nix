@@ -8,40 +8,27 @@
     [ (modulesPath + "/installer/scan/not-detected.nix")
     ];
 
-  boot.initrd.availableKernelModules = [ "xhci_pci" "nvme" "rtsx_pci_sdmmc" ];
+  boot.initrd.availableKernelModules = [ "xhci_pci" "nvme" "usb_storage" "sd_mod" "rtsx_pci_sdmmc" ];
   boot.initrd.kernelModules = [ ];
   boot.kernelModules = [ "kvm-intel" ];
   boot.extraModulePackages = [ ];
 
-fileSystems."/" = {
-    device = "none";
-    fsType = "tmpfs";
-    options = [ "defaults" "size=2G" "mode=755" ];
-};
+  fileSystems."/" =
+    { device = "rpool/root";
+      fsType = "zfs";
+      options = [ "zfsutil" ];
+    };
 
-fileSystems."/boot" = {
-    device = "/dev/disk/by-uuid/3428-2A49";
-    fsType = "vfat";
-};
+  fileSystems."/home" =
+    { device = "rpool/home";
+      fsType = "zfs";
+      options = [ "zfsutil" ];
+    };
 
-fileSystems."/nix" = {
-    device = "rpool/local/nix";
-    fsType = "zfs";
-    options = [ "zfsutil" ];
-};
-
-fileSystems."/persist" = {
-    device = "rpool/safe/persist";
-    fsType = "zfs";
-    options = [ "zfsutil" ];
-    neededForBoot = true;
-};
-
-fileSystems."/home" = {
-   device = "rpool/safe/home";
-   fsType = "zfs";
-   options = [ "zfsutil" ];
-};
+  fileSystems."/boot" =
+    { device = "/dev/disk/by-uuid/6932-FB29";
+      fsType = "vfat";
+    };
 
   swapDevices = [ ];
 
