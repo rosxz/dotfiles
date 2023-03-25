@@ -21,7 +21,6 @@
   fileSystems."/home" =
     { device = "rpool/home";
       fsType = "zfs";
-      options = [ "zfsutil" ];
     };
 
   fileSystems."/boot" =
