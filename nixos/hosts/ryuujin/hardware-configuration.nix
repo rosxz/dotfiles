@@ -16,7 +16,6 @@
   fileSystems."/" =
     { device = "rpool/root";
       fsType = "zfs";
-      options = [ "zfsutil" ];
     };
 
   fileSystems."/home" =
