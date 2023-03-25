@@ -84,7 +84,7 @@
         inherit system pkgs;
 
         specialArgs = { inherit self sshKeys inputs; };
-        modules = [ ./hosts/ryuujin/configuration.nix agenix.nixosModules.age impermanence.nixosModule ];
+        modules = [ ./hosts/ryuujin/configuration.nix agenix.nixosModules.age ];
       };
 
 	    tsukuyomi = lib.nixosSystem {
