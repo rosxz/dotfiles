@@ -8,11 +8,11 @@
   imports =
     [
       ./hardware-configuration.nix
-      ../../modules/i3.nix
-      # ../../modules/sway.nix
+      ../../modules/sway.nix
       ../../modules/syncthing.nix
       ../../modules/tailscale.nix
       ../../modules/docker.nix
+      ../../modules/wireguard.nix
       ../../modules/rnl.nix
     ];
 
@@ -25,28 +25,21 @@
       editor = false;
       configurationLimit = 6;
     };
+   supportedFilesystems = [ "zfs" ];
+   kernelPackages = config.boot.zfs.package.latestCompatibleLinuxPackages;
   };
+  zramSwap.enable = true;
 
   networking = {
-    hostName = "raijin"; # Define your hostname.
-    networkmanager.enable = true;
-    firewall.checkReversePath = "loose";
-    interfaces.enp4s0 = {
-      ipv4 = {
-        addresses = [{
-          address = "193.136.164.197";
-          prefixLength = 27;
-        }];
-      };
-      ipv6 = {
-        addresses = [{
-          address = "2001:690:2100:82::197";
-          prefixLength = 64;
-        }];
+    hostName = "ryuujin"; # Define your hostname.
+    networkmanager = {
+      enable = true;
+      wifi = {
+        powersave = true;
       };
     };
-    defaultGateway = "193.136.164.222";
-    nameservers = [ "193.136.164.1" "193.136.164.2" ];
+    firewall.checkReversePath = "loose";
+    hostId = "3fe951fb"; # For example: head -c 8 /etc/machine-id
   };
 
   # Open ports in the firewall.
@@ -54,7 +47,10 @@
   # networking.firewall.allowedUDPPorts = [ ... ];
   # Or disable the firewall altogether.
 
-  hardware.bluetooth.enable = true;
+  hardware.bluetooth = {
+    enable = true;
+    powerOnBoot = false;
+  };
   services.blueman.enable = true;
 
   time.timeZone = "Europe/Lisbon";
@@ -86,10 +82,13 @@
 
   services.xserver.enable = true;
 
-  services.xserver.displayManager.sddm = {
+  services.xserver.displayManager.gdm = {
     enable = true;
-    enableHidpi = true;
-    theme = "maldives";
+    wayland = true;
+    autoSuspend = true;
+  };
+  services.fprintd = {
+    enable = true;
   };
 
   services.xserver.libinput.enable = true;
@@ -114,11 +113,13 @@
   users.users.crea = {
     isNormalUser = true;
     description = "Martim Moniz";
-    hashedPassword = "$y$j9T$.lZsDEq66g9qhQnwGumso/$SXJVtLYqg4TgfnMKxhOpxA/o0RuP864sbVEjHcEXux0";
-    extraGroups = [ "networkmanager" "video" "scanner" "qemu-libvirtd" "wheel" ];
+    extraGroups = [ "networkmanager" "video" "scanner" "qemu-libvirtd" "wheel" "input" ];
     shell = pkgs.zsh;
     openssh.authorizedKeys.keys = sshKeys;
+    hashedPassword = "$6$g3erPleT4pElaQQe$fDIA/dckjSAADHRtjQt3RGrLmFE6TjZ5acdaRSTOBWA/8OuQlnDGr0FZUfGGqxJlS0vJDPDtpPzm6pJo7i96j0";
   };
+  users.users.root.hashedPassword = "*";
+  users.mutableUsers = false;
 
   fonts = {
     fonts = with pkgs; [
@@ -148,6 +149,7 @@
   };
 
   environment.systemPackages = with pkgs; [
+          stow
 	  networkmanagerapplet
 	  qbittorrent
 	  yt-dlp
@@ -168,7 +170,6 @@
 	  ripgrep
 	  htop
 	  python3
-    vim
     mpv
 	  neofetch
 	  xsettingsd
@@ -198,6 +199,14 @@
   services.auto-cpufreq.enable = true;
   # services.throttled.enable = true;
   services.thermald.enable = true;
+  # services.tlp = {
+  #  enable = true;
+  #  settings = {
+  #    START_CHARGE_THRESH_BAT0="60";
+  #    STOP_CHARGE_THRESH_BAT0="80";
+  #  };
+  #};
+  services.thinkfan.enable = true;
 
   programs.thunar.enable = true;
   programs.thunar.plugins = with pkgs.xfce; [
@@ -289,6 +298,18 @@ D /var/tmp 1777 root root 30d
   nix.extraOptions = ''
     min-free = ${toString (500 * 1024 * 1024)}
   '';
+
+environment.persistence."/persist" = {
+  hideMounts = true;
+  files = [
+    "/etc/machine-id"
+  ];
+
+  directories = [
+    "/var/log"
+    "/etc/NetworkManager/"
+  ];
+};
 
   system.stateVersion = "22.05";
 

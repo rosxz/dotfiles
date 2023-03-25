@@ -1,0 +1,42 @@
+theme = "slick"
+icons = "awesome6"
+
+[[block]]
+block = "disk_space"
+path = "/"
+alias = "/"
+info_type = "available"
+unit = "GB"
+interval = 20
+warning = 20.0
+alert = 10.0
+
+[[block]]
+block = "memory"
+display_type = "memory"
+clickable = true
+format_mem = "{mem_used}({mem_used_percents})"
+format_swap = "{swap_used}/{swap_total}({swap_used_percents})"
+
+[[block]]
+block = "sound"
+on_click = "pavucontrol"
+format = "{volume}"
+
+[[block]]
+block = "pomodoro"
+length = 25
+break_length = 5
+message = "Take a break!"
+break_message = "Back to work!"
+notifier = "notifysend"
+
+# [[block]]
+# block = "weather"
+# format = "{weather} ({location}) {temp}"
+# service = { name = "openweathermap", api_key = "<openweathermap_api_key>", city_id = "2271772", units = "metric" }
+
+[[block]]
+block = "time"
+interval = 5
+format = "%a %d/%m %R"

@@ -366,6 +366,8 @@ in
         nnoremap <silent> <C-k> :call WinMove('k')<cr>
         nnoremap <silent> <C-l> :call WinMove('l')<cr>
 
+        set cc=80
+
         function! WinMove(key)
           let t:curwin = winnr()
           exec "wincmd ".a:key
