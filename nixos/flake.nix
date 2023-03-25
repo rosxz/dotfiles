@@ -10,9 +10,11 @@
 
     agenix.url = "github:ryantm/agenix/main";
     agenix.inputs.nixpkgs.follows = "nixpkgs";
+
+    impermanence.url = "github:nix-community/impermanence/master";
   };
 
-  outputs = inputs@{ self, nixpkgs, nixpkgs-unstable, home-manager, agenix, ... }:
+  outputs = inputs@{ self, nixpkgs, nixpkgs-unstable, home-manager, agenix, impermanence, ... }:
     let
       system = "x86_64-linux";
       inherit (inputs.nixpkgs) lib;
@@ -71,11 +73,18 @@
       };
 
     nixosConfigurations = {
-	    ebisu = lib.nixosSystem {
+      ebisu = lib.nixosSystem {
         inherit system pkgs;
 
         specialArgs = { inherit self sshKeys inputs; };
         modules = [ ./hosts/ebisu/configuration.nix agenix.nixosModules.age ];
+      };
+      
+      ryuujin = lib.nixosSystem {
+        inherit system pkgs;
+
+        specialArgs = { inherit self sshKeys inputs; };
+        modules = [ ./hosts/ryuujin/configuration.nix agenix.nixosModules.age impermanence.nixosModule ];
       };
 
 	    tsukuyomi = lib.nixosSystem {
