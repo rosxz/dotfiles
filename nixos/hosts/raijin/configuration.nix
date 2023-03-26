@@ -8,12 +8,13 @@
   imports =
     [
       ./hardware-configuration.nix
-      ../../modules/i3.nix
-      # ../../modules/sway.nix
+      # ../../modules/i3.nix
+      ../../modules/sway.nix
       ../../modules/syncthing.nix
       ../../modules/tailscale.nix
       ../../modules/docker.nix
       ../../modules/rnl.nix
+      ../../modules/esof.nix
     ];
 
   # Bootloader.
@@ -50,7 +51,7 @@
   };
 
   # Open ports in the firewall.
-  # networking.firewall.allowedTCPPorts = [ ... ];
+  networking.firewall.allowedTCPPorts = [ 22 ];
   # networking.firewall.allowedUDPPorts = [ ... ];
   # Or disable the firewall altogether.
 
@@ -86,12 +87,6 @@
 
   services.xserver.enable = true;
 
-  services.xserver.displayManager.sddm = {
-    enable = true;
-    enableHidpi = true;
-    theme = "maldives";
-  };
-
   services.xserver.libinput.enable = true;
 
   console.keyMap = "pt-latin1";
@@ -114,7 +109,7 @@
   users.users.crea = {
     isNormalUser = true;
     description = "Martim Moniz";
-    hashedPassword = "$y$j9T$.lZsDEq66g9qhQnwGumso/$SXJVtLYqg4TgfnMKxhOpxA/o0RuP864sbVEjHcEXux0";
+    hashedPassword = "$6$IJvaxq7NVCzisnok$oYzrzQ4OyFXtEd0jWL4/q8x0YSL3DhviV4PhnFl1l3GxS/T6mBlBaFd8TstCjMZfST8tzXL6fzxIB7wtb/8Ld.";
     extraGroups = [ "networkmanager" "video" "scanner" "qemu-libvirtd" "wheel" ];
     shell = pkgs.zsh;
     openssh.authorizedKeys.keys = sshKeys;
@@ -208,7 +203,7 @@
   services.tumbler.enable = true; # Thumbnail support for images
 
   services.gnome.gnome-keyring.enable = true;
-  security.pam.services.sddm.enableGnomeKeyring = true; # seems like a sddm issue
+  # security.pam.services.sddm.enableGnomeKeyring = true; # seems like a sddm issue
 
   # Enable Flakes
   nix.settings.experimental-features = [ "nix-command" "flakes" ];

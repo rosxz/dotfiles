@@ -6,8 +6,7 @@
 
 {
 
-  imports = [
-  ];
+  imports = [];
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
@@ -15,12 +14,11 @@
     packer
     remmina
     virt-manager
-    # realvnc-vnc-viewer
-    thunderbird
+    realvnc-vnc-viewer
+    thunderbird-bin
   ];
 
   virtualisation.libvirtd.enable = true;
-
 
 }
 

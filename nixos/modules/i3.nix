@@ -22,10 +22,25 @@ in
 
   services.xserver = {
     enable = true;
-
-    displayManager = {
-        defaultSession = "none+i3";
+    desktopManager = {
+      xterm.enable = false;
+      xfce = {
+        enable = true;
+        noDesktop = true;
+        enableXfwm = false;
+      };
     };
+    displayManager = {
+      defaultSession = "xfce+i3";
+      gdm = {
+        enable = true;
+        autoSuspend = true;
+        wayland = false;
+      };
+    };
+    # displayManager = {
+    #    defaultSession = "none+i3";
+    #};
 
     windowManager.i3 = {
       enable = true;

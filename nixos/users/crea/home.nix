@@ -27,6 +27,8 @@
     patchelf
     jetbrains.idea-community
     easyrpg-player
+    godot_4
+    aseprite-unfree
   ];
 
   xdg.desktopEntries.Anki = {

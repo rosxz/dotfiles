@@ -51,7 +51,7 @@
     ; 'randr' is the preferred X11 method, 'vidmode' is an older API
     ; that works in some cases when 'randr' does not.
     ; The adjustment method settings are in a different section.
-    adjustment-method=wayland
+    adjustment-method=randr
 
     ; Configuration of the location-provider:
     ; type 'gammastep -l PROVIDER:help' to see the settings.
