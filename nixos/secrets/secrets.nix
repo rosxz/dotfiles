@@ -2,7 +2,7 @@ let
   # system keys
   tsukuyomi = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINC7qWv7Fjim/F3koJBBzJQA22obpXlU7nnTh0ymEZjm root@tsukuyomi";
   ebisu = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBu7Uy8WIEsNQ5LsVwXzD3oaXZFTvwuUwE2hn9NbBkyC root@ebisu";
-  ryuujin = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBqduQ0VCmd+9p9cVTYub0X/eeDgFjvKt+s/36Ncg6Lq root@ryuujin";
+  ryuujin = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICKTj6ug2eor2EDMVGebzUWgfAQdXlcQZ9rjZ/EeDp9Y root@ryuujin";
   systems = [ tsukuyomi ebisu ryuujin ];
 
   # user keys
@@ -17,5 +17,5 @@ in
   "nextcloud-db-pass.age".publicKeys = [ tsukuyomi tsukuyomiUser ryuujinUser ];
   "nextcloud-admin-pass.age".publicKeys = [ tsukuyomi tsukuyomiUser ryuujinUser ];
   "invidious-db-pass.age".publicKeys = [ tsukuyomi tsukuyomiUser ryuujinUser ];
-  "wireguard-rnl-private.age".publicKeys = [ ebisu ebisuUser ryuujin ryuujinUser ];
+  "wireguard-rnl-private.age".publicKeys = [ ryuujin ryuujinUser ebisu ebisuUser ];
 }
