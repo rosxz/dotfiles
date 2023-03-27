@@ -25,10 +25,8 @@
       editor = false;
       configurationLimit = 6;
     };
-   supportedFilesystems = [ "zfs" ];
-   kernelPackages = config.boot.zfs.package.latestCompatibleLinuxPackages;
   };
-  zramSwap.enable = true;
+  services.fstrim.enable = true;
 
   networking = {
     hostName = "ryuujin"; # Define your hostname.
@@ -39,7 +37,7 @@
       };
     };
     firewall.checkReversePath = "loose";
-    hostId = "3fe951fb"; # For example: head -c 8 /etc/machine-id
+    # hostId = "3fe951fb"; # For example: head -c 8 /etc/machine-id
   };
 
   # Open ports in the firewall.
