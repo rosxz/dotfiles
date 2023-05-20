@@ -36,4 +36,5 @@
      };
 
      security.acme.acceptTerms = true;
+     security.acme.defaults.email = "martim@moniz.pt";
    }
