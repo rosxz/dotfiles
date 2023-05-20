@@ -24,11 +24,7 @@
            "martim@moniz.pt" = {
                # nix-shell -p mkpasswd --run 'mkpasswd -sm bcrypt' > /hashed/password/file/location
                hashedPasswordFile = config.age.secrets.martim_at_moniz_passwd.path;
-
-               aliases = [
-                   "info@example.com"
-                   "postmaster@example.com"
-               ];
+               aliases = [];
            };
        };
 
@@ -36,5 +32,20 @@
      };
 
      security.acme.acceptTerms = true;
-     security.acme.defaults.email = "martim@moniz.pt";
+     security.acme.defaults.email = "martim+letsencrypt@moniz.pt";
+
+     environment.persistence."/persist".directories = [
+       "/var/lib/rspamd"
+       {
+        directory = "/var/vmail";
+         user = "virtualMail";
+         group = "virtualMail";
+       }
+       {
+         directory = "/var/dkim";
+         user = "opendkim";
+         group = "opendkim";
+       }
+       "/var/lib/acme"
+     ];
    }
