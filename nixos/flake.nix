@@ -101,6 +101,13 @@
         specialArgs = { inherit self sshKeys inputs; };
         modules = [ ./hosts/raijin/configuration.nix agenix.nixosModules.age ];
       };
+
+      hachiman = lib.nixosSystem {
+        inherit system pkgs;
+
+        specialArgs = { inherit self sshKeys inputs; };
+        modules = [ ./hosts/hachiman/configuration.nix agenix.nixosModules.age ];
+      };
    };
  };
 }
