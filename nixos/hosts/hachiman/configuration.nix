@@ -215,9 +215,6 @@
         ExecStart = "${pkgs.systemd}/bin/journalctl --vacuum-time=30d";
       };
     };
-    services.dnscrypt-proxy2.serviceConfig = {
-      StateDirectory = "dnscrypt-proxy";
-    };
     timers.clear-log = {
       wantedBy = [ "timers.target" ];
       partOf = [ "clear-log.service" ];
