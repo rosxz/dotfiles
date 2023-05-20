@@ -6,7 +6,7 @@
        (builtins.fetchTarball {
          url = "https://gitlab.com/simple-nixos-mailserver/nixos-mailserver/-/archive/${release}/nixos-mailserver-${release}.tar.gz";
          # This hash needs to be updated
-         sha256 = "0000000000000000000000000000000000000000000000000000";
+         sha256 = "1i56llz037x416bw698v8j6arvv622qc0vsycd20lx3yx8n77n44";
        })
      ];
 
@@ -23,7 +23,7 @@
        loginAccounts = {
            "martim@moniz.pt" = {
                # nix-shell -p mkpasswd --run 'mkpasswd -sm bcrypt' > /hashed/password/file/location
-               hashedPasswordFile = config.age.secrets.nextcloud-db-pass.path;
+               hashedPasswordFile = config.age.secrets.martim_at_moniz_passwd.path;
 
                aliases = [
                    "info@example.com"
@@ -34,4 +34,6 @@
 
        certificateScheme = 3;
      };
+
+     security.acme.acceptTerms = true;
    }
