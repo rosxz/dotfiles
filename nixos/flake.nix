@@ -106,7 +106,7 @@
         inherit system pkgs;
 
         specialArgs = { inherit self sshKeys inputs; };
-        modules = [ ./hosts/hachiman/configuration.nix agenix.nixosModules.age impermanence.nixosModules ];
+        modules = [ ./hosts/hachiman/configuration.nix agenix.nixosModules.age impermanence.nixosModule ];
       };
    };
  };

@@ -9,6 +9,7 @@
     [
       ./hardware-configuration.nix
       ../../modules/tailscale.nix
+      ../../modules/mailserver.nix
     ];
 
   # Bootloader.
