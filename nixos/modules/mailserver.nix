@@ -24,7 +24,10 @@
            "martim@moniz.pt" = {
                # nix-shell -p mkpasswd --run 'mkpasswd -sm bcrypt' > /hashed/password/file/location
                hashedPasswordFile = config.age.secrets.martim_at_moniz_passwd.path;
-               aliases = [];
+               
+               aliases = [
+                 "@moniz.pt"
+               ];
            };
        };
 
