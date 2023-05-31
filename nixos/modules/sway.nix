@@ -1,7 +1,5 @@
 { config, pkgs, lib, ... }:
 
-
-
 let
   dbus-sway-environment = pkgs.writeTextFile {
     name = "dbus-sway-environment";
@@ -53,7 +51,7 @@ in
     xwayland
     waybar
     imv
-    sirula
+    ulauncher
     mako
     firefox-wayland
 

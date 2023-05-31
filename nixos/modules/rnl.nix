@@ -13,12 +13,14 @@
   environment.systemPackages = with pkgs; [
     packer
     remmina
-    virt-manager
+    # virt-manager
     realvnc-vnc-viewer
     thunderbird-bin
+    ansible_2_13
   ];
+  networking.resolvconf.extraOptions = [ "search rnl.tecnico.ulisboa.pt" ];
 
-  virtualisation.libvirtd.enable = true;
+  # virtualisation.libvirtd.enable = true;
 
 }
 
