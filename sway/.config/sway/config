@@ -15,7 +15,7 @@ input "type:keyboard" {
 # exec $HOME/.navifiles/other/.random_bg | xargs -n 1 swaybg -o eDP-1 -i
 # output DP-1 bg ~/Pictures/Wallpapers/bulgaria.jpg fill
 # output DP-3 bg ~/Pictures/Wallpapers/blame.jpeg fill
-output * bg $HOME/Pictures/Wallpapers/okinawa4.jpg fill
+output * bg $HOME/.background-image fill
 
 #input "2821:257:Asus_TouchPad" {
 #	tap enabled

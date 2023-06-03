@@ -39,7 +39,7 @@
 
   xdg.desktopEntries.Anki = {
     name = "Anki";
-    exec = ''env ANKI_WAYLAND=1 anki''; # DISABLE_QT5_COMPAT=1 BUGGED
+    exec = ''env ANKI_WAYLAND=1 anki''; # DISABLE_QT5_COMPAT=1 # Bugged
   };
 
   xdg.desktopEntries.Sonixd = {
