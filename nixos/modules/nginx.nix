@@ -52,11 +52,23 @@
       locations."/".proxyPass = "http://127.0.0.1:3000";
     };
 
+    "cloud.moniz.pt" = {
+      forceSSL = true;
+      useACMEHost = "moniz.pt";
+      locations."/".proxyPass = "http://127.0.0.1:80";
+    };
+
     # Private
     "flood.moniz.pt" = {
       forceSSL = true;
       useACMEHost = "moniz.pt";
       locations."/".proxyPass = "http://100.83.228.83:8082";
+    };
+    
+    "transmission.moniz.pt" = {
+      forceSSL = true;
+      useACMEHost = "moniz.pt";
+      locations."/".proxyPass = "http://100.83.228.83:9091";
     };
 
     "firefly.moniz.pt" = {
@@ -69,12 +81,6 @@
       forceSSL = true;
       useACMEHost = "moniz.pt";
       locations."/".proxyPass = "http://100.83.228.83:8384";
-    };
-
-    "cloud.moniz.pt" = {
-      forceSSL = true;
-      useACMEHost = "moniz.pt";
-      locations."/".proxyPass = "http://100.83.228.83:80";
     };
   };
 

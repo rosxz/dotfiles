@@ -8,12 +8,12 @@ age.secrets.restic-pass = {
 };
 
 services.restic.backups.STORAGE = {
-  timerConfig = { OnCalendar = "weekly"; };
+  timerConfig = { OnCalendar = "monthly"; };
   repository = "/mnt/Backup/STORAGE";
-  paths = [ "/mnt/Storage" ];
+  paths = [ "/mnt/Storage/Torrents" ];
   passwordFile = config.age.secrets.restic-pass.path;
   initialize = true;
-  pruneOpts = [ "--keep-weekly 3" ];
+  pruneOpts = [ "--keep-monthly 3" ];
   extraBackupArgs = [ "--compression=max" ];
   # backupPrepareCommand = (builtins.readFile ../utils/resticStartup.sh);
   # backupCleanupCommand = (builtins.readFile ../utils/resticPost.sh);

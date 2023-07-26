@@ -22,7 +22,7 @@ in {
   services = {
     nextcloud = {
       enable = true;
-      package = pkgs.nextcloud25; # Need to manually increment with every update
+      package = pkgs.nextcloud27; # Need to manually increment with every update
       hostName = domain;
 
       https = true;
@@ -32,8 +32,11 @@ in {
 
       extraAppsEnable = true;
       extraApps = with pkgs.nextcloud25Packages.apps; {
-        inherit calendar contacts mail news notes tasks deck unsplash;
+        inherit calendar contacts mail news notes tasks unsplash;
       };
+
+      # home = "/mnt/Storage/nextcloud";
+      datadir = "/mnt/Storage/nextcloud";
 
       config = {
         overwriteProtocol = "https";

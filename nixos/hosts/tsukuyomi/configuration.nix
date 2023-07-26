@@ -8,16 +8,31 @@
   imports =
     [ 
       ./hardware-configuration.nix
+ 
+      # ../../modules/distributedBuilds.nix
+
       ../../modules/headless.nix
       ../../modules/nginx.nix
       ../../modules/docker.nix
       ../../modules/syncthing.nix
       ../../modules/jellyfin.nix
       ../../modules/tailscale.nix
+      
+      ../../modules/transmission.nix
       ../../modules/rtorrent.nix
       ../../modules/nextcloud.nix
       ../../modules/postgresql.nix
+
       ../../modules/invidious.nix
+      ../../modules/invidious2.nix # temporary service
+
+      # ../../modules/radarr.nix # Movies
+      # ../../modules/sonarr.nix # Shows
+      # ../../modules/lidarr.nix # Music
+      # ../../modules/readarr.nix # Books
+      ../../modules/prowlarr.nix
+      # ../../modules/bazarr.nix # Subtitle Management
+      ../../modules/homer.nix
     ];
 
   # Bootloader.
@@ -118,8 +133,8 @@
 
   security.sudo.execWheelOnly = true;
   security.pam = {
-    services.login.googleAuthenticator.enable = true;
-    services.sudo.googleAuthenticator.enable = true; # require OTP for sudo
+    services.login.googleAuthenticator.enable = false;
+    services.sudo.googleAuthenticator.enable = false; # require OTP for sudo
   };
 
   time.timeZone = "Europe/Lisbon";
@@ -174,11 +189,10 @@
 	htop
 	neofetch
 	xsettingsd
-	hd-idle
 
 	python310Full
 	python310Packages.requests
-	beets
+	# beets
 	flac
 	lame
 	mp3gain

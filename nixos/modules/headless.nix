@@ -26,11 +26,19 @@
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
-    vim
+    neovim
     git
     wget
     # intel-gpu-tools # For debugging transcoding
   ];
+
+  # Seperate user to run docker containers and other things on (see if i need that later)
+  users.users.media = {
+    # extraGroups = [ "docker" ];
+    isSystemUser = true;
+    group = "media";
+  };
+  users.groups.media = { };
 
   # Enable the OpenSSH daemon.
   services.openssh.enable = true;
