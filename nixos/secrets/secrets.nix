@@ -19,6 +19,7 @@ in
   "nextcloud-admin-pass.age".publicKeys = [ tsukuyomi tsukuyomiUser ryuujinUser ];
   "invidious-extra-settings.age".publicKeys = [ tsukuyomi tsukuyomiUser ryuujinUser ];
   "invidious-db-pass.age".publicKeys = [ tsukuyomi tsukuyomiUser ryuujinUser ];
+  "transmission.age".publicKeys = [ tsukuyomi tsukuyomiUser ryuujinUser ];
   "wireguard-rnl-private.age".publicKeys = [ ryuujin ryuujinUser ebisu ebisuUser ];
   "martim_at_moniz_passwd.age".publicKeys = [ hachiman ryuujinUser ];
 }
