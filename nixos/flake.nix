@@ -23,7 +23,7 @@
 
       sshKeys = [
   "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILW5ZVdVaKMVlau1wp/JGJpdpE6JUxJ07DEYHi9qOLC8 crea@tsukuyomi" # Tsukuyomi (HP Homeserver)
-	"ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJcUMSSFZQheROdhFVmIUwBTbAVBv9YUm/Ib3ED3O0gv crea@pasokon" # Ebisu (ASUS Laptop)
+  "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJcUMSSFZQheROdhFVmIUwBTbAVBv9YUm/Ib3ED3O0gv crea@pasokon" # Ebisu (ASUS Laptop)
   "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINKtzQZmcfn9DS+s8Wx034OaMHthFXrrG/JQyMl2rLXx u0_a225@localhost" # Xiaomi 10
   "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIK5qplpxonrKYtW8al56XFjOypAbh49LKH9BdakIb6Ie navi@DESKTOP-EMI1M84" # NAVI Desktop
   "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIL7tve12K34nhNgVYZ6VgQBRrJs10v+hClpyzpXTIb/n crea@raijin" # Raijin (RNL)
@@ -88,18 +88,25 @@
         modules = [ ./hosts/ryuujin/configuration.nix agenix.nixosModules.age ];
       };
 
-	    tsukuyomi = lib.nixosSystem {
+      tsukuyomi = lib.nixosSystem {
         inherit system pkgs;
 
         specialArgs = { inherit self sshKeys; };
         modules = [ ./hosts/tsukuyomi/configuration.nix agenix.nixosModules.age ];
       };
 
-	    raijin = lib.nixosSystem {
+      raijin = lib.nixosSystem {
         inherit system pkgs;
 
         specialArgs = { inherit self sshKeys inputs; };
         modules = [ ./hosts/raijin/configuration.nix agenix.nixosModules.age ];
+      };
+
+      hachiman = lib.nixosSystem {
+        inherit system pkgs;
+
+        specialArgs = { inherit self sshKeys inputs; };
+        modules = [ ./hosts/hachiman/configuration.nix agenix.nixosModules.age impermanence.nixosModule ];
       };
    };
  };

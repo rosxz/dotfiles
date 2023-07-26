@@ -14,6 +14,7 @@
       ../../modules/docker.nix
       ../../modules/wireguard.nix
       ../../modules/rnl.nix
+      # ../../modules/polkit.nix
     ];
 
   # Bootloader.
@@ -25,6 +26,7 @@
       editor = false;
       configurationLimit = 6;
     };
+    plymouth.enable = true;
   };
   services.fstrim.enable = true;
 
@@ -233,7 +235,6 @@
     openFirewall = false;
     permitRootLogin = "no";
     authorizedKeysFiles = pkgs.lib.mkForce [ "/etc/ssh/authorized_keys.d/%u" ];
-    # extraConfig = '' ''; # dont need this for now
   };
 
   programs.zsh = {
@@ -264,6 +265,7 @@
    unsetopt menu_complete
    setopt completealiases
    source $ZSH/oh-my-zsh.sh
+   eval "$(direnv hook zsh)"
     '';
     promptInit = "source ${pkgs.zsh-powerlevel10k}/share/zsh-powerlevel10k/powerlevel10k.zsh-theme";
   };
@@ -295,7 +297,10 @@ D /var/tmp 1777 root root 30d
   # Run garbage collection whenever there is less than 500MB free space left, prob better increase this value
   nix.extraOptions = ''
     min-free = ${toString (500 * 1024 * 1024)}
-  '';
+
+    keep-outputs = true
+    keep-derivations = true
+  ''; # DIRENV
 
   system.stateVersion = "22.05";
 

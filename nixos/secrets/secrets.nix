@@ -3,7 +3,8 @@ let
   tsukuyomi = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINC7qWv7Fjim/F3koJBBzJQA22obpXlU7nnTh0ymEZjm root@tsukuyomi";
   ebisu = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBu7Uy8WIEsNQ5LsVwXzD3oaXZFTvwuUwE2hn9NbBkyC root@ebisu";
   ryuujin = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICKTj6ug2eor2EDMVGebzUWgfAQdXlcQZ9rjZ/EeDp9Y root@ryuujin";
-  systems = [ tsukuyomi ebisu ryuujin ];
+  hachiman = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIN5sIZ/tykBmj5CgfZSvxlYL+27eBC74kp9qNw5UkPK7 root@hachiman";
+  systems = [ tsukuyomi hachiman ebisu ryuujin ];
 
   # user keys
   tsukuyomiUser = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILW5ZVdVaKMVlau1wp/JGJpdpE6JUxJ07DEYHi9qOLC8 crea@tsukuyomi";
@@ -19,4 +20,5 @@ in
   "invidious-extra-settings.age".publicKeys = [ tsukuyomi tsukuyomiUser ryuujinUser ];
   "invidious-db-pass.age".publicKeys = [ tsukuyomi tsukuyomiUser ryuujinUser ];
   "wireguard-rnl-private.age".publicKeys = [ ryuujin ryuujinUser ebisu ebisuUser ];
+  "martim_at_moniz_passwd.age".publicKeys = [ hachiman ryuujinUser ];
 }

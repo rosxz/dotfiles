@@ -1,7 +1,5 @@
 { config, pkgs, lib, ... }:
 
-
-
 let
   dbus-sway-environment = pkgs.writeTextFile {
     name = "dbus-sway-environment";
@@ -53,9 +51,11 @@ in
     xwayland
     waybar
     imv
-    sirula
+    # sirula # doesnt work well with env vars thingies idk
+    ulauncher
     mako
     firefox-wayland
+
 
     kora-icon-theme
     bibata-cursors-translucent
@@ -79,5 +79,28 @@ in
       export QT_QPA_PLATFORM=wayland
       export NIXOS_OZONE_WL=1
     '';
+  };
+
+
+  services.xserver = {
+    enable = true;
+    desktopManager = {
+      xterm.enable = false;
+      xfce = {
+        enable = false;
+        noDesktop = true;
+        enableXfwm = false;
+      };
+    };
+    displayManager = {
+      defaultSession = "sway";
+      gdm = {
+        enable = true;
+        autoSuspend = false;
+        wayland = true;
+      };
+    };
+    # displayManager = {
+    #    defaultSession = "none+i3";
   };
 }

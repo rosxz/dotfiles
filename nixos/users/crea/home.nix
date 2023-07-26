@@ -13,27 +13,33 @@
 
   # Packages that should be installed to the user profile.
   home.packages = with pkgs; [
-    anki-bin
+    page
+    unstable.anki-bin
     sonixd
     unstable.kdenlive
     zathura
     man-pages
-    libreoffice-qt
+    # libreoffice-qt
     krita
     xournalpp
     libqalculate
     jellyfin-media-player
 
     patchelf
-    jetbrains.idea-community
-    easyrpg-player
-    godot_4
-    aseprite-unfree
+    # easyrpg-player
+    mgba
+
+    # godot_4
+    # aseprite-unfree
+    # blender
   ];
+
+  programs.direnv.enable = true;
+  programs.direnv.nix-direnv.enable = true;
 
   xdg.desktopEntries.Anki = {
     name = "Anki";
-    exec = "ANKI_WAYLAND=1 DISABLE_QT5_COMPAT=1 anki";
+    exec = ''env ANKI_WAYLAND=1 anki''; # DISABLE_QT5_COMPAT=1 # Bugged
   };
 
   xdg.desktopEntries.Sonixd = {
@@ -44,7 +50,7 @@
   xdg.desktopEntries.visual-studio-code = {
     type = "Application";
     name = "Visual Studio Code";
-    exec = "NIXOS_OZONE_WL=1 code"; # Still not working
+    exec = ''env NIXOS_OZONE_WL=1 code'';
   };
 
   programs.vscode = {
@@ -60,6 +66,30 @@
       vscode-extensions.vscjava.vscode-java-debug
       unstable.vscode-extensions.github.copilot
     ];
+  };
+
+  programs.ssh = {
+    enable = true;
+    extraConfig = ''
+# Assume hosts without fqdn come from RNL
+CanonicalizeHostname yes
+CanonicalDomains rnl.tecnico.ulisboa.pt
+CanonicalizeMaxDots 0
+
+Match originalhost lab*,!lab*.rnl.tecnico.ulisboa.pt
+  HostName dolly.rnl.tecnico.ulisboa.pt
+  User root
+  RemoteCommand ssh %n
+  ForwardAgent no
+  RequestTTY yes
+
+Match canonical host="*.rnl.tecnico.ulisboa.pt"
+  User root
+  ServerAliveInterval 60
+
+Host *.rnl.tecnico.ulisboa.pt *.rnl.ist.utl.pt
+  User root
+  ServerAliveInterval 60''; # TODO: put this in a proper place
   };
 
   home.file.".config/gtk-3.0/settings.ini".text = ''
