@@ -22,4 +22,5 @@ in
   "transmission.age".publicKeys = [ tsukuyomi tsukuyomiUser ryuujinUser ];
   "wireguard-rnl-private.age".publicKeys = [ ryuujin ryuujinUser ebisu ebisuUser ];
   "martim_at_moniz_passwd.age".publicKeys = [ hachiman ryuujinUser ];
+  "betanin-api-key.age".publicKeys = [ tsukuyomi tsukuyomiUser ryuujinUser ];
 }
