@@ -39,7 +39,9 @@ in
 	  if [[ $TR_TORRENT_NAME =~ .*($QUALITY).* ]] || [[ $TR_TORRENT_TRACKERS =~ .*($TRACKERS).* ]]; then
             echo "INFO: Running music torrent script for $TR_TORRENT_NAME"
 	    
-            ln -s "$TR_TORRENT_DIR$TR_TORRENT_NAME" /tmp/$TR_TORRENT_HASH # Hopefuly this filename-guessing works
+	    ${pkgs.transmission}/bin/transmission-remote -t $TR_TORRENT_HASH --move ${downloadDir}/Music
+
+            ln -s "${downloadDir}Music/$TR_TORRENT_NAME" /tmp/$TR_TORRENT_HASH # Hopefuly this filename-guessing works
 	    ${pkgs.whatmp3}/bin/whatmp3 -nrz --V0 -o ${transcodeDir} /tmp/$TR_TORRENT_HASH
 
 	    ${pkgs.curl}/bin/curl \
