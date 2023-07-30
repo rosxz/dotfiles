@@ -2,7 +2,7 @@
   
   whatmp3 = super.python3Packages.buildPythonApplication rec {
     pname = "whatmp3";
-    version = "v3.8";
+    version = "v3.81";
   
     # whatmp3 seems abandoned anyway so I'm using my own fork for the setup.py
     src = super.fetchFromGitHub rec {
@@ -11,7 +11,7 @@
       rev = version;
       owner = "creaaidev";
       repo = "whatmp3";
-      sha256 = "sha256-9ayqXqSD4DEvLTvtZ2zJTwW/YdkMZwnZ7tACAqJXTHM=";
+      sha256 = "sha256-WXvXgaUtI4xt2e2hwWCNNEuvn5a+OtEH5TbwgkukLas=";
     };
   
     installPhase = ''install -Dm755 whatmp3.py $out/bin/whatmp3'';

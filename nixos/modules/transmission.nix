@@ -7,13 +7,12 @@
 let 
   # /tmp/transcodes would be cool but apparmor has restrictions
   downloadDir = "/mnt/Storage/Torrents/";
-  transcodeDir = "/mnt/Storage/Torrents/Transcodes"; # needs to be a subdir
+  transcodeDir = "/mnt/Storage/Torrents/Transcodes/"; # needs to be a subdir
 in
 {
   age.secrets.transmission = {
     file = "${self}/nixos/secrets/transmission.age";
     owner = "transmission";
-    # group = "media";
   };
   
   age.secrets.betanin-api-key = {
@@ -40,19 +39,18 @@ in
 	  if [[ $TR_TORRENT_NAME =~ .*($QUALITY).* ]] || [[ $TR_TORRENT_TRACKERS =~ .*($TRACKERS).* ]]; then
             echo "INFO: Running music torrent script for $TR_TORRENT_NAME"
 	    
-	    # NAME=$(printf '%q' "$TR_TORRENT_NAME")
             ln -s "$TR_TORRENT_DIR$TR_TORRENT_NAME" /tmp/$TR_TORRENT_HASH # Hopefuly this filename-guessing works
-	    ${pkgs.whatmp3}/bin/whatmp3 -nzv --V0 -o ${transcodeDir} /tmp/$TR_TORRENT_HASH
+	    ${pkgs.whatmp3}/bin/whatmp3 -nrz --V0 -o ${transcodeDir} /tmp/$TR_TORRENT_HASH
 
 	    ${pkgs.curl}/bin/curl \
     --request POST \
-    --data-urlencode "path=/transcodes/$TR_TORRENT_HASH\ \(V0\)" \
-    --data-urlencode "name=$TR_TORRENT_NAME" \
+    --data-urlencode "path=/transcodes/" \
+    --data-urlencode "name=$TR_TORRENT_HASH (V0)" \
     --header "X-API-Key: $(cat ${config.age.secrets.betanin-api-key.path})" \
     "https://betanin.moniz.pt/api/torrents"
 
 	    # Cleanup
-	    # rm /tmp/$TR_TORRENT_HASH
+	    rm /tmp/$TR_TORRENT_HASH
 	  fi
           ''); # if not transcoding, then replace path and name in request and read activationScript
 	};

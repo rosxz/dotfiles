@@ -11,6 +11,8 @@
  
       # ../../modules/distributedBuilds.nix
 
+      ../../modules/betanin.nix
+
       ../../modules/headless.nix
       ../../modules/nginx.nix
       ../../modules/docker.nix
@@ -20,7 +22,8 @@
       
       ../../modules/transmission.nix
       ../../modules/rtorrent.nix
-      ../../modules/nextcloud.nix
+
+      # ../../modules/nextcloud.nix
       ../../modules/postgresql.nix
 
       ../../modules/invidious.nix
@@ -190,16 +193,11 @@
 	neofetch
 	xsettingsd
 
-	python310Full
-	python310Packages.requests
-	# beets
-	flac
-	lame
-	mp3gain
-	vorbisgain
-	vorbis-tools
-
 	agenix
+	
+	#python310Full
+	#python310Packages.requests
+	#beets
   ];
 
   services.fstrim = {
