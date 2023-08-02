@@ -10,16 +10,18 @@
       ./hardware-configuration.nix
       # ../../modules/i3.nix
       ../../modules/sway.nix
+      # ../../modules/hyprland.nix
       ../../modules/syncthing.nix
       ../../modules/tailscale.nix
       ../../modules/docker.nix
       ../../modules/rnl.nix
-      ../../modules/esof.nix
+      # ../../modules/minecraft.nix
     ];
 
   # Bootloader.
   boot = {
     kernelParams = [ "quiet" ];
+    kernelPackages = pkgs.linuxPackages_xanmod;
     loader.efi.canTouchEfiVariables = true;
     loader.systemd-boot = {
       enable = true;
@@ -109,10 +111,18 @@
   users.users.crea = {
     isNormalUser = true;
     description = "Martim Moniz";
-    hashedPassword = "$6$IJvaxq7NVCzisnok$oYzrzQ4OyFXtEd0jWL4/q8x0YSL3DhviV4PhnFl1l3GxS/T6mBlBaFd8TstCjMZfST8tzXL6fzxIB7wtb/8Ld.";
-    extraGroups = [ "networkmanager" "video" "scanner" "qemu-libvirtd" "wheel" ];
+    hashedPassword = "$6$g3erPleT4pElaQQe$fDIA/dckjSAADHRtjQt3RGrLmFE6TjZ5acdaRSTOBWA/8OuQlnDGr0FZUfGGqxJlS0vJDPDtpPzm6pJo7i96j0";
+    extraGroups = [ "networkmanager" "video" "scanner" "libvirtd" "qemu-libvirtd" "wheel" ];
     shell = pkgs.zsh;
     openssh.authorizedKeys.keys = sshKeys;
+  };
+  security.polkit.enable = true;
+
+  users.users.nixremote = {
+    isNormalUser = true;
+    description = "Nix remote builder";
+    useDefaultShell = true;
+    openssh.authorizedKeys.keys = [ "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIAr7+pEOyGlRL4r5uUvQ8OK1tJMpqcH+eBdtZFusshk9 root@client" ];
   };
 
   fonts = {
@@ -144,7 +154,6 @@
 
   environment.systemPackages = with pkgs; [
 	  networkmanagerapplet
-	  qbittorrent
 	  yt-dlp
 	  fzf
 	  exa
@@ -184,15 +193,8 @@
 	  thefuck
     agenix
     wireguard-tools
-    # sddm-lain-wired-theme
+    obs-studio
   ];
-
-  powerManagement = {
-    powertop.enable = true;
-  };
-  services.auto-cpufreq.enable = true;
-  # services.throttled.enable = true;
-  services.thermald.enable = true;
 
   programs.thunar.enable = true;
   programs.thunar.plugins = with pkgs.xfce; [
@@ -252,6 +254,7 @@
    unsetopt menu_complete
    setopt completealiases
    source $ZSH/oh-my-zsh.sh
+   eval "$(direnv hook zsh)"
     '';
     promptInit = "source ${pkgs.zsh-powerlevel10k}/share/zsh-powerlevel10k/powerlevel10k.zsh-theme";
   };
@@ -281,8 +284,12 @@ D /var/tmp 1777 root root 30d
   };
 
   # Run garbage collection whenever there is less than 500MB free space left, prob better increase this value
+  # Direnv
   nix.extraOptions = ''
     min-free = ${toString (500 * 1024 * 1024)}
+
+    keep-outputs = true
+    keep-derivations = true
   '';
 
   system.stateVersion = "22.05";

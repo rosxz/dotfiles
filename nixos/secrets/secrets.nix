@@ -2,9 +2,10 @@ let
   # system keys
   tsukuyomi = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINC7qWv7Fjim/F3koJBBzJQA22obpXlU7nnTh0ymEZjm root@tsukuyomi";
   ebisu = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBu7Uy8WIEsNQ5LsVwXzD3oaXZFTvwuUwE2hn9NbBkyC root@ebisu";
+  raijin = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILA7kogqyTlmdn4sXPwmM6U2RlOsm6uyc981/CyEI0cm root@raijin";
   ryuujin = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICKTj6ug2eor2EDMVGebzUWgfAQdXlcQZ9rjZ/EeDp9Y root@ryuujin";
   hachiman = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIN5sIZ/tykBmj5CgfZSvxlYL+27eBC74kp9qNw5UkPK7 root@hachiman";
-  systems = [ tsukuyomi hachiman ebisu ryuujin ];
+  systems = [ tsukuyomi hachiman ebisu raijin ryuujin ];
 
   # user keys
   tsukuyomiUser = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILW5ZVdVaKMVlau1wp/JGJpdpE6JUxJ07DEYHi9qOLC8 crea@tsukuyomi";
@@ -23,4 +24,5 @@ in
   "wireguard-rnl-private.age".publicKeys = [ ryuujin ryuujinUser ebisu ebisuUser ];
   "martim_at_moniz_passwd.age".publicKeys = [ hachiman ryuujinUser ];
   "betanin-api-key.age".publicKeys = [ tsukuyomi tsukuyomiUser ryuujinUser ];
+  "vault-agent-secret.age".publicKeys = [ ryuujin ryuujinUser raijin raijinUser ];
 }

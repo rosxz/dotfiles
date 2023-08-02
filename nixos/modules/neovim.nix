@@ -31,6 +31,7 @@ let
     tree-sitter-yaml
   ];
   commonPlugins = with pkgs.unstable.vimPlugins; [
+    copilot-vim
     nvim-web-devicons
     {
       plugin = lualine-nvim;
