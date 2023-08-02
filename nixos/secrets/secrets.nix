@@ -25,4 +25,5 @@ in
   "martim_at_moniz_passwd.age".publicKeys = [ hachiman ryuujinUser ];
   "betanin-api-key.age".publicKeys = [ tsukuyomi tsukuyomiUser ryuujinUser ];
   "vault-agent-secret.age".publicKeys = [ ryuujin ryuujinUser raijin raijinUser ];
+  "firefly-env.age".publicKeys = [ tsukuyomi ] ++ users;
 }
