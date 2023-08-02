@@ -258,6 +258,13 @@ in {
     environmentFiles = [ env_file config.age.secrets.firefly-env.path ];
   };
 
+  systemd.services.podman-firefly = {
+    description = "Firefly III";
+    after = [ "postgresql.service" ];
+    wantedBy = [ "multi-user.target" ];
+    };
+  };
+
   services.nginx.virtualHosts.${domain} = {
     forceSSL = true;
     useACMEHost = "moniz.pt";
