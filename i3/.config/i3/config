@@ -14,8 +14,8 @@ set $mod Mod4
 # Font for window titles. Will also be used by the bar unless a different font
 # is used in the bar {} block below.
 font pango:monospace 8
-exec "setxkbmap -layout pt"
-exec --no-startup-id feh --bg-scale /home/crea/Downloads/raijin_wp2.jpg
+# exec "setxkbmap -layout pt"
+exec --no-startup-id feh --bg-scale /home/crea/.background-image
 
 # This font is widely installed, provides lots of unicode glyphs, right-to-left
 # text rendering and scalability on retina/hidpi displays (thanks to pango).
@@ -35,6 +35,7 @@ exec --no-startup-id feh --bg-scale /home/crea/Downloads/raijin_wp2.jpg
 # NetworkManager is the most popular way to manage wireless networks on Linux,
 # and nm-applet is a desktop environment-independent system tray GUI for it.
 exec --no-startup-id nm-applet
+exec "fcitx5 -d"
 
 # Use pactl to adjust volume in PulseAudio.
 set $refresh_i3status killall -SIGUSR1 i3status
@@ -51,7 +52,8 @@ bindsym $mod+Return exec alacritty
 
 bindsym $mod+X exec thunar
 bindsym $mod+W exec firefox
-bindsym $mod+O exec "i3lock-fancy-rapid 5 3"
+# bindsym $mod+O exec "i3lock-fancy-rapid 5 3"
+bindsym $mod+O exec "xfce4-screensaver-command -a"
 
 # kill focused window
 bindsym $mod+c kill
@@ -155,7 +157,8 @@ bindsym $mod+Shift+c reload
 # restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
 bindsym $mod+Shift+r restart
 # exit i3 (logs you out of your X session)
-bindsym $mod+Shift+q exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -B 'Yes, exit i3' 'i3-msg exit'"
+# bindsym $mod+Shift+q exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -B 'Yes, exit i3' 'i3-msg exit'"
+bindsym $mod+Shift+q exec "xfce4-session-logout"
 
 # resize window (you can also use the mouse for that)
 mode "resize" {

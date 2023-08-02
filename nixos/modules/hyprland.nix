@@ -70,6 +70,11 @@ in
   # enable sway window manager
   programs.hyprland = {
     enable = true;
+    xwayland = {
+      enable = true;
+      hidpi = true;
+    };
+    nvidiaPatches = true;
     # wrapperFeatures.gtk = true;
     # extraSessionCommands = ''
     #  export QT_QPA_PLATFORM=wayland

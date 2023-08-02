@@ -4,23 +4,58 @@
 
 { self, config, lib, pkgs, ... }:
 
+let RNLCert = builtins.fetchurl {
+    url = "https://rnl.tecnico.ulisboa.pt/ca/cacert/cacert.pem";
+    sha256 = "Qg7e7LIdFXvyh8dbEKLKdyRTwFaKSG0qoNN4KveyGwg=";
+  };
+in
 {
 
-  imports = [];
+  age.secrets.vault-agent-secret = {
+    file = "${self}/nixos/secrets/vault-agent-secret.age";
+    owner = "root";
+    group = "root";
+  };
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
-    packer
+    # packer
     remmina
-    # virt-manager
+
+    virt-manager
+    qemu_full
+    dnsmasq
+    bridge-utils
+    netcat-openbsd
+    vde2
+    libguestfs
+
     realvnc-vnc-viewer
     thunderbird-bin
-    ansible_2_13
+    (ansible.overrideAttrs (old: {
+      propagatedBuildInputs = old.propagatedBuildInputs ++ [ python310Packages.pywinrm ];
+    }))
+
+    vault
   ];
-  networking.resolvconf.extraOptions = [ "search rnl.tecnico.ulisboa.pt" ];
 
-  # virtualisation.libvirtd.enable = true;
+  networking.firewall.allowedTCPPorts = [ 31001];
+  networking.firewall.allowedUDPPorts = [ 31001 ];
 
+  programs.zsh.shellAliases.ssh = lib.mkForce "vault write -field=signed_key ssh-client-signer/sign/rnl-admin public_key=@$HOME/.ssh/id_ed25519.pub > $HOME/.ssh/id_ed25519-cert.pub ; TERM=xterm-256color ssh";
+
+  virtualisation.libvirtd.enable = true;
+  programs.dconf.enable = true;
+
+  environment.sessionVariables = {
+    VAULT_ADDR = "https://vault.rnl.tecnico.ulisboa.pt";
+  };
+
+  security.pki.certificateFiles = ["${RNLCert}"];
+
+  networking.search = [
+    "rnl.tecnico.ulisboa.pt"
+  ];
 }
 
