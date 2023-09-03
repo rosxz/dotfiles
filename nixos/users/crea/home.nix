@@ -76,12 +76,12 @@ CanonicalizeHostname yes
 CanonicalDomains rnl.tecnico.ulisboa.pt
 CanonicalizeMaxDots 0
 
-Match originalhost lab*,!lab*.rnl.tecnico.ulisboa.pt
-  HostName dolly.rnl.tecnico.ulisboa.pt
-  User root
-  RemoteCommand ssh %n
-  ForwardAgent no
-  RequestTTY yes
+# Match originalhost lab*,!lab*.rnl.tecnico.ulisboa.pt
+#   HostName dolly.rnl.tecnico.ulisboa.pt
+#   User root
+#   RemoteCommand ssh %n
+#   ForwardAgent no
+#   RequestTTY yes
 
 Match canonical host="*.rnl.tecnico.ulisboa.pt"
   User root

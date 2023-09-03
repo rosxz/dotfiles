@@ -40,8 +40,7 @@ in
     vault
   ];
 
-  networking.firewall.allowedTCPPorts = [ 31001];
-  networking.firewall.allowedUDPPorts = [ 31001 ];
+  networking.firewall.enable = false;
 
   programs.zsh.shellAliases.ssh = lib.mkForce "vault write -field=signed_key ssh-client-signer/sign/rnl-admin public_key=@$HOME/.ssh/id_ed25519.pub > $HOME/.ssh/id_ed25519-cert.pub ; TERM=xterm-256color ssh";
 
@@ -49,7 +48,7 @@ in
   programs.dconf.enable = true;
 
   environment.sessionVariables = {
-    VAULT_ADDR = "https://vault.rnl.tecnico.ulisboa.pt";
+    VAULT_ADDR = "http://vault.rnl.tecnico.ulisboa.pt";
   };
 
   security.pki.certificateFiles = ["${RNLCert}"];
