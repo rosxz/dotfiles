@@ -1,11 +1,11 @@
 { config, pkgs, lib, ... }:
 
 let
-  cfg = config.services.hd-idle;
+  cfg = config.modules.services.hd-idle;
 in
 with lib;
 {
-  options.services.hd-idle = {
+  options.modules.services.hd-idle = {
     enable = mkEnableOption "hd-idle";
 
     package = mkOption {

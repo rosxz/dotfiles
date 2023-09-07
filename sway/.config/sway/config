@@ -9,19 +9,22 @@ input "type:keyboard" {
 }
 
 # output DP-2 res 3840x2160 scale 1.5 # 4K display
-# output eDP-1 bg ~/Pictures/Wallpapers/1J8A7015-2.jpg fill
-# output eDP-1 bg $HOME/Pictures/Wallpapers/1J8A1386.jpg fill pos 3840 0
 # output HDMI-A-2 bg $HOME/Pictures/Wallpapers/1J8A1719.jpg fill scale 1.8 pos 0 0
 # exec $HOME/.navifiles/other/.random_bg | xargs -n 1 swaybg -o eDP-1 -i
-# output DP-1 bg ~/Pictures/Wallpapers/bulgaria.jpg fill
-# output DP-3 bg ~/Pictures/Wallpapers/blame.jpeg fill
-output * bg $HOME/.background-image fill
+# output * bg $HOME/.background-image fill
+exec swww init
+exec swww img $HOME/.background-image
 
 #input "2821:257:Asus_TouchPad" {
 #	tap enabled
 #	accel_profile "flat"
 #	pointer_accel 0.5
 #}
+
+input "1267:47:Elan_Touchpad" {
+	tap enabled
+	natural_scroll disabled
+}
 
 # xwayland force scale 2
 
@@ -58,6 +61,16 @@ font pango:monospace 8
 # and nm-applet is a desktop environment-independent system tray GUI for it.
 # exec --no-startup-id nm-applet
 
+# Sway has a "scratchpad", which is a bag of holding for windows.
+# You can send windows there and get them back later.
+
+# Move the currently focused window to the scratchpad
+bindsym $mod+Shift+minus move scratchpad
+
+# Show the next scratchpad window or hide the focused scratchpad window.
+# If there are multiple scratchpad windows, this command cycles through them.
+bindsym $mod+minus scratchpad show
+
 # Use pactl to adjust volume in PulseAudio.
 set $refresh_i3status killall -SIGUSR1 i3status
 #bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +10% && $refresh_i3status
@@ -78,7 +91,8 @@ bindsym XF86MonBrightnessUp exec --no-startup-id brightnessctl s +1250
 floating_modifier $mod
 
 set $term alacritty
-set $launcher ulauncher
+set $launcher wofi -G --allow-images --show drun
+set $powermenu wlogout
 set $lock 'swaylock \
 	--screenshots \
 	--clock \
@@ -100,6 +114,7 @@ set $lock 'swaylock \
 bindsym $mod+Return exec $term
 bindsym $mod+p exec $launcher
 bindsym $mod+o exec $lock
+bindsym $mod+Escape exec wlogout -p layer-shell
 
 # kill focused window
 bindsym $mod+c kill
@@ -114,6 +129,9 @@ bindsym $mod+c kill
 
 bindsym $mod+Print exec grim -g "$(slurp)" /tmp/$(date +'%H:%M:%S.png')
 bindsym Print exec slurp | grim -g - - | wl-copy
+# TODO: sway.contrib.grimshot
+
+bindsym $mod+b exec PICTURE=$(ls --color=never --no-icons $HOME/Pictures/Wallpapers | shuf -n 1); swww img $HOME/Pictures/Wallpapers/$PICTURE --transition-type random
 
 bindsym $mod+w exec firefox
 bindsym $mod+x exec thunar
@@ -314,7 +332,7 @@ titlebar_padding 1
 titlebar_border_thickness 0
 
 # You can also use any non-zero value if you'd like to have a border
-for_window [class=".*"] border pixel 2 
+for_window [class=".*"] border pixel 4 
 
 # Start i3bar to display a workspace bar (plus the system information i3status
 # finds out, if available)

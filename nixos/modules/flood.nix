@@ -1,11 +1,11 @@
 { config, pkgs, lib, ... }:
 
 let
-  cfg = config.services.flood;
+  cfg = config.modules.services.flood;
 in
 with lib;
 {
-  options.services.flood = {
+  options.modules.services.flood = {
     enable = mkEnableOption "flood";
 
     user = mkOption {

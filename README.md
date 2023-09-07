@@ -1,10 +1,8 @@
 # dotfiles
-Martim Moniz's dotfiles
-Moved on from dwm, i3 (and i3status-rust) to sway and waybar, but you can still 
-find my old configuration files for those on past commits.
 Now with NixOS.
+Many thanks to my closeted friends for providing configs I could steal from.
 
-- [.navifiles](#.navifiles)
+- [dotfiles](#dotfiles)
   - [Anki](#anki)
 
 ## Anki
