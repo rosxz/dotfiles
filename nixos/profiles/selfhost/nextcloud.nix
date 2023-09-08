@@ -31,7 +31,7 @@ in {
 
       extraAppsEnable = true;
       extraApps = with config.services.nextcloud.package.packages.apps; {
-        inherit calendar contacts mail notes tasks;
+        inherit memories calendar contacts mail notes tasks;
         unsplash = pkgs.fetchNextcloudApp rec {
 	  url =
             "https://github.com/nextcloud/unsplash/releases/download/v2.2.1/unsplash.tar.gz";
