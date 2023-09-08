@@ -2,6 +2,7 @@
 {
   services.syncthing = {
     enable = true;
+    user = "${user}"; #TODO: in the future this probably shouldnt be :grimace:
     systemService = true;
     openDefaultPorts = true;
     dataDir = "/home/${user}/Documents";    # Default folder for new synced folders

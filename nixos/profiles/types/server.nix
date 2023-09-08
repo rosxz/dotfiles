@@ -5,6 +5,7 @@
     syncthing
   ];
 
+  networkmanager.enable = false; #TODO: profiles/server ?
   networking.firewall = {
     logRefusedConnections = false;
     allowedTCPPorts = [ 80 443 3000 8080 8081 8082 8089 9393 ]; #TODO: put this in respective places

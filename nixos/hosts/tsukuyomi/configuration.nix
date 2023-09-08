@@ -24,7 +24,6 @@
       address = "192.168.1.80";
       prefixLength = 24;
     }];
-    # networkmanager.enable = false; # TODO: ???
     networkmanager.dns = "none";
     dhcpcd.extraConfig = "nohook resolv.conf";
   };

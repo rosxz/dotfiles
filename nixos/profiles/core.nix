@@ -5,7 +5,7 @@
   ];
 
   networking = {
-    networkmanager.enable = true;
+    networkmanager.enable = lib.mkDefault true;
     firewall.enable = lib.mkDefault true;
     firewall.checkReversePath = "loose";
   };
