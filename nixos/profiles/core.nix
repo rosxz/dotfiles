@@ -6,6 +6,7 @@
 
   networking = {
     networkmanager.enable = true;
+    firewall.enable = lib.mkDefault true;
     firewall.checkReversePath = "loose";
   };
 
