@@ -1,4 +1,4 @@
-{ config, lib, pkgs, ... }: {
+{ config, lib, pkgs, profiles, ... }: {
 
   imports = with profiles.selfhost; [
     nginx

@@ -14,7 +14,7 @@
   home-manager.users.crea = {
     imports = with profiles.home; [ core neovim gammastep ];
 
-    modules = { git.enable = true; };
+    # modules = { git.enable = true; };
 
     home.stateVersion = "21.11";
   };
@@ -24,7 +24,7 @@
     description = "Martim Moniz";
     extraGroups = [ "networkmanager" "video" "scanner" "qemu-libvirtd" "wheel" "input" "adbusers" ];
     shell = pkgs.zsh;
-    openssh.authorizedKeys.keys = sshKeys;
+    # openssh.authorizedKeys.keys = sshKeys;
     hashedPassword = "$6$g3erPleT4pElaQQe$fDIA/dckjSAADHRtjQt3RGrLmFE6TjZ5acdaRSTOBWA/8OuQlnDGr0FZUfGGqxJlS0vJDPDtpPzm6pJo7i96j0";
   };
   users.users.root.hashedPassword = "*";

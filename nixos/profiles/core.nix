@@ -42,16 +42,17 @@
   environment.etc."channels/nixpkgs".source = inputs.nixpkgs.outPath;
 
   # Enable the OpenSSH daemon.
-  #services.openssh = {
-  #  enable = true;
-  #  openFirewall = lib.mkDefault false;
-  #  authorizedKeysFiles = pkgs.lib.mkForce [ "/etc/ssh/authorized_keys.d/%u" ];
-  #  settings = {
-  #    PasswordAuthentication = false;
-  #    PermitRootLogin = "no";
-  #  };
-  #};
-  #programs.ssh.startAgent = true;
+  services.openssh = {
+    enable = lib.mkDefault true;
+    openFirewall = lib.mkDefault false;
+    authorizedKeysFiles = pkgs.lib.mkForce [ "/etc/ssh/authorized_keys.d/%u" ];
+    settings = {
+      PasswordAuthentication = false;
+      PermitRootLogin = "no";
+      KbdInteractiveAuthentication = false;
+    };
+  };
+  programs.ssh.startAgent = true;
 
   programs.zsh = {
     enable = true;

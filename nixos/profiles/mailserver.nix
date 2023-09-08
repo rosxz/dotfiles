@@ -1,4 +1,5 @@
-{ self, config, pkgs, ... }:
+{ self, config, pkgs, ... }: {
+
   age.secrets.martim_at_moniz_passwd = {
     file = "${self}/nixos/secrets/martim_at_moniz_passwd.age";
     owner = "root";
@@ -20,7 +21,7 @@
         };
     };
 
-    certificateScheme = 3;
+    certificateScheme = "acme-nginx";
   };
 
   security.acme.acceptTerms = true;

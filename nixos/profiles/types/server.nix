@@ -32,8 +32,6 @@
   services.openssh = {
     enable = true;
     openFirewall = true;
-    kbdInteractiveAuthentication = false; # ??
-    authorizedKeysFiles = pkgs.lib.mkForce [ "/etc/ssh/authorized_keys.d/%u" ];
   };
 
   system.autoUpgrade = {

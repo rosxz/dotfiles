@@ -11,9 +11,7 @@
 
   home-manager.users.crea = {
     imports = with profiles.home; [ core neovim gammastep ];
-
-    modules = { git.enable = true; };
-
+    # modules = { git.enable = true; };
     home.stateVersion = "21.11";
   };
 
@@ -38,8 +36,6 @@
   };
 
   services.printing.enable = true;
-  services.xserver.enable = true;
-
   services.xserver.libinput.enable = true; #TODO: ??
 
   users.users.crea = {
@@ -51,12 +47,12 @@
     openssh.authorizedKeys.keys = sshKeys;
   };
 
-  users.users.nixremote = {
-    isNormalUser = true;
-    description = "Nix remote builder";
-    useDefaultShell = true;
-    openssh.authorizedKeys.keys = [ "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIAr7+pEOyGlRL4r5uUvQ8OK1tJMpqcH+eBdtZFusshk9 root@client" ];
-  };
+  # users.users.nixremote = {
+  #   isNormalUser = true;
+  #   description = "Nix remote builder";
+  #   useDefaultShell = true;
+  #   openssh.authorizedKeys.keys = [ "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIAr7+pEOyGlRL4r5uUvQ8OK1tJMpqcH+eBdtZFusshk9 root@client" ];
+  # };
 
   environment.sessionVariables = rec {
     # environment variables go here
@@ -70,18 +66,12 @@
 	  xsettingsd
 	  home-manager
 	  (discord.override { nss = pkgs.nss_latest; withOpenASAR = true; }) # unlatest breaks nss_latest fix for firefox, but has openasar
-
-  services.gnome.gnome-keyring.enable = true;
-  # security.pam.services.sddm.enableGnomeKeyring = true; # seems like a sddm issue
+  ];
 
   # Enable the OpenSSH daemon.
   services.openssh = {
     enable = true;
-    passwordAuthentication = false;
-    openFirewall = false;
-    permitRootLogin = "no";
-    authorizedKeysFiles = pkgs.lib.mkForce [ "/etc/ssh/authorized_keys.d/%u" ];
-    # extraConfig = '' ''; # dont need this for now
+    openFirewall = true;
   };
 
   system.stateVersion = "22.05";

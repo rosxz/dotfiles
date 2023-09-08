@@ -100,6 +100,12 @@ in {
       config
       { networking.hostName = lib.mkForce name; }
       { _module.args = extraArgs; }
+      {
+        home-manager = {
+          useGlobalPkgs = true;
+          useUserPackages = true;
+        };
+      }
     ] ++ lib.my.listModulesRecursive modulesDir ++ extraModules;
   };
 
