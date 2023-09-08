@@ -2,12 +2,12 @@
 
   imports = with profiles; [
     types.server
-    selfhost
-    # distributedBuilds
+    selfhost.full
+    # selfhost
     ./hardware-configuration.nix
+    # distributedBuilds
   ];
 
-  modules.services.rtorrent.enable = true;
   modules.services.hd-idle.enable = true;
   hardware.cpu.intel.updateMicrocode = true;
 

@@ -1,9 +1,7 @@
-{ pkgs, ... }:
-
-{
+{ pkgs, ... }: {
   services.caddy = {
     enable = true;
-    
+
     extraConfig = ''
       inv.moniz.pt {
         reverse_proxy localhost:3000
@@ -13,5 +11,4 @@
       }
     '';
   };
-
 }
