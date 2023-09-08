@@ -1,5 +1,5 @@
 {
-  description = "My simple NixOS configuration";
+  description = "My messy NixOS configuration";
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-23.05";
@@ -11,15 +11,25 @@
     agenix.url = "github:ryantm/agenix/main";
     agenix.inputs.nixpkgs.follows = "nixpkgs";
 
+    nixos-mailserver.url = "gitlab:simple-nixos-mailserver/nixos-mailserver/nixos-23.05";
+    nixos-mailserver.inputs.nixpkgs.follows = "nixpkgs";
+
     impermanence.url = "github:nix-community/impermanence/master";
   };
 
-  outputs = inputs@{ self, nixpkgs, nixpkgs-unstable, home-manager, agenix, impermanence, ... }:
-    let
-      system = "x86_64-linux";
-      inherit (inputs.nixpkgs) lib;
+  outputs = { self, ... }@inputs:
+  let
       inherit (builtins) listToAttrs concatLists attrValues attrNames readDir;
-      inherit (lib) mapAttrs mapAttrsToList hasSuffix;
+
+      system = "x86_64-linux";
+      user = "crea";
+
+      lib = inputs.nixpkgs.lib.extend (final: prev: import ./lib {
+        inherit inputs pkgs system;
+        lib = final;
+      });
+      overlays = (lib.my.mkOverlays ./overlays) // { agenix = inputs.agenix.overlays.default; };
+      pkgs = lib.my.mkPkgs overlays;
 
       sshKeys = [
   "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILW5ZVdVaKMVlau1wp/JGJpdpE6JUxJ07DEYHi9qOLC8 crea@tsukuyomi" # Tsukuyomi (HP Homeserver)
@@ -30,85 +40,23 @@
   "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIB0Y66xC+lCLENxktcVwGYacISi8A+KEbijg7N+w5HcF crea@ryuujin" # Ryuujin (T490s)
       ];
 
-      overlaysDir = ./overlays;
-
-      myOverlays = mapAttrsToList
-        (name: _: import "${overlaysDir}/${name}" { inherit inputs; })
-        (readDir overlaysDir);
-
-      overlay-unstable = final: prev: {
-        unstable = import nixpkgs-unstable {
-          inherit system;
-          config.allowUnfree = true;
-        };
+    nixosConfigurations = lib.my.mkHosts {
+      modulesDir = ./modules;
+      profilesDir = ./profiles;
+      hostsDir = ./hosts;
+      extraArgs = {
+        inherit self sshKeys user system inputs nixosConfigurations;
+        root = ./.;
       };
-
-      overlays = [
-	        overlay-unstable
-	        agenix.overlays.default
-	    ] ++ myOverlays;
-
-      pkgs = import nixpkgs {
-        inherit system overlays;
-        config.allowUnfree = true;
-      };
-
-    in
-    {
-      homeConfigurations = {
-	      crea = home-manager.lib.homeManagerConfiguration {
-	        # pkgs = nixpkgs.legacyPackages.${system};
-    	    inherit pkgs;
-
-	        modules = [
-            ./users/crea/home.nix
-            {
-              home = {
-                username = "crea";
-                homeDirectory = "/home/crea";
-                stateVersion = "22.05";
-              };
-            }
-          ];
-	      };
-      };
-
-    nixosConfigurations = {
-      ebisu = lib.nixosSystem {
-        inherit system pkgs;
-
-        specialArgs = { inherit self sshKeys inputs; };
-        modules = [ ./hosts/ebisu/configuration.nix agenix.nixosModules.age ];
-      };
-
-      ryuujin = lib.nixosSystem {
-        inherit system pkgs;
-
-        specialArgs = { inherit self sshKeys inputs; };
-        modules = [ ./hosts/ryuujin/configuration.nix agenix.nixosModules.age ];
-      };
-
-      tsukuyomi = lib.nixosSystem {
-        inherit system pkgs;
-
-        specialArgs = { inherit self sshKeys; };
-        modules = [ ./hosts/tsukuyomi/configuration.nix agenix.nixosModules.age ];
-      };
-
-      raijin = lib.nixosSystem {
-        inherit system pkgs;
-
-        specialArgs = { inherit self sshKeys inputs; };
-        modules = [ ./hosts/raijin/configuration.nix agenix.nixosModules.age ];
-      };
-
-      hachiman = lib.nixosSystem {
-        inherit system pkgs;
-
-        specialArgs = { inherit self sshKeys inputs; };
-        modules = [ ./hosts/hachiman/configuration.nix agenix.nixosModules.age impermanence.nixosModule ];
-      };
-   };
- };
+      extraModules = [
+        inputs.agenix.nixosModules.age
+        inputs.impermanence.nixosModules.impermanence
+        inputs.home-manager.nixosModules.home-manager
+        # inputs.programs-sqlite.nixosModules.programs-sqlite
+        inputs.nixos-mailserver.nixosModule
+      ];
+    };
+  in
+  { inherit nixosConfigurations; };
 }
 

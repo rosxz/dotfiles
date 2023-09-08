@@ -1,6 +1,6 @@
-{ self, config, lib, pkgs, ... }: 
-{
-  age.secrets.invidious-extra-settings = { # NOT WORKING, AS INVIDIOUS USER DOESN'T EXIST AT A CERTAIN MOMENT FOR WHATEVER REASON
+{ self, config, pkgs, ... }: {
+
+  age.secrets.invidious-extra-settings = {
     file = "${self}/nixos/secrets/invidious-extra-settings.age";
     owner = "invidious";
     group = "invidious";
@@ -10,7 +10,13 @@
     file = "${self}/nixos/secrets/invidious-db-pass.age";
   };
 
-  services.invidious2 = { # temporary service with fix
+  users.users.invidious = {
+    isSystemUser = true;
+    group = "invidious";
+  };
+  users.groups.invidious = {};
+
+  services.invidious = {
     package = pkgs.unstable.invidious;
     enable = true;
     settings = {
@@ -38,7 +44,6 @@
         Unit = "invidious-reset.service";
       };
   };
-
   systemd.services."invidious-reset" = {
       script = ''
         ${pkgs.systemd}/bin/systemctl restart invidious.service

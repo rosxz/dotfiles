@@ -6,7 +6,6 @@
 # - /var/lib/nextcloud must be owned by nextcloud (sudo chown -R nextcloud: /var/lib/nextcloud)
 let domain = "cloud.moniz.pt";
 in {
-
   age.secrets.nextcloud-db-pass = {
     file = "${self}/nixos/secrets/nextcloud-db-pass.age";
     owner = "nextcloud";
@@ -31,8 +30,23 @@ in {
       enableBrokenCiphersForSSE = false;
 
       extraAppsEnable = true;
-      extraApps = with pkgs.nextcloud25Packages.apps; {
-        inherit calendar contacts mail news notes tasks unsplash;
+      extraApps = with config.services.nextcloud.package.packages.apps; {
+        inherit calendar contacts mail notes tasks;
+        unsplash = pkgs.fetchNextcloudApp rec {
+	  url =
+            "https://github.com/nextcloud/unsplash/releases/download/v2.2.1/unsplash.tar.gz";
+          sha256 = "sha256-/fOkTIRAwMgtgqAykWI+ahB1uo6FlvUaDNKztCyBQfk=";
+	};
+	cookbook = pkgs.fetchNextcloudApp rec {
+          url =
+            "https://github.com/nextcloud/cookbook/releases/download/v0.10.2/Cookbook-0.10.2.tar.gz";
+          sha256 = "sha256-XgBwUr26qW6wvqhrnhhhhcN4wkI+eXDHnNSm1HDbP6M=";
+        };
+	news = pkgs.fetchNextcloudApp rec {
+          url =
+            "https://github.com/nextcloud/news/releases/download/22.0.0/news.tar.gz";
+          sha256 = "sha256-hhXPEITSbCiFs0o+TOsQnSasXBpjU9mA/OFsbzuaCPw=";
+        };
       };
 
       # home = "/mnt/Storage/nextcloud";

@@ -1,6 +1,5 @@
-{ config, lib, pkgs, ... }:
+{ config, lib, pkgs, ... }: {
 
-{
   services.nginx = {
     enable = true;
     recommendedGzipSettings = true;
@@ -33,7 +32,7 @@
       credentialsFile = /var/lib/secrets/nginx/acme;
     };
   };
-  
+
   users.users.nginx.extraGroups = [ "acme" ];
 
   # HTTPS
@@ -63,18 +62,6 @@
       forceSSL = true;
       useACMEHost = "moniz.pt";
       locations."/".proxyPass = "http://100.83.228.83:8082";
-    };
-    
-    "transmission.moniz.pt" = {
-      forceSSL = true;
-      useACMEHost = "moniz.pt";
-      locations."/".proxyPass = "http://100.83.228.83:9091";
-    };
-
-    "firefly.moniz.pt" = {
-      forceSSL = true;
-      useACMEHost = "moniz.pt";
-      locations."/".proxyPass = "http://100.83.228.83:8081";
     };
 
     "sync.moniz.pt" = {

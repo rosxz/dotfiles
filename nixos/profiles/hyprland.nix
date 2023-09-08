@@ -70,11 +70,6 @@ in
   # enable sway window manager
   programs.hyprland = {
     enable = true;
-    xwayland = {
-      enable = true;
-      hidpi = true;
-    };
-    nvidiaPatches = true;
     # wrapperFeatures.gtk = true;
     # extraSessionCommands = ''
     #  export QT_QPA_PLATFORM=wayland
@@ -92,7 +87,7 @@ in
       # defaultSession = "sway";
       gdm = {
         enable = true;
-        autoSuspend = false;
+        # autoSuspend = false;
         wayland = true;
       };
     };

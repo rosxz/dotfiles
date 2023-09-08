@@ -28,13 +28,11 @@ let
         gsettings set $gnome_schema cursor-theme 'Bibata_Ghost'
         '';
   };
-
-
 in
 {
-
   environment.systemPackages = with pkgs; [
-    sway
+    wayfire
+
     dbus-sway-environment
     configure-gtk
     wayland
@@ -56,10 +54,13 @@ in
     mako
     firefox-wayland
 
-
     kora-icon-theme
     bibata-cursors-translucent
     wlogout
+
+    ## stupid wallpaper software
+    # mpvpaper # videos as background # eventually use profiles for laptop only
+    swww # (animated) images as background # p efficient and not resource hogging
   ];
 
   services.dbus.enable = true;
@@ -80,7 +81,6 @@ in
       export NIXOS_OZONE_WL=1
     '';
   };
-
 
   services.xserver = {
     enable = true;

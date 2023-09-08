@@ -1,5 +1,4 @@
 { self, config, lib, pkgs, ... }:
-
 {
   age.secrets.wireguard-rnl-private = {
     file = "${self}/nixos/secrets/wireguard-rnl-private.age";
@@ -9,7 +8,7 @@
     firewall = {
       allowedUDPPorts = [ 51820 ]; # Clients and peers can use the same port, see listenport
     };
-    networkmanager.enable = true;
+    networkmanager.enable = true; # ??
   };
 
   networking.wg-quick.interfaces = {

@@ -1,5 +1,4 @@
 { config, pkgs, ... }:
-
 {
   # make the tailscale command usable to users
   environment.systemPackages = [ pkgs.tailscale ];

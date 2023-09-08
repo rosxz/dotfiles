@@ -1,13 +1,11 @@
-{ config, pkgs, lib, ... }:
-
+{ config, pkgs, user, lib, ... }:
 {
   services.syncthing = {
     enable = true;
-    user = "crea";
     systemService = true;
     openDefaultPorts = true;
-    dataDir = "/home/crea/Documents";    # Default folder for new synced folders
-    configDir = "/home/crea/.config/syncthing";   # Folder for Syncthing's settings and keys
+    dataDir = "/home/${user}/Documents";    # Default folder for new synced folders
+    configDir = "/home/${user}/.config/syncthing";   # Folder for Syncthing's settings and keys
     overrideFolders = false;
     overrideDevices = false;
     guiAddress = "0.0.0.0:8384";
@@ -17,5 +15,4 @@
       };
     };
   };
-
 }
