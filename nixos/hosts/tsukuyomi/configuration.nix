@@ -8,7 +8,10 @@
     # distributedBuilds
   ];
 
-  modules.services.hd-idle.enable = true;
+  modules.services.hd-idle = {
+    enable = true;
+    drives = [ "sda" ];
+  };
   hardware.cpu.intel.updateMicrocode = true;
 
   networking = {

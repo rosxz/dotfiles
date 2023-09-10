@@ -8,6 +8,17 @@ with lib;
   options.modules.services.hd-idle = {
     enable = mkEnableOption "hd-idle";
 
+    drives = mkOption {
+      type = types.listOf types.str;
+      default = [];
+      description = lib.mdDoc ''
+        A list of drive device names to be affected
+        by the service. Leave unset to target all
+        external drives..
+      '';
+      example = [ "sda sdb" ];
+    };
+
     package = mkOption {
       type = types.package;
       default = pkgs.hd-idle;
@@ -23,10 +34,15 @@ with lib;
       wantedBy = [ "multi-user.target" ];
       after = [ "network.target" ];
       description = "hd-idle system service";
-      serviceConfig = {
+      serviceConfig =
+        let
+          drives = config.modules.services.hd-idle.drives;
+          ids = if drives != [] then lib.concatStrings (lib.intersperse " " ([ " -a" ] ++ drives)) else "";
+        in
+      {
         Type = "simple";
         Restart = "on-failure";
-        ExecStart = "${cfg.package}/bin/hd-idle -i 1800"; # Send logs to var/lib
+        ExecStart = lib.concatStrings ["${cfg.package}/bin/hd-idle -i 1800" "${ids}"];
       };
     };
   };
