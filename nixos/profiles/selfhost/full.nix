@@ -20,5 +20,6 @@
     rtorrent
     transmission
     betanin
+    calibre
   ];
 }
