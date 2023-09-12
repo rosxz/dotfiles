@@ -9,6 +9,11 @@ in {
       forceSSL = true;
       useACMEHost = "moniz.pt";
       locations."/".proxyPass = "http://127.0.0.1:${toString config.services.calibre-web.listen.port}";
+      extraConfig = ''
+      proxy_busy_buffers_size   1024k;
+      proxy_buffers   4 512k;
+      proxy_buffer_size   1024k;
+      '';
     };
 
     calibre-server = {
