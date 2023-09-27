@@ -1,6 +1,9 @@
-{ config, pkgs, lib, ... }:
+{ config, pkgs, lib, user, ... }: {
 
-{
+  users.users.${user} = {
+    extraGroups = [ "docker" ];
+  };
+
   networking.firewall.trustedInterfaces = [ "docker0" ];
 
   virtualisation.docker.enable = true;

@@ -1,5 +1,11 @@
 { config, pkgs, user, lib, ... }:
 {
+  fileSystems."/home/${user}/Documents" = {
+    device = "/home/${user}/crea_sync/Documentos";
+    options = [ "bind" "user" "rw" "failok" ]; # "noauto"
+    fsType = "none";
+  };
+
   services.syncthing = {
     enable = true;
     user = "${user}"; #TODO: in the future this probably shouldnt be :grimace:

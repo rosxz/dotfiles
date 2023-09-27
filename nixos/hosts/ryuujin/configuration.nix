@@ -6,6 +6,7 @@
     work
     polkit
     gdt
+    docker
     entertainment
     ./hardware-configuration.nix
   ];
@@ -15,13 +16,32 @@
 
     # modules = { git.enable = true; };
 
-    home.stateVersion = "21.11";
+    home.stateVersion = "23.05";
+  };
+  boot.supportedFilesystems = [ "zfs" ];
+  boot.kernelPackages = config.boot.zfs.package.latestCompatibleLinuxPackages;
+  networking.hostId = "1dc334bc"; # For example: head -c 8 /etc/machine-id
+  services.zfs.autoScrub.enable = true;
+
+  i18n = {
+    defaultLocale = "ja_JP.UTF-8";
+    extraLocaleSettings = {
+      LC_ADDRESS = "pt_PT.utf8";
+      LC_IDENTIFICATION = "pt_PT.utf8";
+      LC_MEASUREMENT = "pt_PT.utf8";
+      LC_MONETARY = "pt_PT.utf8";
+      LC_NAME = "pt_PT.utf8";
+      LC_NUMERIC = "pt_PT.utf8";
+      LC_PAPER = "ja_JP.utf-8";
+      LC_TELEPHONE = "pt_PT.utf8";
+      LC_TIME = "ja_JP.utf-8";
+    };
   };
 
   users.users.crea = {
     isNormalUser = true;
     description = "Martim Moniz";
-    extraGroups = [ "networkmanager" "video" "scanner" "qemu-libvirtd" "wheel" "input" "adbusers" ];
+    extraGroups = [ "networkmanager" "video" "scanner" "qemu-libvirtd" "wheel" "input" ];
     shell = pkgs.zsh;
     # openssh.authorizedKeys.keys = sshKeys;
     hashedPassword = "$6$g3erPleT4pElaQQe$fDIA/dckjSAADHRtjQt3RGrLmFE6TjZ5acdaRSTOBWA/8OuQlnDGr0FZUfGGqxJlS0vJDPDtpPzm6pJo7i96j0";
@@ -37,8 +57,6 @@
   services.gnome.gnome-keyring.enable = true;
   security.pam.services.sddm.enableGnomeKeyring = true; # seems like a sddm issue
 
-  programs.adb.enable = true;
-
   environment.systemPackages = with pkgs; [
 	  qbittorrent
 	  yt-dlp
@@ -47,4 +65,6 @@
 	  home-manager
 	  (discord.override { nss = pkgs.nss_latest; withOpenASAR = true; }) # unlatest breaks nss_latest fix for firefox, but has openasar
   ];
+
+  system.stateVersion = "22.11"; # Did you read the comment?
 }

@@ -3,6 +3,10 @@
   services.xserver.desktopManager.gnome.enable = true;
   services.dbus.enable = true;
 
+  environment.systemPackages = [
+    pkgs.gnome.gnome-tweaks
+  ];
+
   environment.gnome.excludePackages = (with pkgs; [
     gnome-photos
     gnome-tour

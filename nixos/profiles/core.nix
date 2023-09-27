@@ -11,7 +11,7 @@
   };
 
   time.timeZone = "Europe/Lisbon";
-  i18n = {
+  i18n = lib.mkDefault {
     defaultLocale = "en_US.UTF-8";
     extraLocaleSettings = {
       LC_ADDRESS = "pt_PT.utf8";
@@ -25,7 +25,7 @@
       LC_TIME = "pt_PT.utf8";
     };
   };
-  console.keyMap = "pt-latin1";
+  console.keyMap = lib.mkDefault "pt-latin1";
 
   # networking.search = [ "rnl.tecnico.ulisboa.pt" ];
   # security.pki.certificateFiles = [

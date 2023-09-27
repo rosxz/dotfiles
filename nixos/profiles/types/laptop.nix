@@ -8,14 +8,14 @@
   ];
 
   boot = {
-    kernelParams = [ "quiet" ];
+    # kernelParams = [ "quiet" ];
     loader.efi.canTouchEfiVariables = true;
     loader.systemd-boot = {
       enable = true;
       editor = false;
       configurationLimit = 6;
     };
-    plymouth.enable = true;
+    # plymouth.enable = true;
   };
   services.fstrim.enable = true; # SSDs are the new normal
 
