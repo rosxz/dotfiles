@@ -3,6 +3,12 @@ self: super: rec {
     passthru.optional-dependencies = {
         kobo = [ super.python310Packages.jsonschema ];
     };
-    propagatedBuildInputs = old.propagatedBuildInputs ++ calibre-web.optional-dependencies.kobo;
+    preFixup = ''
+      makeWrapperArgs+=(--prefix PATH : ${super.lib.makeBinPath [
+        super.kepubify
+      ]})
+    '';
+
+    propagatedBuildInputs = old.propagatedBuildInputs ++ [ super.kepubify ] ++ calibre-web.optional-dependencies.kobo;
   });
 }
