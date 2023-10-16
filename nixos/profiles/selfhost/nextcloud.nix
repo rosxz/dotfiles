@@ -75,6 +75,10 @@ in {
     after = [ "postgresql.service" ];
   };
 
+  users.users.nextcloud = {
+    extraGroups = [ "media" ];
+  };
+
   # At a certain point add impermanence
   # (steal from carjorvaz)
 }

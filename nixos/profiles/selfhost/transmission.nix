@@ -26,6 +26,7 @@ in
 
   services.transmission = {
 	enable = true;
+	group = "media";
 	package = with pkgs; unstable.transmission_4;
 	openFirewall = true;
 	openPeerPorts = true;
@@ -66,7 +67,7 @@ in
 	# settings.trash-original-torrent-files = true;
 	settings.message-level = 1;
   };
-  users.users.transmission = {
-    extraGroups = [ "media" ];
-  };
+  #users.users.transmission = {
+  #  extraGroups = [ "media" ];
+  #};
 }

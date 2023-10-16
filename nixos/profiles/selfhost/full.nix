@@ -15,8 +15,10 @@
     postgresql
     invidious
     homer
-    prowlarr
+    sonarr
+    radarr
     bazarr
+    prowlarr
     rtorrent
     transmission
     betanin
