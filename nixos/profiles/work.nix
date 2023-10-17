@@ -21,7 +21,7 @@ in
 
   programs.zsh.shellAliases.ssh = lib.mkForce "vault write -field=signed_key ssh-client-signer/sign/rnl-admin public_key=@$HOME/.ssh/id_ed25519.pub > $HOME/.ssh/id_ed25519-cert.pub ; TERM=xterm-256color ssh";
   environment.sessionVariables = {
-    VAULT_ADDR = "http://vault.rnl.tecnico.ulisboa.pt";
+    VAULT_ADDR = "https://vault.rnl.tecnico.ulisboa.pt";
   };
 
   environment.systemPackages = with pkgs; [
