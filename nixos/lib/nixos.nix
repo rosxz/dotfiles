@@ -56,7 +56,7 @@ in {
   inherit rakeLeaves;
 
   mkPkgs = overlays:
-    let args = { inherit system; config.allowUnfree = true; };
+    let args = { inherit system; config.allowUnfree = true; config.permittedInsecurePackages = [ "electron-24.8.6" ]; };
     in
     import inputs.nixpkgs (args // {
       overlays = [

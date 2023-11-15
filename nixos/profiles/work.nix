@@ -13,7 +13,6 @@ in
   };
 
   imports = with profiles; [
-    wireguard
   ];
 
   security.pki.certificateFiles = ["${RNLCert}"];
@@ -29,6 +28,7 @@ in
     realvnc-vnc-viewer
     remmina
     vault
+    waypipe
 
     virt-manager
 

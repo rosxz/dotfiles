@@ -13,11 +13,9 @@
 
   home-manager.users.crea = {
     imports = with profiles.home; [ core neovim gammastep ];
-
-    # modules = { git.enable = true; };
-
     home.stateVersion = "23.05";
   };
+
   boot.supportedFilesystems = [ "zfs" ];
   boot.kernelPackages = config.boot.zfs.package.latestCompatibleLinuxPackages;
   networking.hostId = "1dc334bc"; # For example: head -c 8 /etc/machine-id

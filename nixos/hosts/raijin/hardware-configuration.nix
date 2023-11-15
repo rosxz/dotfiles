@@ -34,9 +34,9 @@
   # networking.interfaces.wlp3s0.useDHCP = lib.mkDefault true;
 
   # NVIDIA RNL
-  # services.xserver.videoDrivers = [ "nvidia" ];
-  # hardware.opengl.enable = true;
-  # hardware.nvidia.package = config.boot.kernelPackages.nvidiaPackages.legacy_470;
+  #services.xserver.videoDrivers = [ "nvidia" ];
+  #hardware.opengl.enable = true;
+  #hardware.nvidia.package = config.boot.kernelPackages.nvidiaPackages.legacy_470;
   # nvidia-drm.modeset=1 is required for some wayland compositors, e.g. sway
   # hardware.nvidia.modesetting.enable = true;
 

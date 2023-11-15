@@ -32,6 +32,7 @@ let
   ];
   commonPlugins = with pkgs.unstable.vimPlugins; [
     nvim-web-devicons
+    vim-markdown-composer
     {
       plugin = lualine-nvim;
       type = "lua";

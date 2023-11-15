@@ -13,9 +13,6 @@
 
   home-manager.users.crea = {
     imports = with profiles.home; [ core neovim gammastep ];
-
-    # modules = { git.enable = true; };
-
     home.stateVersion = "21.11";
   };
 

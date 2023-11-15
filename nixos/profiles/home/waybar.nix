@@ -1,3 +1,7 @@
+{ config, pkgs, lib, user, ... }:
+{
+  programs.waybar.enable = true;
+  programs.waybar.style = ''
 @define-color bg #282a36;
 @define-color fg #f8f8f2;
 @define-color fg-unfocused #6272a4;
@@ -297,3 +301,113 @@ window#waybar.chromium {
 #mpd.paused {
 	background-color: #51a37a;
 }*/
+  '';
+  programs.waybar.systemd.enable = true;
+  programs.waybar.settings = {
+    mainBar = {
+      layer = "top";
+      position = "bottom";
+      height = 34;
+      modules-left = ["idle_inhibitor" "clock" "sway/mode" "sway/workspaces"];
+      modules-center = [];
+      modules-right = ["pulseaudio" "backlight" "cpu" "temperature#cpu" "memory" "battery" "tray"];
+
+      "sway/workspaces" = {
+        disable-scroll = true;
+        all-outputs = true;
+      };
+	    "sway/mode"= {
+	    	"format"= "{}";
+	    };
+	    "idle_inhibitor"= {
+	    	"format"= "{icon}";
+	    	"format-icons"= {
+	    		"activated"= "";
+	    		"deactivated"= "";
+	    	};
+	    };
+	    "tray"= {
+	    	# "icon-size"= 21,
+	    	"spacing"= 10;
+	    };
+	    "clock"= {
+	    	"interval"= 5;
+	    	"format"= "🕒 {:%a %d/%b %H:%M}";
+	    	"format-alt"= "🕒 {:%a %F %T}";
+	    	"tooltip"= false;
+	    };
+	    "cpu"= {
+	    	"format"= " {usage}%";
+	    	"tooltip"= false;
+	    };
+	    "memory"= {
+	    	"format"= " {used:4.2f}/{total:4.2f} GiB";
+	    };
+	    "temperature#cpu"= {
+	    	# "thermal-zone"= 2,
+	    	"hwmon-path"= "/sys/class/hwmon/hwmon4/temp1_input";
+	    	"critical-threshold"= 80;
+	    	# "format-critical"= "{temperatureC}°C {icon}";
+	    	"format"= "{icon} {temperatureC}°C";
+	    	"format-icons"= ["" "" "" "" ""];
+	    };
+	    "temperature#gpu"= {
+	    	# "thermal-zone"= 2,
+	    	"hwmon-path"= "/sys/class/hwmon/hwmon6/temp1_input";
+	    	"critical-threshold"= 80;
+	    	# "format-critical"= "{temperatureC}°C {icon}",
+	    	"format"= "{icon} {temperatureC}°C";
+	    	"format-icons"= ["" "" "" "" ""];
+	    };
+	    "backlight"= {
+	    	# "device"= "acpi_video1",
+	    	"format"= "{icon} {percent}%";
+	    	"format-icons"= ["🔆"];
+	    };
+	    "battery"= {
+	    	"interval"= 2;
+	    	"states"= {
+	    		# "good"= 95,
+	    		"pre-warning"= 30;
+	    		"warning"= 20;
+	    		"critical"= 10;
+	    	};
+	    	"format"= "{icon} {capacity}%";
+	    	"format-charging"= "{icon} {capacity}%";
+	    	"format-plugged"= "{icon} {capacity}%";
+	    	"format-alt"= "{icon} {time}";
+	    	# "format-good"= "", // An empty format will hide the module
+	    	# "format-full"= "",
+	    	"format-icons"= ["" "" "" "" ""];
+	    };
+	    "network"= {
+	    	# "interface"= "wlp2*", // (Optional) To force the use of this interface
+	    	"format-wifi"= " {essid} ({signalStrength}%)";
+	    	"format-ethernet"= " {ifname}: {ipaddr}/{cidr}";
+	    	"format-linked"= " {ifname} (No IP)";
+	    	"format-disconnected"= "⚠ Disconnected";
+	    	"tooltip-format"= "{ifname}: {ipaddr}/{cidr}";
+	    	"on-click"= "nm-connection-editor";
+	    };
+	    "pulseaudio"= {
+	    	# "scroll-step"= 1, // %, can be a float
+	    	"format"= "{icon} {volume}% {format_source}";
+	    	"format-bluetooth"= "{icon} {volume}% {format_source}";
+	    	"format-bluetooth-muted"= "{icon} 🔇 {format_source}";
+	    	"format-muted"= "🔇 {format_source}";
+	    	"format-source"= " {volume}%";
+	    	"format-source-muted"= "";
+	    	"format-icons"= {
+	    		"headphones"= "";
+	    		"handsfree"= "";
+	    		"headset"= "";
+	    		"phone"= "";
+	    		"portable"= "";
+	    		"car"= "";
+	    		"default"= ["" "" ""];
+	    	};
+	    	"on-click"= "pavucontrol";
+	    };
+    };
+  };
+}

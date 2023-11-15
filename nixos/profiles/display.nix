@@ -62,7 +62,7 @@ in
       gdm = {
         enable = true;
         autoSuspend = lib.mkDefault false;
-        wayland = true;
+        wayland = lib.mkDefault true;
       };
     };
   };

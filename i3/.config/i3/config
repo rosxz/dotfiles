@@ -36,6 +36,7 @@ exec --no-startup-id feh --bg-scale /home/crea/.background-image
 # and nm-applet is a desktop environment-independent system tray GUI for it.
 exec --no-startup-id nm-applet
 exec "fcitx5 -d"
+exec "setxbmap pt"
 
 # Use pactl to adjust volume in PulseAudio.
 set $refresh_i3status killall -SIGUSR1 i3status

@@ -2,7 +2,7 @@
 
   imports = with profiles; [
     types.desktop
-    gnome
+    sway # !!
     work
     polkit
     docker
@@ -11,7 +11,6 @@
 
   home-manager.users.crea = {
     imports = with profiles.home; [ core neovim gammastep ];
-    # modules = { git.enable = true; };
     home.stateVersion = "21.11";
   };
 
@@ -65,7 +64,7 @@
 	  python3
 	  xsettingsd
 	  home-manager
-	  (discord.override { nss = pkgs.nss_latest; withOpenASAR = true; }) # unlatest breaks nss_latest fix for firefox, but has openasar
+    webcord-vencord
   ];
 
   # Enable the OpenSSH daemon.
