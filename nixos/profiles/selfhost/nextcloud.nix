@@ -23,6 +23,7 @@ in {
       enable = true;
       package = pkgs.nextcloud27; # Need to manually increment with every update
       hostName = domain;
+      configureRedis = true;
 
       https = true;
       autoUpdateApps.enable = true;
