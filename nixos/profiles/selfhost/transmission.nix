@@ -6,8 +6,8 @@ let
   transcodeDir = "/mnt/Storage/Torrents/Transcodes/"; # needs to be a subdir
 in
 {
-  age.secrets.transmission = {
-    file = "${self}/nixos/secrets/transmission.age";
+  age.secrets.transmission-secrets = {
+    file = "${self}/nixos/secrets/transmission-secrets.age";
     owner = "transmission";
   };
 
@@ -63,6 +63,7 @@ in
 	  fi
           '');
 	};
+	credentialsFile = config.age.secrets.transmission-secrets.path;
 	# settings.watch-dir-enabled = false; # Change later
 	# settings.trash-original-torrent-files = true;
 	settings.message-level = 1;
