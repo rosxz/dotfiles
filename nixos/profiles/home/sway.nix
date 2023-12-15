@@ -65,9 +65,6 @@ in
       };
 
       extraConfig = ''
-        output HDMI-A-1 res 2560x1440
-        output VGA-1 res 1920x1080 transform 270
-
         exec dbus-sway-environment
         exec configure-gtk
 

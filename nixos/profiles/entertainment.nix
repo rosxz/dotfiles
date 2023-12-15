@@ -4,6 +4,7 @@
     jellyfin-media-player
     stremio
     mgba
+    moonlight-qt
   ];
 
   # install steam link thru flathub

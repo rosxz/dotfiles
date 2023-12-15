@@ -2,7 +2,7 @@
 {
   imports = with profiles; [
     types.laptop # type of machine
-    gnome # window manager
+    sway # window manager
     work
     polkit
     gdt
@@ -61,7 +61,7 @@
 	  python3
 	  xsettingsd
 	  home-manager
-	  (discord.override { nss = pkgs.nss_latest; withOpenASAR = true; }) # unlatest breaks nss_latest fix for firefox, but has openasar
+    webcord-vencord
   ];
 
   system.stateVersion = "22.11"; # Did you read the comment?
