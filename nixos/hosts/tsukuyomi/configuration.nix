@@ -1,9 +1,8 @@
-{ self, config, pkgs, sshKeys, profiles, ... }: {
+{ config, pkgs, sshKeys, profiles, ... }: {
 
   imports = with profiles; [
     types.server
     selfhost.full
-    # selfhost
     ./hardware-configuration.nix
     # distributedBuilds
   ];
@@ -69,7 +68,7 @@
   	yt-dlp
   	xsettingsd
   	agenix
-	whatmp3
+	  whatmp3
   ];
 
   system.stateVersion = "22.05";
