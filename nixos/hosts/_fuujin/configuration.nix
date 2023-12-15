@@ -96,19 +96,6 @@
     openssh.authorizedKeys.keys = sshKeys;
   };
 
-  fonts.fonts = with pkgs; [
-    noto-fonts
-    noto-fonts-cjk
-    noto-fonts-emoji
-    liberation_ttf
-    fira-code
-    fira-code-symbols
-    font-awesome
-    source-han-sans
-    source-han-sans-japanese
-    source-han-serif-japanese
-  ];
-
   environment.sessionVariables = rec {
     # environment variables go here
     # export GDK_SCALE=2

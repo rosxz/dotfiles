@@ -66,7 +66,7 @@
       rebuild = ''sudo nixos-rebuild switch --flake "github:creaaidev/dotfiles?dir=nixos"
       '';
       ssh = "TERM=xterm-256color ssh";
-      ls = "exa --color=always --icons --group-directories-first";
+      ls = "eza --color=always --icons --group-directories-first";
     };
     interactiveShellInit = ''
    export ZSH=${pkgs.oh-my-zsh}/share/oh-my-zsh/
@@ -124,7 +124,7 @@ D /var/tmp 1777 root root 30d
     neovim
     stow
     fzf
-    exa
+    eza
     gettext
     git
     lf

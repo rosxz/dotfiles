@@ -33,7 +33,7 @@ in
     virt-manager
 
     (ansible.overrideAttrs (old: {
-      propagatedBuildInputs = old.propagatedBuildInputs ++ [ python310Packages.pywinrm ];
+      propagatedBuildInputs = old.propagatedBuildInputs ++ [ python3Packages.setuptools python3Packages.pywinrm ];
     }))
   ];
 }

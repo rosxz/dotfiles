@@ -1,7 +1,7 @@
 { config, inputs, lib, pkgs, ... }:
 {
   fonts = {
-    fonts = with pkgs; [
+    packages = with pkgs; [
       source-han-sans
       source-han-sans-japanese
       source-han-serif-japanese

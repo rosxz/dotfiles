@@ -2,8 +2,9 @@
 
   imports = with profiles; [
     types.desktop
-    sway # !!
+    gnome # !!
     work
+    entertainment
     polkit
     docker
     ./hardware-configuration.nix

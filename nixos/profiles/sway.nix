@@ -13,21 +13,6 @@ let
       '';
   };
 
-  configure-gtk = pkgs.writeTextFile {
-      name = "configure-gtk";
-      destination = "/bin/configure-gtk";
-      executable = true;
-      text = let
-        schema = pkgs.gsettings-desktop-schemas;
-        datadir = "${schema}/share/gsettings-schemas/${schema.name}";
-      in ''
-        export XDG_DATA_DIRS=${datadir}:$XDG_DATA_DIRS
-        gnome_schema=org.gnome.desktop.interface
-        gsettings set $gnome_schema gtk-theme 'Dracula'
-        gsettings set $gnome_schema icon-theme 'kora'
-        gsettings set $gnome_schema cursor-theme 'Bibata_Ghost'
-        '';
-  };
 in
 {
   programs = {
@@ -45,26 +30,18 @@ in
     imports = with profiles.home; [ sway waybar ];
   };
 
-  services.xserver = {
-    enable = true;
-    desktopManager = {
-      xterm.enable = false;
-      xfce = {
-        enable = false;
-        noDesktop = true;
-        enableXfwm = false;
-      };
-    };
-    displayManager = {
-      gdm = {
-        enable = true;
-        autoSuspend = false;
-        wayland = true;
-      };
-    };
-    # displayManager = {
-    #    defaultSession = "none+i3";
-  };
+  #services.xserver = {
+  #  desktopManager = {
+  #    xterm.enable = false;
+  #    xfce = {
+  #      enable = false;
+  #      noDesktop = true;
+  #      enableXfwm = false;
+  #    };
+  #  };
+  #  # displayManager = {
+  #  #    defaultSession = "none+i3";
+  #};
 
   services.dbus.enable = true;
   xdg.portal = {
