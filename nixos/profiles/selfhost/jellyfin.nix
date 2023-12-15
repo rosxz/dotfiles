@@ -1,9 +1,6 @@
 { pkgs, lib,config, ... }:
 {
   # 1. enable vaapi on OS-level
-  nixpkgs.config.packageOverrides = pkgs: {
-    vaapiIntel = pkgs.vaapiIntel.override { enableHybridCodec = true; };
-  };
   hardware.opengl = {
     enable = true;
     extraPackages = with pkgs; [
@@ -14,7 +11,7 @@
       intel-compute-runtime # OpenCL filter support (hardware tonemapping and subtitle burn-in)
     ];
   };
-  
+
   services.jellyfin = {
     enable = true;
     package = with pkgs; unstable.jellyfin;
@@ -26,4 +23,4 @@
 
   # 2. override default hardening measure from NixOS - this is default since 22.05
   systemd.services.jellyfin.serviceConfig.PrivateDevices = lib.mkForce false;
-}  
+}

@@ -5,17 +5,17 @@
     ensureDatabases = [ "invidious_db" "firefly_db" "nextcloud_db_pg" ];
     ensureUsers = [
       {
-        name = "invidious";
-        ensurePermissions."DATABASE invidious_db" = "ALL PRIVILEGES";
+        name = "invidious_db";
+        ensureDBOwnership = true;
       }
       {
-	      name = "firefly";
-	      ensurePermissions."DATABASE firefly_db" = "ALL PRIVILEGES";
+        name = "nextcloud_db_pg";
+        ensureDBOwnership = true;
       }
-      {
-        name = "nextcloud";
-        ensurePermissions."DATABASE nextcloud_db_pg" = "ALL PRIVILEGES";
-      }
+      #{
+	    #  name = "firefly";
+      #  ensureDBOwnership = true;
+      #}
     ];
   };
 

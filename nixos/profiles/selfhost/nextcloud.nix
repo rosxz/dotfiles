@@ -31,21 +31,22 @@ in {
       extraAppsEnable = true;
       extraApps = with config.services.nextcloud.package.packages.apps; {
         inherit memories calendar contacts mail notes tasks;
-        unsplash = pkgs.fetchNextcloudApp rec {
-	  url =
-            "https://github.com/nextcloud/unsplash/releases/download/v2.2.1/unsplash.tar.gz";
-          sha256 = "sha256-/fOkTIRAwMgtgqAykWI+ahB1uo6FlvUaDNKztCyBQfk=";
-	};
-	cookbook = pkgs.fetchNextcloudApp rec {
-          url =
-            "https://github.com/nextcloud/cookbook/releases/download/v0.10.2/Cookbook-0.10.2.tar.gz";
-          sha256 = "sha256-XgBwUr26qW6wvqhrnhhhhcN4wkI+eXDHnNSm1HDbP6M=";
-        };
-	news = pkgs.fetchNextcloudApp rec {
-          url =
-            "https://github.com/nextcloud/news/releases/download/22.0.0/news.tar.gz";
-          sha256 = "sha256-hhXPEITSbCiFs0o+TOsQnSasXBpjU9mA/OFsbzuaCPw=";
-        };
+        # fetchNextcloudApp borked
+        #unsplash = pkgs.fetchNextcloudApp rec {
+	      #  url =
+        #    "https://github.com/nextcloud/unsplash/releases/download/v2.2.1/unsplash.tar.gz";
+        #  sha256 = "sha256-/fOkTIRAwMgtgqAykWI+ahB1uo6FlvUaDNKztCyBQfk=";
+	      #};
+	      #cookbook = pkgs.fetchNextcloudApp rec {
+        #  url =
+        #    "https://github.com/nextcloud/cookbook/releases/download/v0.10.2/Cookbook-0.10.2.tar.gz";
+        #  sha256 = "sha256-XgBwUr26qW6wvqhrnhhhhcN4wkI+eXDHnNSm1HDbP6M=";
+        #};
+	      #news = pkgs.fetchNextcloudApp rec {
+        #  url =
+        #    "https://github.com/nextcloud/news/releases/download/24.0.0/news.tar.gz";
+        #  sha256 = "";
+        #};
       };
 
       # home = "/mnt/Storage/nextcloud";
@@ -58,7 +59,7 @@ in {
         trustedProxies = [ "100.83.228.83" ];
 
         dbtype = "pgsql";
-        dbuser = "nextcloud";
+        dbuser = "nextcloud_db_pg";
 	dbhost = "/run/postgresql"; # nextcloud will add /.s.PGSQL.5432 by itself
         dbname = "nextcloud_db_pg";
         dbpassFile = config.age.secrets.nextcloud-db-pass.path;
