@@ -244,7 +244,7 @@ FIREFLY_III_LAYOUT=v1
   '';
 in {
   age.secrets.firefly-env = {
-    file = "${self}/nixos/secrets/firefly-env.age";
+    file = "${self}/secrets/firefly-env.age";
   };
 
   virtualisation.oci-containers.containers.firefly = {

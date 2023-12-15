@@ -1,7 +1,7 @@
 { self, config, pkgs, ... }: {
 
   age.secrets.martim_at_moniz_passwd = {
-    file = "${self}/nixos/secrets/martim_at_moniz_passwd.age";
+    file = "${self}/secrets/martim_at_moniz_passwd.age";
     owner = "root";
     group = "root";
   };

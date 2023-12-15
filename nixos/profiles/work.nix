@@ -7,7 +7,7 @@ let RNLCert = builtins.fetchurl {
 in
 {
   age.secrets.vault-agent-secret = {
-    file = "${self}/nixos/secrets/vault-agent-secret.age";
+    file = "${self}/secrets/vault-agent-secret.age";
     owner = "root";
     group = "root";
   };

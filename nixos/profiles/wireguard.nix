@@ -1,7 +1,7 @@
 { self, config, lib, pkgs, ... }:
 {
   age.secrets.wireguard-rnl-private = {
-    file = "${self}/nixos/secrets/wireguard-rnl-private.age";
+    file = "${self}/secrets/wireguard-rnl-private.age";
   };
 
   networking = {

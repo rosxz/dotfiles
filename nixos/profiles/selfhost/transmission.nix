@@ -7,12 +7,12 @@ let
 in
 {
   age.secrets.transmission-secrets = {
-    file = "${self}/nixos/secrets/transmission-secrets.age";
+    file = "${self}/secrets/transmission-secrets.age";
     owner = "transmission";
   };
 
   age.secrets.betanin-api-key = {
-    file = "${self}/nixos/secrets/betanin-api-key.age";
+    file = "${self}/secrets/betanin-api-key.age";
     owner = "transmission";
   };
 

@@ -7,13 +7,13 @@
 let domain = "cloud.moniz.pt";
 in {
   age.secrets.nextcloud-db-pass = {
-    file = "${self}/nixos/secrets/nextcloud-db-pass.age";
+    file = "${self}/secrets/nextcloud-db-pass.age";
     owner = "nextcloud";
     group = "nextcloud";
   };
 
   age.secrets.nextcloud-admin-pass = {
-    file = "${self}/nixos/secrets/nextcloud-admin-pass.age";
+    file = "${self}/secrets/nextcloud-admin-pass.age";
     owner = "nextcloud";
     group = "nextcloud";
   };
@@ -59,9 +59,9 @@ in {
         trustedProxies = [ "100.83.228.83" ];
 
         dbtype = "pgsql";
-        dbuser = "nextcloud_db_pg";
+        dbuser = "nextcloud";
 	dbhost = "/run/postgresql"; # nextcloud will add /.s.PGSQL.5432 by itself
-        dbname = "nextcloud_db_pg";
+        dbname = "nextcloud";
         dbpassFile = config.age.secrets.nextcloud-db-pass.path;
 
         adminpassFile = config.age.secrets.nextcloud-admin-pass.path;

@@ -1,7 +1,7 @@
 self: super: rec {
   calibre-web = super.calibre-web.overrideAttrs (old: {
     passthru.optional-dependencies = {
-        kobo = [ super.python310Packages.jsonschema ];
+        kobo = [ super.python3Packages.jsonschema ];
     };
     preFixup = ''
       makeWrapperArgs+=(--prefix PATH : ${super.lib.makeBinPath [
@@ -9,6 +9,7 @@ self: super: rec {
       ]})
     '';
 
-    propagatedBuildInputs = old.propagatedBuildInputs ++ [ super.kepubify ] ++ calibre-web.optional-dependencies.kobo;
+    propagatedBuildInputs = old.propagatedBuildInputs ++ [ super.python3Packages.setuptools
+      super.kepubify ] ++ calibre-web.optional-dependencies.kobo;
   });
 }

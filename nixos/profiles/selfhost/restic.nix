@@ -1,7 +1,7 @@
 { self, config, pkgs, lib, ... }: {
 
 age.secrets.restic-pass = {
-  file = "${self}/nixos/secrets/restic-pass.age";
+  file = "${self}/secrets/restic-pass.age";
 };
 
 services.restic.backups.STORAGE = {

@@ -2,20 +2,18 @@
 
   services.postgresql = {
     enable = true;
-    ensureDatabases = [ "invidious_db" "firefly_db" "nextcloud_db_pg" ];
+    ensureDatabases = [ "invidious" "nextcloud" ];
     ensureUsers = [
       {
-        name = "invidious_db";
+        name = "invidious";
         ensureDBOwnership = true;
+	ensurePermissions."DATABASE invidious" = "ALL PRIVILEGES";
       }
       {
-        name = "nextcloud_db_pg";
+        name = "nextcloud";
         ensureDBOwnership = true;
+	ensurePermissions."DATABASE nextcloud" = "ALL PRIVILEGES";
       }
-      #{
-	    #  name = "firefly";
-      #  ensureDBOwnership = true;
-      #}
     ];
   };
 
