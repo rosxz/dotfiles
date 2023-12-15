@@ -28,8 +28,6 @@ in {
       https = true;
       autoUpdateApps.enable = true;
 
-      enableBrokenCiphersForSSE = false;
-
       extraAppsEnable = true;
       extraApps = with config.services.nextcloud.package.packages.apps; {
         inherit memories calendar contacts mail notes tasks;

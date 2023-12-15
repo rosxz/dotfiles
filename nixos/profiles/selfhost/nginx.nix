@@ -54,7 +54,7 @@
     "cloud.moniz.pt" = {
       forceSSL = true;
       useACMEHost = "moniz.pt";
-      locations."/".proxyPass = "http://127.0.0.1:80";
+      # locations."/".proxyPass = "http://127.0.0.1:80"; # according to vaz, this isn't needed
     };
 
     # Private

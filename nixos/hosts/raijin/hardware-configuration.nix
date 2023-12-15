@@ -41,6 +41,5 @@
   # hardware.nvidia.modesetting.enable = true;
 
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
-  # hardware.video.hidpi.enable = lib.mkDefault true; # Deprecated
   hardware.cpu.amd.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
 }
