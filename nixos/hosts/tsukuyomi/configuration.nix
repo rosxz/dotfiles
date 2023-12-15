@@ -69,6 +69,7 @@
   	yt-dlp
   	xsettingsd
   	agenix
+	whatmp3
   ];
 
   system.stateVersion = "22.05";

@@ -15,6 +15,10 @@ in {
     thelounge = {
       enable = true;
       plugins = [ pkgs.theLoungePlugins.themes.mininapse pkgs.theLoungePlugins.themes.amoled ];
+      extraConfig = {
+	reverseProxy = true;
+	prefetch = true;
+      };
     };
   };
 }
