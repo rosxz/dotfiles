@@ -14,7 +14,7 @@
     nextcloud
     postgresql
     invidious
-    homer
+    # homer
     sonarr
     radarr
     bazarr
@@ -23,5 +23,6 @@
     transmission
     betanin
     calibre
+    thelounge
   ];
 }

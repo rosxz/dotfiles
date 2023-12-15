@@ -20,6 +20,7 @@
             ];
         };
     };
+    enableManageSieve = true;
 
     certificateScheme = "acme-nginx";
   };
@@ -29,6 +30,7 @@
 
   environment.persistence."/persist".directories = [
     "/var/lib/rspamd"
+    "/var/lib/acme"
     {
      directory = "/var/vmail";
       user = "virtualMail";
@@ -39,6 +41,10 @@
       user = "opendkim";
       group = "opendkim";
     }
-    "/var/lib/acme"
+    {
+      directory = "/var/sieve";
+      user = "virtualMail";
+      group = "virtualMail";
+    }
   ];
 }
