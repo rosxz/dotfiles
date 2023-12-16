@@ -9,7 +9,7 @@ self: super: rec {
       inherit pname version;
       name = pname;
       rev = version;
-      owner = "creaaidev";
+      owner = "rosxz";
       repo = "whatmp3";
       sha256 = "sha256-WXvXgaUtI4xt2e2hwWCNNEuvn5a+OtEH5TbwgkukLas=";
     };

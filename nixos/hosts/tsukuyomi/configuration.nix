@@ -3,9 +3,12 @@
   imports = with profiles; [
     types.server
     selfhost.full
+    syncthing # not all servers need it
     ./hardware-configuration.nix
     # distributedBuilds
   ];
+
+  system.autoUpgrade.enable = true;
 
   modules.services.hd-idle = {
     enable = true;

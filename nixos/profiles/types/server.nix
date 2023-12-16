@@ -2,7 +2,6 @@
 
   imports = with profiles; [
     core
-    syncthing
   ];
 
   networking.networkmanager.enable = false;
@@ -38,8 +37,8 @@
   };
 
   system.autoUpgrade = {
-    enable = true;
-    flake = "github:creaaidev/dotfiles?dir=nixos";
+    enable = lib.mkDefault false; # dont want mailserver going down
+    flake = "github:rosxz/dotfiles?dir=nixos";
     allowReboot = true;
     # Daily 00:00
     dates = "daily UTC";
