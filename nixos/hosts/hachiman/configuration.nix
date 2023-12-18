@@ -13,6 +13,8 @@
   };
   zramSwap.enable = true;
 
+  system.autoUpgrade.enable = false;
+
   environment.persistence."/persist" = {
     hideMounts = true;
     files = [

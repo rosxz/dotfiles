@@ -63,10 +63,10 @@
       poweroff = "poweroff --no-wall";
       reboot = "reboot --no-wall";
       update = "nix flake update";
-      rebuild = ''sudo nixos-rebuild switch --flake "github:creaaidev/dotfiles?dir=nixos"
+      rebuild = ''sudo nixos-rebuild switch --flake "github:rosxz/dotfiles?dir=nixos"
       '';
       ssh = "TERM=xterm-256color ssh";
-      ls = "exa --color=always --icons --group-directories-first";
+      ls = "eza --color=always --icons --group-directories-first";
     };
     interactiveShellInit = ''
    export ZSH=${pkgs.oh-my-zsh}/share/oh-my-zsh/
