@@ -30,7 +30,7 @@ in {
 
       extraAppsEnable = true;
       extraApps = with config.services.nextcloud.package.packages.apps; {
-        inherit memories calendar contacts mail notes tasks;
+        inherit calendar contacts mail notes tasks; #memories
         # fetchNextcloudApp borked
         #unsplash = pkgs.fetchNextcloudApp rec {
 	      #  url =
