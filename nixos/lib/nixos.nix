@@ -66,12 +66,10 @@ in {
       ] ++ lib.attrValues overlays;
     });
 
-  mkOverlays = overlaysDir: builtins.listToAttrs (map
-    (m: {
-      name = lib.removeSuffix ".nix" (builtins.baseNameOf m);
-      value = import m;
-    })
-    (lib.my.listModulesRecursive overlaysDir));
+  mkOverlays = overlaysDir:
+    lib.mapAttrsRecursive
+    (_: module: import module {inherit rakeLeaves inputs;})
+    (lib.my.rakeLeaves overlaysDir);
 
   mkProfiles = profilesDir:
     (map

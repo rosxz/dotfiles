@@ -1,11 +1,13 @@
+# Graciously done by: Abread, tyvm!
 {
+  self,
   config,
   pkgs,
   profiles,
   ...
 }: let
-  appn = "firefly-iii";
-  domain = "fin.moniz.pt";
+  appn = "firefly-iii-data-importer";
+  domain = "findi.moniz.pt";
 
   # Firefly must be able to store state (storage and bootstrap/cache)
   dataDir = "/var/lib/${appn}";
@@ -20,21 +22,21 @@
     APP_EVENTS_CACHE = "${dataDir}/cache/events.php";
   };
 
-  fireflyEnv =
+  fireflyUrl = "https://fin.moniz.pt";
+  dataImporterEnv =
     laravelEnv
     // {
-      APP_ENV = "production";
-      SITE_OWNER = "robots@moniz.pt";
-      DEFAULT_LOCALE = "pt_PT";
-      TZ = config.time.timeZone;
+      FIREFLY_III_URL = fireflyUrl;
+      VANITY_URL = fireflyUrl;
+      NORDIGEN_ID_FILE = config.age.secrets.nordigen-id.path;
+      NORDIGEN_KEY_FILE = config.age.secrets.nordigen-key.path;
 
-      DB_CONNECTION = "pgsql";
-      DB_HOST = "/run/postgresql"; # socket dir
-      DB_PORT = "5432"; # postgres is weird with sockets
-      DB_USERNAME = appn;
-      DB_DATABASE = appn;
-      # TODO: setup email
-      APP_URL = "https://${domain}";
+      APP_ENV = "production";
+      TZ = config.time.timeZone;
+      EXPECT_SECURE_URL = "true";
+      # TODO: email (?)
+
+      APP_URL = "https://${domain}"; # not used by anything supposedly but oh well
     };
 
   wrappedArtisan = pkgs.writeShellScriptBin "artisan-${appn}" ''
@@ -43,19 +45,28 @@
       exec ${pkgs.util-linux}/bin/runuser -u "${appn}" -- "$0" "$@"
     fi
 
-    ${builtins.concatStringsSep "\n" (builtins.attrValues (builtins.mapAttrs (name: value: "export ${name}=${value}") fireflyEnv))}
+    ${builtins.concatStringsSep "\n" (builtins.attrValues (builtins.mapAttrs (name: value: "export ${name}=${value}") dataImporterEnv))}
 
     # load app key
     source '${appKeyEnvPath}'
     export APP_KEY
 
-    exec ${pkgs.firefly-iii}/share/php/firefly-iii/artisan "$@"
+    exec ${pkgs.firefly-iii-data-importer}/share/php/firefly-iii-data-importer/artisan "$@"
   '';
 in {
-  imports = [ ];
+  age.secrets.nordigen-id = {
+    file = "${self}/secrets/nordigen-id.age";
+  };
+  age.secrets.nordigen-key = {
+    file = "${self}/secrets/nordigen-key.age";
+  };
+
+  imports = [
+    # profiles.webserver
+  ];
 
   services.nginx.virtualHosts.${domain} = {
-    root = "${pkgs.firefly-iii}/share/php/firefly-iii/public";
+    root = "${pkgs.firefly-iii-data-importer}/share/php/firefly-iii-data-importer/public";
     useACMEHost = "moniz.pt";
     forceSSL = true;
 
@@ -93,7 +104,7 @@ in {
       "catch_workers_output" = true;
     };
     phpEnv =
-      fireflyEnv
+      dataImporterEnv
       // {
         APP_KEY = "$APP_KEY"; # load from phpfpm service env
       };
@@ -101,9 +112,6 @@ in {
   systemd.services."phpfpm-${appn}" = {
     requires = [
       "laravelsetup-${appn}.service"
-
-      # require DB for PHP, to avoid weird cascading errors
-      "postgresql.service"
     ];
     after = [
       "laravelsetup-${appn}.service"
@@ -143,14 +151,6 @@ in {
     '';
   };
 
-  services.postgresql.ensureDatabases = [appn];
-  services.postgresql.ensureUsers = [
-    {
-      name = appn;
-      ensureDBOwnership = true;
-    }
-  ];
-
   users.users.${appn} = {
     isSystemUser = true;
     home = dataDir;
@@ -162,27 +162,5 @@ in {
   users.users.root.packages = [wrappedArtisan];
   users.groups.${appn} = {};
 
-  systemd.services."${appn}-cron" = {
-    description = "Firefly III cron";
-    requires = ["nginx.service" "phpfpm-${appn}.service"];
-    wantedBy = ["phpfpm-${appn}.service"];
-    after = ["nginx.service" "phpfpm-${appn}.service" "postgresql.service"];
-
-    serviceConfig = {
-      Type = "oneshot";
-      User = appn;
-      Group = appn;
-    };
-    environment = fireflyEnv;
-    script = ''
-      ${wrappedArtisan}/bin/artisan-${appn} firefly-iii:cron
-    '';
-  };
-  systemd.timers."${appn}-cron" = {
-    unitConfig.Description = "Firefly III cron";
-    timerConfig.OnCalendar = "daily";
-    wantedBy = ["timers.target"];
-  };
-
-  # TODO: backup ${dataDir}/storage/upload (or just the whole dataDir) and DB
+  # TODO: backups?
 }

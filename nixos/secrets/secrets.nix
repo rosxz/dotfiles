@@ -26,4 +26,6 @@ in
   "vault-agent-secret.age".publicKeys = [ ryuujin ryuujinUser raijin raijinUser ];
   "firefly-env.age".publicKeys = [ tsukuyomi ] ++ users;
   "transmission-secrets.age".publicKeys = [ tsukuyomi ] ++ [ tsukuyomiUser ryuujinUser ];
+  "nordigen-id.age".publicKeys = [ tsukuyomi ] ++ [ tsukuyomiUser ryuujinUser ];
+  "nordigen-key.age".publicKeys = [ tsukuyomi ] ++ [ tsukuyomiUser ryuujinUser ];
 }

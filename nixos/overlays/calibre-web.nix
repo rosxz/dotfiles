@@ -1,4 +1,4 @@
-self: super: rec {
+{...}: self: super: rec {
   calibre-web = super.calibre-web.overrideAttrs (old: {
     passthru.optional-dependencies = {
         kobo = [ super.python3Packages.jsonschema ];

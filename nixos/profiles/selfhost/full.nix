@@ -24,5 +24,8 @@
     betanin
     calibre
     thelounge
+    # finance
+    firefly
+    firefly-data-importer
   ];
 }

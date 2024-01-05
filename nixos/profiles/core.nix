@@ -144,5 +144,12 @@ D /var/tmp 1777 root root 30d
     agenix
   ];
 
+  system.activationScripts.diff = {
+    supportsDryActivation = true;
+    text = ''
+      ${pkgs.nvd}/bin/nvd --nix-bin-dir=${pkgs.nix}/bin diff /run/current-system "$systemConfig"
+    '';
+  };
+
   system.stateVersion = lib.mkDefault "22.05";
 }

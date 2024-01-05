@@ -22,18 +22,29 @@
 
   security.acme = {
     acceptTerms = true;
-    defaults.email = "martim@moniz.pt";
-
+    defaults = {
+    	reloadServices = [ "nginx" ];
+    	email = "robots@moniz.pt";
+    	group = config.services.nginx.group;
+      	dnsProvider = "cloudflare";
+      	dnsPropagationCheck = true;
+    };
     certs."moniz.pt" = {
       domain = "moniz.pt";
       extraDomainNames = [ "*.moniz.pt" ];
-      dnsProvider = "cloudflare";
-      dnsPropagationCheck = true;
-      credentialsFile = /var/lib/secrets/nginx/acme;
+      credentialsFile = /var/lib/secrets/nginx/acme; # TODO
     };
   };
 
   users.users.nginx.extraGroups = [ "acme" ];
+  # Always use Nginx
+  services.httpd.enable = lib.mkForce false;
+  # Override the user and group to match the Nginx ones
+  # Since some services uses the httpd user and group
+  services.httpd = {
+    user = lib.mkForce config.services.nginx.user;
+    group = lib.mkForce config.services.nginx.group;
+  };
 
   # HTTPS
 
