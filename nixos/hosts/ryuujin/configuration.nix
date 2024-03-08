@@ -7,6 +7,7 @@
     polkit
     gdt
     docker
+    dev
     entertainment
     ./hardware-configuration.nix
   ];
@@ -22,7 +23,7 @@
   services.zfs.autoScrub.enable = true;
 
   i18n = {
-    defaultLocale = "ja_JP.UTF-8";
+    # defaultLocale = "ja_JP.UTF-8";
     extraLocaleSettings = {
       LC_ADDRESS = "pt_PT.utf8";
       LC_IDENTIFICATION = "pt_PT.utf8";
@@ -62,6 +63,8 @@
 	  xsettingsd
 	  home-manager
     webcord-vencord
+    gimp
+    inkscape
   ];
 
   system.stateVersion = "22.11"; # Did you read the comment?

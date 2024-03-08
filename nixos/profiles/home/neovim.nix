@@ -29,6 +29,7 @@ let
     tree-sitter-typescript
     tree-sitter-vim
     tree-sitter-yaml
+    tree-sitter-julia
   ];
   commonPlugins = with pkgs.unstable.vimPlugins; [
     nvim-web-devicons
@@ -139,9 +140,10 @@ vim.api.nvim_create_autocmd({ "FileType" }, { callback = define_fdm })
     vim-commentary
 
     {
-      plugin = nvim-base16;
+      plugin = base16-nvim;
       config = ''
       " colorscheme settings
+      set termguicolors
       set background=dark
       colorscheme base16-horizon-dark
       '';
@@ -153,23 +155,9 @@ vim.api.nvim_create_autocmd({ "FileType" }, { callback = define_fdm })
       plugin = nvim-osc52;
       type = "lua";
       config = ''
-local function copy(lines, _)
-  require('osc52').copy(table.concat(lines, '\n'))
-end
-
-local function paste()
-  return {vim.fn.split(vim.fn.getreg(""), '\n'), vim.fn.getregtype("")}
-end
-
-vim.g.clipboard = {
-  name = 'osc52',
-  copy = {['+'] = copy, ['*'] = copy},
-  paste = {['+'] = paste, ['*'] = paste},
-}
-
--- Now the '+' register will copy to system clipboard using OSC52
-vim.keymap.set('n', '<leader>y', '"+y')
-vim.keymap.set('x', '<leader>y', '"+y')
+        vim.keymap.set('n', '<leader>y', require('osc52').copy_operator, {expr = true})
+        vim.keymap.set('n', '<leader>yy', '<leader>c_', {remap = true})
+        vim.keymap.set('v', '<leader>y', require('osc52').copy_visual)
       '';
     }
 
@@ -199,6 +187,11 @@ capabilities.textDocument.completion.completionItem.resolveSupport = {
 	}
 }
 
+lsp.julials.setup{
+  capabilities = capabilities,
+  on_attach = require'generic_lsp'
+}
+
 lsp.rust_analyzer.setup{
 	capabilities = capabilities,
 	on_attach = require'generic_lsp'
@@ -210,6 +203,7 @@ lsp.texlab.setup{
       '';
     }
     lsp_extensions-nvim
+    conjure
 
     {
       plugin = presence-nvim;
@@ -334,6 +328,8 @@ in
 
         " Change leader key to comma
         let mapleader = ","
+        " Change localleader key to cedilla for conjure
+        let maplocalleader = "ç"
 
         " fuzzy find files in the working directory (where you launched Vim from)
         nmap <expr> <leader>f FugitiveHead() != "" ? ':GFiles --cached --others --exclude-standard<CR>' : ':Files<CR>'
