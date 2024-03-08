@@ -23,7 +23,6 @@ in
   "wireguard-rnl-private.age".publicKeys = [ ryuujin ryuujinUser ebisu ebisuUser ];
   "martim_at_moniz_passwd.age".publicKeys = [ hachiman ryuujinUser ];
   "betanin-api-key.age".publicKeys = [ tsukuyomi tsukuyomiUser ryuujinUser ];
-  "vault-agent-secret.age".publicKeys = [ ryuujin ryuujinUser raijin raijinUser ];
   "firefly-env.age".publicKeys = [ tsukuyomi ] ++ users;
   "transmission-secrets.age".publicKeys = [ tsukuyomi ] ++ [ tsukuyomiUser ryuujinUser ];
   "nordigen-id.age".publicKeys = [ tsukuyomi ] ++ [ tsukuyomiUser ryuujinUser ];
