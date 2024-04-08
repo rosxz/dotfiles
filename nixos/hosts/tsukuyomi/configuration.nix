@@ -7,6 +7,7 @@
     ./hardware-configuration.nix
     # distributedBuilds
   ];
+  services.logrotate.checkConfig = false; ## FIXME: fix this workaround 
 
   system.autoUpgrade.enable = true;
 

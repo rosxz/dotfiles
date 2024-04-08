@@ -15,6 +15,7 @@
     postgresql
     invidious
     # homer
+    ## arrs
     sonarr
     radarr
     bazarr
@@ -24,8 +25,10 @@
     betanin
     calibre
     thelounge
-    # finance
-    firefly
-    firefly-data-importer
+    ## finance
+    # firefly
+    # firefly-data-importer
+    ## backups
+    restic
   ];
 }

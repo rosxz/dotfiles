@@ -7,24 +7,20 @@ age.secrets.restic-pass = {
 services.restic.backups.STORAGE = {
   timerConfig = { OnCalendar = "weekly"; };
   repository = "/mnt/Backup/STORAGE";
-  paths = [ "/mnt/Storage/Torrents" ];
+  paths = [ "/mnt/Storage/Torrents" "/mnt/Storage/nextcloud" ];
   passwordFile = config.age.secrets.restic-pass.path;
   initialize = true;
-  pruneOpts = [ "--keep-weekly 3" ];
+  pruneOpts = [ "--keep-weekly 1" ];
   extraBackupArgs = [ "--compression=max" ];
-  # backupPrepareCommand = (builtins.readFile ../utils/resticStartup.sh);
-  # backupCleanupCommand = (builtins.readFile ../utils/resticPost.sh);
   backupPrepareCommand = ''
    #!/bin/sh
-   ${pkgs.mount}/bin/mount /dev/disk/by-label/BACKUP /mnt/Backup
+   ${pkgs.mount}/bin/mount /dev/sda1 /mnt/Backup
   '';
   # ${pkgs.transmission}/bin/transmission-remote -N /var/lib/secrets/transmission/.netrc -t all --stop
-  # ${pkgs.killall}/bin/killall -s SIGSTOP qbittorrent-nox
   backupCleanupCommand = ''
    #!/bin/sh
    ${pkgs.umount}/bin/umount /mnt/Backup
   '';
   # ${pkgs.transmission}/bin/transmission-remote -N /var/lib/secrets/transmission/.netrc -t all --start
-  # ${pkgs.killall}/bin/killall -s SIGCONT qbittorrent
 };
 }

@@ -18,7 +18,7 @@
 
   services.invidious = {
     package = pkgs.unstable.invidious;
-    enable = false; # erm etto
+    enable = true;
     settings = {
         db = {
             user = "invidious";
@@ -33,7 +33,10 @@
 	registration_enabled = false;
     };
     extraSettingsFile = config.age.secrets.invidious-extra-settings.path;
-    database.passwordFile = config.age.secrets.invidious-db-pass.path;
+    database = {
+    	passwordFile = config.age.secrets.invidious-db-pass.path;
+	createLocally = false;
+    };
   };
 
   systemd.timers."invidious-reset" = {

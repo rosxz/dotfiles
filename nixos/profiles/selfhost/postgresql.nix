@@ -7,12 +7,10 @@
       {
         name = "invidious";
         ensureDBOwnership = true;
-	ensurePermissions."DATABASE invidious" = "ALL PRIVILEGES";
       }
       {
         name = "nextcloud";
         ensureDBOwnership = true;
-	ensurePermissions."DATABASE nextcloud" = "ALL PRIVILEGES";
       }
     ];
   };
