@@ -11,7 +11,7 @@
     agenix.url = "github:ryantm/agenix/main";
     agenix.inputs.nixpkgs.follows = "nixpkgs";
 
-    nixos-mailserver.url = "gitlab:simple-nixos-mailserver/nixos-mailserver/nixos-23.05";
+    nixos-mailserver.url = "gitlab:simple-nixos-mailserver/nixos-mailserver/nixos-23.11";
     nixos-mailserver.inputs.nixpkgs.follows = "nixpkgs";
 
     impermanence.url = "github:nix-community/impermanence/master";
