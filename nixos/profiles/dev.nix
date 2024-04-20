@@ -5,6 +5,5 @@
   ];
 
   environment.systemPackages = [
-    pkgs.unstable.julia-bin
   ];
 }

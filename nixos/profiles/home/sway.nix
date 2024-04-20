@@ -68,12 +68,12 @@ in
         exec dbus-sway-environment
         exec configure-gtk
 
-        exec sww init
-        exec sww img $HOME/.background-image
+        exec swww init
+        exec swww img $HOME/.background-image
         exec fcitx5
         exec nm-applet --indicator
-        exec blueman--aplet
         exec swayidle -w before-sleep $lock
+        exec blueman--aplet
       '';
 
       extraSessionCommands = ''

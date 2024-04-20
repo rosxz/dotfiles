@@ -53,7 +53,8 @@
       KbdInteractiveAuthentication = false;
     };
   };
-  programs.ssh.startAgent = true;
+  # programs.ssh.startAgent = true;
+  programs.mosh.enable = true;
 
   programs.zsh = {
     enable = true;

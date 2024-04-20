@@ -35,5 +35,6 @@
     tagainijisho
     unstable.goldendict-ng
     qolibri
+    manga-ocr
   ];
 }

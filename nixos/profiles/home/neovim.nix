@@ -29,7 +29,6 @@ let
     tree-sitter-typescript
     tree-sitter-vim
     tree-sitter-yaml
-    tree-sitter-julia
   ];
   commonPlugins = with pkgs.unstable.vimPlugins; [
     nvim-web-devicons
@@ -187,11 +186,6 @@ capabilities.textDocument.completion.completionItem.resolveSupport = {
 	}
 }
 
-lsp.julials.setup{
-  capabilities = capabilities,
-  on_attach = require'generic_lsp'
-}
-
 lsp.rust_analyzer.setup{
 	capabilities = capabilities,
 	on_attach = require'generic_lsp'
@@ -203,7 +197,7 @@ lsp.texlab.setup{
       '';
     }
     lsp_extensions-nvim
-    conjure
+    copilot-vim
 
     {
       plugin = presence-nvim;

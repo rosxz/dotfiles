@@ -83,6 +83,7 @@ in
 	  brightnessctl
 	  xarchiver # thunar
     configure-gtk
+    trashy
 
     # |_> wayland specific tools
 	  grim
