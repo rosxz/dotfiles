@@ -5,6 +5,7 @@ let
   raijin = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILA7kogqyTlmdn4sXPwmM6U2RlOsm6uyc981/CyEI0cm root@raijin";
   ryuujin = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICKTj6ug2eor2EDMVGebzUWgfAQdXlcQZ9rjZ/EeDp9Y root@ryuujin";
   hachiman = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIN5sIZ/tykBmj5CgfZSvxlYL+27eBC74kp9qNw5UkPK7 root@hachiman";
+  navi = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMEmRCjtyx60uB7opTk7l1Plk8YVEzpSspEzf6gVgi2L root@navi";
   systems = [ tsukuyomi hachiman ebisu raijin ryuujin ];
 
   # user keys
@@ -12,7 +13,8 @@ let
   ebisuUser = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJcUMSSFZQheROdhFVmIUwBTbAVBv9YUm/Ib3ED3O0gv crea@pasokon";
   raijinUser = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIL7tve12K34nhNgVYZ6VgQBRrJs10v+hClpyzpXTIb/n crea@raijin";
   ryuujinUser = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIB0Y66xC+lCLENxktcVwGYacISi8A+KEbijg7N+w5HcF crea@ryuujin";
-  users = [ tsukuyomiUser ebisuUser raijinUser ryuujinUser ];
+  naviUser = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIC36CNRkhRvwygw8dGAHE7ThT5kw2RjuX/X5MzUIfFSU crea@navi";
+  users = [ tsukuyomiUser ebisuUser raijinUser ryuujinUser naviUser ];
 in
 {
   "restic-pass.age".publicKeys = [ tsukuyomi tsukuyomiUser ryuujinUser ];
@@ -20,7 +22,7 @@ in
   "nextcloud-admin-pass.age".publicKeys = [ tsukuyomi tsukuyomiUser ryuujinUser ];
   "invidious-extra-settings.age".publicKeys = [ tsukuyomi tsukuyomiUser ryuujinUser ];
   "invidious-db-pass.age".publicKeys = [ tsukuyomi tsukuyomiUser ryuujinUser ];
-  "wireguard-rnl-private.age".publicKeys = [ ryuujin ryuujinUser ebisu ebisuUser ];
+  "wireguard-rnl-private.age".publicKeys = [ ryuujin ryuujinUser navi naviUser ];
   "martim_at_moniz_passwd.age".publicKeys = [ hachiman ryuujinUser ];
   "betanin-api-key.age".publicKeys = [ tsukuyomi tsukuyomiUser ryuujinUser ];
   "firefly-env.age".publicKeys = [ tsukuyomi ] ++ users;
