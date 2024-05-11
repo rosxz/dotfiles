@@ -21,16 +21,22 @@ in {
   services = {
     nextcloud = {
       enable = true;
-      package = pkgs.nextcloud28; # Need to manually increment with every update
+      package = pkgs.nextcloud29; # Need to manually increment with every update
       hostName = domain;
       configureRedis = true;
 
       https = true;
       autoUpdateApps.enable = true;
 
+      # appstoreEnable = true;
       extraAppsEnable = true;
       extraApps = with config.services.nextcloud.package.packages.apps; {
-        inherit calendar contacts mail notes tasks; #memories
+        inherit calendar contacts mail notes; #tasks #memories
+	tasks = pkgs.fetchNextcloudApp rec {
+	  url = "https://github.com/nextcloud/tasks/releases/download/v0.16.0/tasks.tar.gz";
+	  sha256 = "L68ughpLad4cr5utOPwefu2yoOgRvnJibqfKmarGXLw=";
+	  license = "agpl3";
+	};
         # fetchNextcloudApp borked
         #unsplash = pkgs.fetchNextcloudApp rec {
 	      #  url =
