@@ -25,7 +25,7 @@ in
     thunderbird-bin
     realvnc-vnc-viewer
     remmina
-    vault
+    unstable.vault
     waypipe
 
     virt-manager

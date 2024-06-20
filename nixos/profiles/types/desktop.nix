@@ -15,7 +15,7 @@
       editor = false;
       configurationLimit = 6;
     };
-    plymouth.enable = true;
+    # plymouth.enable = true;
   };
   services.fstrim.enable = true; # SSDs are the new normal
 }
