@@ -4,6 +4,7 @@
     types.laptop # type of machine
     sway # window manager
     work
+    wireguard
     polkit
     gdt
     docker

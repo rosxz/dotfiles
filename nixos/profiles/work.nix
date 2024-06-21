@@ -7,7 +7,6 @@ let RNLCert = builtins.fetchurl {
 in
 {
   imports = with profiles; [
-    wireguard
   ];
 
   security.pki.certificateFiles = ["${RNLCert}"];
