@@ -58,7 +58,7 @@
         isNormalUser = true;
         description = "Martim Moniz";
         extraGroups = [ "media" "video" "scanner" "wheel" ];
-        hashedPassword = "$6$g3erPleT4pElaQQe$fDIA/dckjSAADHRtjQt3RGrLmFE6TjZ5acdaRSTOBWA/8OuQlnDGr0FZUfGGqxJlS0vJDPDtpPzm6pJo7i96j0";
+        hashedPassword = "$y$j9T$yDGyhMdVtWOt8a7L9pSQw1$y5ZS5zo4KtcfIDxczVYM27.V8bR5OtHdA8PdF5KAY86";
         openssh.authorizedKeys.keys = sshKeys;
       };
     };
