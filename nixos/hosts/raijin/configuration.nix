@@ -7,6 +7,8 @@
     entertainment
     polkit
     docker
+    dev
+    virtualisation
     ./hardware-configuration.nix
   ];
 
@@ -60,9 +62,12 @@
     # export QT_AUTO_SCREEN_SCALE_FACTOR=2
   };
 
-  environment.systemPackages = with pkgs; [
+  environment.systemPackages = let
+    python-packages = ps:
+      with ps; [ tkinter ];
+  in with pkgs; [
 	  yt-dlp
-	  python3
+	  (python3.withPackages python-packages)
 	  xsettingsd
 	  home-manager
     webcord-vencord

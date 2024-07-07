@@ -33,6 +33,7 @@ let
   commonPlugins = with pkgs.unstable.vimPlugins; [
     nvim-web-devicons
     vim-markdown-composer
+    copilot-vim
     {
       plugin = lualine-nvim;
       type = "lua";
@@ -434,6 +435,7 @@ require('gitsigns').setup{
     home.file."${config.xdg.configHome}/nvim/after/ftplugin/lex.vim".text = twoSpaceIndentConfig;
     home.file."${config.xdg.configHome}/nvim/after/ftplugin/cpp.vim".text = twoSpaceIndentConfig;
     home.file."${config.xdg.configHome}/nvim/after/ftplugin/tex.vim".text = twoSpaceIndentConfig;
+    home.file."${config.xdg.configHome}/nvim/after/ftplugin/julia.vim".text = twoSpaceIndentConfig;
 
     # Rust config
     home.file."${config.xdg.configHome}/nvim/after/ftplugin/rust.vim".text = ''

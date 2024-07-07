@@ -44,7 +44,7 @@
 
   # Enable the OpenSSH daemon.
   services.openssh = {
-    enable = lib.mkDefault true;
+    enable = lib.mkDefault true; # Need keys for age cba
     openFirewall = lib.mkDefault false;
     authorizedKeysFiles = pkgs.lib.mkForce [ "/etc/ssh/authorized_keys.d/%u" ];
     settings = {
@@ -53,8 +53,8 @@
       KbdInteractiveAuthentication = false;
     };
   };
-  # programs.ssh.startAgent = true;
   programs.mosh.enable = true;
+  programs.ssh.startAgent = true;
 
   programs.zsh = {
     enable = true;
