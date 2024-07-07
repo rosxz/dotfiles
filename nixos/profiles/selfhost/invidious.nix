@@ -24,6 +24,8 @@
             user = "invidious";
             dbname = "invidious";
 	};
+	continue = true;
+	local = false;
 	check_tables = true;
 	https_only = true;
 	use_quic = true;

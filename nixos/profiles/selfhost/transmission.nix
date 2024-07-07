@@ -35,7 +35,7 @@ in
 	  rpc-whitelist = "127.0.0.1,100.*.*.*";
 	  rpc-host-whitelist-enabled = true;
 	  rpc-host-whitelist = "*.moniz.pt";
-	  rpc-authentication-required = true;
+	  rpc-authentication-required = false;
 
 	  download-dir = downloadDir;
 	  script-torrent-done-enabled = true;

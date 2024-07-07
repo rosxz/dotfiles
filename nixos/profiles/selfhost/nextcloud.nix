@@ -31,12 +31,12 @@ in {
       # appstoreEnable = true;
       extraAppsEnable = true;
       extraApps = with config.services.nextcloud.package.packages.apps; {
-        inherit calendar contacts mail notes; #tasks #memories
-	tasks = pkgs.fetchNextcloudApp rec {
-	  url = "https://github.com/nextcloud/tasks/releases/download/v0.16.0/tasks.tar.gz";
-	  sha256 = "L68ughpLad4cr5utOPwefu2yoOgRvnJibqfKmarGXLw=";
-	  license = "agpl3";
-	};
+        inherit calendar contacts mail notes tasks; #memories
+	# tasks = pkgs.fetchNextcloudApp rec {
+	#   url = "https://github.com/nextcloud/tasks/releases/download/v0.16.0/tasks.tar.gz";
+	#   sha256 = "L68ughpLad4cr5utOPwefu2yoOgRvnJibqfKmarGXLw=";
+	#   license = "agpl3";
+	# };
         # fetchNextcloudApp borked
         #unsplash = pkgs.fetchNextcloudApp rec {
 	      #  url =
@@ -58,12 +58,13 @@ in {
       # home = "/mnt/Storage/nextcloud";
       datadir = "/mnt/Storage/nextcloud";
 
+      settings = {
+	overwrite_protocol = "https";
+        default_phone_region = "PT";
+	trusted_domains = [ "https://cloud.moniz.pt" ];
+        trusted_proxies = [ "100.83.228.83" ];
+      };
       config = {
-        overwriteProtocol = "https";
-        defaultPhoneRegion = "PT";
-
-        trustedProxies = [ "100.83.228.83" ];
-
         dbtype = "pgsql";
         dbuser = "nextcloud";
 	dbhost = "/run/postgresql"; # nextcloud will add /.s.PGSQL.5432 by itself
@@ -84,7 +85,4 @@ in {
   users.users.nextcloud = {
     extraGroups = [ "media" ];
   };
-
-  # At a certain point add impermanence
-  # (steal from carjorvaz)
 }
