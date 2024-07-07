@@ -7,6 +7,9 @@
     syncthing
   ];
 
+  # Change this later if needed
+  services.openssh.openFirewall = true;
+
   boot = {
     kernelParams = [ "quiet" ];
     loader.efi.canTouchEfiVariables = true;

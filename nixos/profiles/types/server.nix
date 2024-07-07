@@ -31,10 +31,7 @@
   };
   security.sudo.execWheelOnly = true;
 
-  services.openssh = {
-    enable = true;
-    openFirewall = true;
-  };
+  services.openssh.openFirewall = true;
 
   system.autoUpgrade = {
     enable = lib.mkDefault false; # dont want mailserver going down

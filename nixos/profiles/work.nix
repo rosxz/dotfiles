@@ -2,7 +2,7 @@
 
 let RNLCert = builtins.fetchurl {
     url = "https://rnl.tecnico.ulisboa.pt/ca/cacert/cacert.pem";
-    sha256 = "1jiqx6s86hlmpp8k2172ki6b2ayhr1hyr5g2d5vzs41rnva8bl63";
+    sha256 = "020vnbvjly6kl0m6sj4aav05693prai10ny7hzr7n58xnbndw3j2";
   };
 in
 {

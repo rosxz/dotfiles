@@ -1,0 +1,13 @@
+live_config_reload = true
+
+[colors.primary]
+background = "#282a36"
+
+[font]
+size = 14.0
+
+[font.normal]
+family = "Fira Code"
+
+[window]
+opacity = 0.88
