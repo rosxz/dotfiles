@@ -24,44 +24,26 @@ in {
       package = pkgs.nextcloud29; # Need to manually increment with every update
       hostName = domain;
       configureRedis = true;
+      database.createLocally = true;
 
       https = true;
       autoUpdateApps.enable = true;
 
-      # appstoreEnable = true;
+      appstoreEnable = false;
       extraAppsEnable = true;
       extraApps = with config.services.nextcloud.package.packages.apps; {
-        inherit calendar contacts mail notes tasks; #memories
-	# tasks = pkgs.fetchNextcloudApp rec {
-	#   url = "https://github.com/nextcloud/tasks/releases/download/v0.16.0/tasks.tar.gz";
-	#   sha256 = "L68ughpLad4cr5utOPwefu2yoOgRvnJibqfKmarGXLw=";
-	#   license = "agpl3";
-	# };
-        # fetchNextcloudApp borked
-        #unsplash = pkgs.fetchNextcloudApp rec {
-	      #  url =
-        #    "https://github.com/nextcloud/unsplash/releases/download/v2.2.1/unsplash.tar.gz";
-        #  sha256 = "sha256-/fOkTIRAwMgtgqAykWI+ahB1uo6FlvUaDNKztCyBQfk=";
-	      #};
-	      #cookbook = pkgs.fetchNextcloudApp rec {
-        #  url =
-        #    "https://github.com/nextcloud/cookbook/releases/download/v0.10.2/Cookbook-0.10.2.tar.gz";
-        #  sha256 = "sha256-XgBwUr26qW6wvqhrnhhhhcN4wkI+eXDHnNSm1HDbP6M=";
-        #};
-	      #news = pkgs.fetchNextcloudApp rec {
-        #  url =
-        #    "https://github.com/nextcloud/news/releases/download/24.0.0/news.tar.gz";
-        #  sha256 = "";
-        #};
+        inherit calendar contacts notes tasks; #memories
       };
 
       # home = "/mnt/Storage/nextcloud";
-      datadir = "/mnt/Storage/nextcloud";
+      # datadir = "/mnt/Storage/nextcloud";
+      # TODO: problem with permissions in mnt/external storage, quick fix was to make a symbolic link
+      # to it instead from var lib
 
       settings = {
 	overwrite_protocol = "https";
         default_phone_region = "PT";
-	trusted_domains = [ "https://cloud.moniz.pt" ];
+	trusted_domains = [ "https://${domain}/" ];
         trusted_proxies = [ "100.83.228.83" ];
       };
       config = {
@@ -69,8 +51,7 @@ in {
         dbuser = "nextcloud";
 	dbhost = "/run/postgresql"; # nextcloud will add /.s.PGSQL.5432 by itself
         dbname = "nextcloud";
-        dbpassFile = config.age.secrets.nextcloud-db-pass.path;
-
+        # dbpassFile = config.age.secrets.nextcloud-db-pass.path;
         adminpassFile = config.age.secrets.nextcloud-admin-pass.path;
         adminuser = "admin";
       };
