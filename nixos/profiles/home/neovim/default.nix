@@ -7,23 +7,23 @@
 
 { pkgs, config, lib, ... }:
 let
+  # Used in all types
   commonGrammars = with pkgs.unstable.tree-sitter-grammars; [
     tree-sitter-bash
     tree-sitter-comment
     tree-sitter-html
+    tree-sitter-javascript
     tree-sitter-markdown
     tree-sitter-python
-  ];
-  personalGrammars = with pkgs.unstable.tree-sitter-grammars; [
     tree-sitter-nix
+  ];
+  #
+  personalGrammars = with pkgs.unstable.tree-sitter-grammars; [
     tree-sitter-c
     tree-sitter-cpp
     tree-sitter-java
-    tree-sitter-javascript
     tree-sitter-latex
     tree-sitter-lua
-    tree-sitter-ocaml
-    tree-sitter-ocaml-interface
     tree-sitter-rust
     tree-sitter-toml
     tree-sitter-typescript
@@ -175,31 +175,47 @@ require 'colorizer'.setup ({ user_default_options = { names = false; }})
       plugin = nvim-lspconfig;
       type = "lua";
       config = ''
-local lsp = require'lspconfig'
+          -- common lsp setup
+          local lsp_config = require'lspconfig'
+          local lsp_setup = require'generic_lsp'
 
-local capabilities = require('cmp_nvim_lsp').default_capabilities()
-capabilities.textDocument.completion.completionItem.snippetSupport = true
-capabilities.textDocument.completion.completionItem.resolveSupport = {
-	properties = {
-		'documentation',
-		'detail',
-		'additionalTextEdits',
-	}
-}
+          -- Rust lsp setup
+          local rt = require("rust-tools")
 
-lsp.rust_analyzer.setup{
-	capabilities = capabilities,
-	on_attach = require'generic_lsp'
-}
-lsp.texlab.setup{
-	capabilities = capabilities,
-	on_attach = require'generic_lsp'
-}
-      '';
+          local capabilities = lsp_setup.capabilities
+          local on_attach = lsp_setup.on_attach
+          rt.setup({
+            server = {
+              capabilities = capabilities,
+              on_attach = function(_, bufnr)
+                -- Hover actions
+                on_attach(_, bufnr)
+                vim.keymap.set('n', 'K', rt.hover_actions.hover_actions, {silent=true})
+              end,
+              settings = {
+                ["rust-analyzer"] = {
+                  checkOnSave = {
+                    command = "clippy",
+                  },
+                },
+              },
+            },
+          })
+
+          -- tex lsp setup
+          lsp_config.texlab.setup(lsp_setup)
+
+          -- python lsp setup
+          lsp_config.pyright.setup(lsp_setup)
+
+          -- dafny lsp setup
+          lsp_config.dafny.setup(lsp_setup)
+'';
     }
+    vim-loves-dafny
+    rust-tools-nvim # TODO Change to Rustaceanvim
     lsp_extensions-nvim
     copilot-vim
-
     {
       plugin = presence-nvim;
       config = ''
@@ -210,73 +226,66 @@ lsp.texlab.setup{
       let g:presence_main_image        = "neovim"
       '';
     }
-
     luasnip
     {
       plugin = nvim-cmp;
       type = "lua";
       config = ''
--- Setup nvim-cmp.
-local cmp = require'cmp'
+        -- Setup nvim-cmp.
+        local cmp = require'cmp'
 
-cmp.setup({
-  snippet = {
-    -- REQUIRED - you must specify a snippet engine
-    expand = function(args)
-      require('luasnip').lsp_expand(args.body) -- For `luasnip` users.
-    end,
-  },
-  window = {
-    -- completion = cmp.config.window.bordered(),
-    -- documentation = cmp.config.window.bordered(),
-  },
-  mapping = cmp.mapping.preset.insert({
-    ['<C-b>'] = cmp.mapping.scroll_docs(-4),
-    ['<C-f>'] = cmp.mapping.scroll_docs(4),
-    ['<C-Space>'] = cmp.mapping.complete(),
-    ['<C-e>'] = cmp.mapping.abort(),
-    ['<CR>'] = cmp.mapping.confirm({ select = true }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
-  }),
-  sources = cmp.config.sources({
-    { name = 'nvim_lsp' },
-    { name = 'luasnip' }, -- For luasnip users.
-  }, {
-    { name = 'buffer' },
-  })
-})
+        cmp.setup({
+          snippet = {
+            -- REQUIRED - you must specify a snippet engine
+            expand = function(args)
+              require('luasnip').lsp_expand(args.body) -- For `luasnip` users.
+            end,
+          },
+          window = {
+            -- completion = cmp.config.window.bordered(),
+            -- documentation = cmp.config.window.bordered(),
+          },
+          mapping = cmp.mapping.preset.insert({
+            ['<C-b>'] = cmp.mapping.scroll_docs(-4),
+            ['<C-f>'] = cmp.mapping.scroll_docs(4),
+            ['<C-Space>'] = cmp.mapping.complete(),
+            ['<C-e>'] = cmp.mapping.abort(),
+            ['<CR>'] = cmp.mapping.confirm({ select = true }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
+          }),
+          sources = cmp.config.sources({
+            { name = 'nvim_lsp' },
+            { name = 'luasnip' },
+            { name = 'treesitter' },
+            { name = 'spell' },
+            { name = 'path' },
+            { name = 'buffer' },
+          })
+        })
 
--- Set configuration for specific filetype.
-cmp.setup.filetype('gitcommit', {
-  sources = cmp.config.sources({
-    -- { name = 'cmp_git' }, -- You can specify the `cmp_git` source if you were installed it.
-  }, {
-    { name = 'buffer' },
-  })
-})
+        -- autocomplete commits, Issue/PR numbers, mentions
+        cmp.setup.filetype('gitcommit', {
+          sources = cmp.config.sources({
+            { name = 'git' },
+            { name = 'spell' },
+            { name = 'buffer' },
+          })
+        })
 
--- Use buffer source for `/` (if you enabled `native_menu`, this won't work anymore).
-cmp.setup.cmdline('/', {
-  mapping = cmp.mapping.preset.cmdline(),
-  sources = {
-    { name = 'buffer' }
-  }
-})
-
--- Use cmdline & path source for ':' (if you enabled `native_menu`, this won't work anymore).
-cmp.setup.cmdline(':', {
-  mapping = cmp.mapping.preset.cmdline(),
-  sources = cmp.config.sources({
-    { name = 'path' }
-  }, {
-    { name = 'cmdline' }
-  })
-})
+        -- Use buffer source for `/` (if you enabled `native_menu`, this won't work anymore).
+        cmp.setup.cmdline('/', {
+          mapping = cmp.mapping.preset.cmdline(),
+          sources = {
+            { name = 'buffer' },
+          }
+        })
       '';
     }
-
     cmp_luasnip
     cmp-treesitter
     cmp-nvim-lsp
+    cmp-spell
+    cmp-path
+    cmp-git
   ];
   twoSpaceIndentConfig = ''
 setlocal shiftwidth=2
@@ -284,16 +293,19 @@ setlocal softtabstop=2
 setlocal tabstop=2
 setlocal expandtab
   '';
-  # TODO: if nvim-osc52 is added to nixpkgs I can stop having it here
-  nvim-osc52 = pkgs.vimUtils.buildVimPlugin {
-    name = "nvim-osc52";
-    src = pkgs.fetchFromGitHub {
-      owner = "ojroques";
-      repo = "nvim-osc52";
-      rev = "87069dc586d835b70360d4771de53adb9b4aaff7";
-      sha256 = "sha256-JAWf0VDgsOF4K9BH3Ihc+JB8IAuaF7pmqPdAz8pytQ4=";
-    };
-  };
+
+  files = {
+    "${config.xdg.configHome}/nvim/lua/generic_lsp.lua".source =
+      ./generic_lsp.lua;
+    "${config.xdg.configHome}/nvim/after/ftplugin/nix.vim".text = ''
+      nnoremap <silent> <leader>tt :silent !${pkgs.nixfmt-rfc-style}/bin/nixfmt %<CR>
+    '' + twoSpaceIndentConfig;
+  } //
+    # languages that should use 2 space indent
+    builtins.listToAttrs (builtins.map (filetype: {
+      name = "${config.xdg.configHome}/nvim/after/ftplugin/${filetype}.vim";
+      value = { text = twoSpaceIndentConfig; };
+    }) [ "markdown" "ocaml" "wast" "yaml" "yacc" "lex" "cpp" "tex" "scheme" ]);
 in
 {
 
@@ -425,62 +437,9 @@ require('gitsigns').setup{
         );
     };
 
-    # languages that should use 2 space indent
-    home.file."${config.xdg.configHome}/nvim/after/ftplugin/markdown.vim".text = twoSpaceIndentConfig;
-    home.file."${config.xdg.configHome}/nvim/after/ftplugin/nix.vim".text = twoSpaceIndentConfig;
-    home.file."${config.xdg.configHome}/nvim/after/ftplugin/ocaml.vim".text = twoSpaceIndentConfig;
-    home.file."${config.xdg.configHome}/nvim/after/ftplugin/wast.vim".text = twoSpaceIndentConfig;
-    home.file."${config.xdg.configHome}/nvim/after/ftplugin/yaml.vim".text = twoSpaceIndentConfig;
-    home.file."${config.xdg.configHome}/nvim/after/ftplugin/yacc.vim".text = twoSpaceIndentConfig;
-    home.file."${config.xdg.configHome}/nvim/after/ftplugin/lex.vim".text = twoSpaceIndentConfig;
-    home.file."${config.xdg.configHome}/nvim/after/ftplugin/cpp.vim".text = twoSpaceIndentConfig;
-    home.file."${config.xdg.configHome}/nvim/after/ftplugin/tex.vim".text = twoSpaceIndentConfig;
-    home.file."${config.xdg.configHome}/nvim/after/ftplugin/julia.vim".text = twoSpaceIndentConfig;
+    home.file = files;
 
-    # Rust config
-    home.file."${config.xdg.configHome}/nvim/after/ftplugin/rust.vim".text = ''
-" Use LSP omni-completion in Rust files.
-setlocal omnifunc=v:lua.vim.lsp.omnifunc
-
-lua << EOF
-local inlay_hints = require('lsp_extensions').inlay_hints
-
--- Global function, so you can just call it on the lua side
-ShowHintsLine = function()
-  inlay_hints {
-    only_current_line = true
-  }
-end
-
-ShowHintsFile = function()
-  inlay_hints()
-end
-EOF
-" not working for some reason
-" autocmd CursorHold,CursorHoldI *.rs :lua ShowHintsLine()
-
-nnoremap <silent> <leader>h <cmd>lua ShowHintsFile()<CR>
-    '';
-    home.file."${config.xdg.configHome}/nvim/lua/generic_lsp.lua".text = ''
-return function(client)
-	-- [[ other on_attach code ]]
-	vim.api.nvim_buf_set_keymap(0, 'n', 'K', '<cmd>lua vim.lsp.buf.hover()<CR>', {noremap = true})
-
-	-- illuminate stuff
-	vim.api.nvim_buf_set_keymap(0, 'n', '<leader>gn', '<cmd>lua require"illuminate".next_reference{}<cr>', {noremap = true})
-	vim.api.nvim_buf_set_keymap(0, 'n', '<leader>gp', '<cmd>lua require"illuminate".next_reference{reverse=true}<cr>', {noremap = true})
-	require 'illuminate'.on_attach(client)
-
-  local set = vim.keymap.set
-  set('n', '<leader>n', function () vim.diagnostic.goto_next { wrap = false } end, {silent = true})
-  set('n', '<leader>p', function () vim.diagnostic.goto_prev { wrap = false } end, {silent = true})
-  set('n', '<leader>d', vim.lsp.buf.definition, {silent = true})
-  set('n', '<leader>gr', vim.lsp.buf.references, {silent = true})
-  set('n', '<leader>rn', vim.lsp.buf.rename, {silent = true})
-  set('n', '<leader>a', vim.lsp.buf.code_action, {silent = true})
-  set('n', '<leader><cr>', vim.diagnostic.open_float, {silent = true})
-end
-    '';
+    home.packages = [ pkgs.dafny pkgs.pyright ];
 
     home.sessionVariables = {
       EDITOR = "nvim";
