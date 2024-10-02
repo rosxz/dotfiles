@@ -7,8 +7,7 @@
     syncthing
   ];
 
-  # Change this later if needed
-  services.openssh.openFirewall = true;
+  modules.labels.type = "desktop";
 
   boot = {
     kernelParams = [ "quiet" ];

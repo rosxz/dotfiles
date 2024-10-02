@@ -7,6 +7,8 @@
     syncthing
   ];
 
+  modules.labels.type = "laptop";
+
   boot = {
     # kernelParams = [ "quiet" ];
     loader.efi.canTouchEfiVariables = true;

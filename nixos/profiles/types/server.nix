@@ -4,6 +4,8 @@
     core
   ];
 
+  modules.labels.type = "server";
+
   networking.networkmanager.enable = false;
   networking.firewall = {
     logRefusedConnections = false;

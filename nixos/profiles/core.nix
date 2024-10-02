@@ -152,5 +152,7 @@ D /var/tmp 1777 root root 30d
     '';
   };
 
+  documentation.dev.enable = true;
+
   system.stateVersion = lib.mkDefault "22.05";
 }

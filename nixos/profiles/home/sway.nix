@@ -29,19 +29,36 @@ in
             natural_scroll = "enabled";
           };
         };
+        output = {
+          DP-1 = {
+            scale = "1.75";
+          };
+        };
 
         keybindings = let
           modifier = "Mod4";
+          recordScript = pkgs.writeTextFile {
+            name = "recordScript";
+            text = ''
+              #!/usr/bin/env bash
+              ${pkgs.sway}/bin/swaymsg Record microphone?
+            '';
+            executable = true;
+          };
         in lib.mkOptionDefault {
           "${modifier}+Escape" = "exec ${lockCommand}";
-
+          "${modifier}+Shift+Escape" = "exec systemctl suspend";
           "${modifier}+c" = "kill";
 
           # Screenshots
           "Print" =
-            "exec ${pkgs.sway-contrib.grimshot}/bin/grimshot --notify copy area";
+            "exec ${pkgs.sway-contrib.grimshot}/bin/grimshot --notify savecopy active /tmp/$(${pkgs.coreutils}/bin/date +'%H:%M:%S.png')";
           "Shift+Print" =
-            "exec ${pkgs.sway-contrib.grimshot}/bin/grimshot --notify save area /tmp/$(${pkgs.coreutils}/bin/date +'%H:%M:%S.png')";
+            "exec ${pkgs.sway-contrib.grimshot}/bin/grimshot --notify savecopy area /tmp/$(${pkgs.coreutils}/bin/date +'%H:%M:%S.png')";
+          "${modifier}+Print" =
+            "exec alacritty -t ScreenRecorder -e ''${pkgs.wf-recorder}/bin/wf-recorder -a -m webm -c libvpx -C libopus -f /tmp/$(${pkgs.coreutils}/bin/date +'%H:%M:%S.webm')''";
+          "${modifier}+Shift+Print" =
+            "exec alacritty -t ScreenRecorder -e ''${pkgs.wf-recorder}/bin/wf-recorder -g $(${pkgs.slurp}/bin/slurp) -a -m webm -c libvpx -C libvorbis -f /tmp/$(${pkgs.coreutils}/bin/date +'%H:%M:%S.webm')''";
 
           # Brightness
           "XF86MonBrightnessDown" = "exec ${pkgs.light}/bin/light -T 0.72";
@@ -73,7 +90,7 @@ in
         exec fcitx5
         exec nm-applet --indicator
         exec swayidle -w before-sleep $lock
-        exec blueman--aplet
+        exec blueman-applet
       '';
 
       extraSessionCommands = ''
