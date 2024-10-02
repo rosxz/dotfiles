@@ -27,7 +27,7 @@ in
   services.transmission = {
 	enable = true;
 	group = "media";
-	package = with pkgs; unstable.transmission_4;
+	package = pkgs.transmission_4;
 	openFirewall = true;
 	openPeerPorts = true;
 	settings = {
