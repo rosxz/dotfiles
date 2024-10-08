@@ -19,27 +19,27 @@
 
   outputs = { self, ... }@inputs:
   let
-      inherit (builtins) listToAttrs concatLists attrValues attrNames readDir;
+    inherit (builtins) listToAttrs concatLists attrValues attrNames readDir;
 
-      system = "x86_64-linux";
-      user = "crea";
+    system = "x86_64-linux";
+    user = "crea";
 
-      lib = inputs.nixpkgs.lib.extend (final: prev: import ./lib {
-        inherit inputs pkgs system;
-        lib = final;
-      });
-      overlays = (lib.my.mkOverlays ./overlays) // { agenix = inputs.agenix.overlays.default; };
-      pkgs = lib.my.mkPkgs overlays;
+    lib = inputs.nixpkgs.lib.extend (final: prev: import ./lib {
+      inherit inputs pkgs system;
+      lib = final;
+    });
+    overlays = (lib.my.mkOverlays ./overlays) // { agenix = inputs.agenix.overlays.default; };
+    pkgs = lib.my.mkPkgs overlays;
 
-      # TODO remove from secrets.nix or here
-      sshKeys = [
-  "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILW5ZVdVaKMVlau1wp/JGJpdpE6JUxJ07DEYHi9qOLC8 crea@tsukuyomi" # Tsukuyomi (HP Homeserver)
-  "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJcUMSSFZQheROdhFVmIUwBTbAVBv9YUm/Ib3ED3O0gv crea@pasokon" # Ebisu (ASUS Laptop)
-  "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIK6yNVUz9RnIFibmEb2cpdrypr2k2KPffMQpmIn0gbHb u0_a243@localhost" # Xiaomi 10
-  "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIC36CNRkhRvwygw8dGAHE7ThT5kw2RjuX/X5MzUIfFSU crea@navi" # NAVI Desktop
-  "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIL7tve12K34nhNgVYZ6VgQBRrJs10v+hClpyzpXTIb/n crea@raijin" # Raijin (RNL)
-  "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIB0Y66xC+lCLENxktcVwGYacISi8A+KEbijg7N+w5HcF crea@ryuujin" # Ryuujin (T490s)
-      ];
+    # TODO remove from secrets.nix or here
+    sshKeys = {
+      user_tsukuyomi = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILW5ZVdVaKMVlau1wp/JGJpdpE6JUxJ07DEYHi9qOLC8 crea@tsukuyomi"; # Tsukuyomi (HP Homeserver)
+      user_ebisu = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJcUMSSFZQheROdhFVmIUwBTbAVBv9YUm/Ib3ED3O0gv crea@pasokon"; # Ebisu (ASUS Laptop)
+      user_xiaomi = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIK6yNVUz9RnIFibmEb2cpdrypr2k2KPffMQpmIn0gbHb u0_a243@localhost"; # Xiaomi 10
+      user_navi = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIC36CNRkhRvwygw8dGAHE7ThT5kw2RjuX/X5MzUIfFSU crea@navi"; # NAVI Desktop
+      user_raijin = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIL7tve12K34nhNgVYZ6VgQBRrJs10v+hClpyzpXTIb/n crea@raijin"; # Raijin (RNL)
+      user_ryuujin = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIB0Y66xC+lCLENxktcVwGYacISi8A+KEbijg7N+w5HcF crea@ryuujin"; # Ryuujin (T490s)
+    };
 
     nixosConfigurations = lib.my.mkHosts {
       modulesDir = ./modules;

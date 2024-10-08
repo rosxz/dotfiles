@@ -1,4 +1,4 @@
-{ config, pkgs, sshKeys, profiles, ... }: {
+{ config, lib, pkgs, sshKeys, user, profiles, ... }: {
 
   imports = with profiles; [
     types.server
@@ -54,18 +54,9 @@
     };
   };
 
-  users = {
-    mutableUsers = false;
-    users = {
-      root.hashedPassword = "*"; # Disable root
-      crea = {
-        isNormalUser = true;
-        description = "Martim Moniz";
-        extraGroups = [ "docker" "media" "video" "scanner" "qemu-libvirtd" "wheel" ];
-        hashedPassword = "$6$WU1epwfq/D/h8Lny$Tcqfptb0ji/ZRIhB4uHzh1GISz3JegWVb1ZB0ZqfIzF5Vp/FzFVorqwi5npwRxCwzsSpOdLK5tdnlrB2pdz44/";
-        openssh.authorizedKeys.keys = sshKeys;
-      };
-    };
+  users.users.${user} = {
+    extraGroups = [ "docker" "media" "qemu-libvirtd" ];
+    hashedPassword = lib.mkForce "$6$WU1epwfq/D/h8Lny$Tcqfptb0ji/ZRIhB4uHzh1GISz3JegWVb1ZB0ZqfIzF5Vp/FzFVorqwi5npwRxCwzsSpOdLK5tdnlrB2pdz44/";
   };
 
   environment.systemPackages = with pkgs; [

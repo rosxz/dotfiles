@@ -1,4 +1,4 @@
-{ config, pkgs, sshKeys, profiles, ... }:
+{ config, lib, pkgs, sshKeys, user, profiles, ... }:
 {
   imports = with profiles; [
     types.desktop # type of machine
@@ -38,16 +38,10 @@
     };
   };
 
-  users.users.crea = {
-    isNormalUser = true;
-    description = "Martim Moniz";
-    extraGroups = [ "networkmanager" "video" "scanner" "qemu-libvirtd" "wheel" "input" ];
-    shell = pkgs.zsh;
-    # openssh.authorizedKeys.keys = sshKeys;
-    hashedPassword = "$6$g3erPleT4pElaQQe$fDIA/dckjSAADHRtjQt3RGrLmFE6TjZ5acdaRSTOBWA/8OuQlnDGr0FZUfGGqxJlS0vJDPDtpPzm6pJo7i96j0";
+  users.users.${user} = {
+    extraGroups = [ "qemu-libvirtd" "input" ];
+    openssh.authorizedKeys.keys = with sshKeys. lib.mkForce [ user_ryuujin user_xiaomi ];
   };
-  users.users.root.hashedPassword = "*";
-  users.mutableUsers = false;
 
   services.printing.enable = true;
   # services.fprintd = {

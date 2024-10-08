@@ -59,7 +59,7 @@
         description = "Martim Moniz";
         extraGroups = [ "media" "video" "scanner" "wheel" ];
         hashedPassword = "$y$j9T$yDGyhMdVtWOt8a7L9pSQw1$y5ZS5zo4KtcfIDxczVYM27.V8bR5OtHdA8PdF5KAY86";
-        openssh.authorizedKeys.keys = sshKeys;
+        # openssh.authorizedKeys.keys = sshKeys;
       };
     };
   };

@@ -1,4 +1,4 @@
-{ config, inputs, lib, pkgs, profiles, ... }:
+{ config, inputs, lib, pkgs, sshKeys, user, profiles, ... }:
 {
   imports = with profiles; [
     tailscale
@@ -41,6 +41,19 @@
   nix.registry.nixpkgs.flake = inputs.nixpkgs;
   nix.nixPath = [ "nixpkgs=/etc/channels/nixpkgs" "nixos-config=/etc/nixos/configuration.nix" "/nix/var/nix/profiles/per-user/root/channels" ];
   environment.etc."channels/nixpkgs".source = inputs.nixpkgs.outPath;
+
+  # users.users.root.openssh.authorizedKeys.keys = lib.mkDefault (lib.mapAttrsToList (name: value: value) sshKeys);
+  users.users.crea = {
+    isNormalUser = true;
+    description = "Martim Moniz";
+    hashedPassword = "$6$g3erPleT4pElaQQe$fDIA/dckjSAADHRtjQt3RGrLmFE6TjZ5acdaRSTOBWA/8OuQlnDGr0FZUfGGqxJlS0vJDPDtpPzm6pJo7i96j0";
+    extraGroups = [ "networkmanager" "video" "scanner" "wheel" ];
+    shell = pkgs.zsh;
+    openssh.authorizedKeys.keys = with sshKeys; [
+     user_xiaomi user_navi user_ryuujin user_ebisu ];
+  };
+  users.users.root.hashedPassword = "*"; # Disable root user
+  users.mutableUsers = false;
 
   # Enable the OpenSSH daemon.
   services.openssh = {

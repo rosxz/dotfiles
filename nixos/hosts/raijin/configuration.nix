@@ -1,4 +1,4 @@
-{ config, pkgs, sshKeys, profiles, ... }: {
+{ config, pkgs, sshKeys, user, profiles, ... }: {
 
   imports = with profiles; [
     types.desktop
@@ -40,14 +40,7 @@
   services.printing.enable = true;
   services.xserver.libinput.enable = true; #TODO: ??
 
-  users.users.crea = {
-    isNormalUser = true;
-    description = "Martim Moniz";
-    hashedPassword = "$6$g3erPleT4pElaQQe$fDIA/dckjSAADHRtjQt3RGrLmFE6TjZ5acdaRSTOBWA/8OuQlnDGr0FZUfGGqxJlS0vJDPDtpPzm6pJo7i96j0";
-    extraGroups = [ "networkmanager" "video" "scanner" "libvirtd" "qemu-libvirtd" "wheel" ];
-    shell = pkgs.zsh;
-    openssh.authorizedKeys.keys = sshKeys;
-  };
+  users.users.${user}.extraGroups = [ "libvirtd" "qemu-libvirtd" "wheel" ];
 
   # users.users.nixremote = {
   #   isNormalUser = true;
