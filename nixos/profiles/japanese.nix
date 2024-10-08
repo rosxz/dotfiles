@@ -36,5 +36,15 @@
     unstable.goldendict-ng
     qolibri
     manga-ocr
+    #(mpv-unwrapped.wrapper {
+    #  scripts = [ pkgs.mpvScripts.mpvacious ];
+    #  mpv = (mpv-unwrapped.override {
+    #    ffmpeg_5 = pkgs.ffmpeg_5-full;
+    #  });
+    #})
   ];
 }
+# -- MPV shenanigans --
+# change ffmpeg on unwrapped
+#  call the wrapper on unwrapped
+#   change scripts on wrapped

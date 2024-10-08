@@ -21,7 +21,7 @@ in
       wrapperFeatures.gtk = true;
     };
 
-    light.enable = true;
+    light.enable = config.modules.labels.type == "laptop";
     dconf.enable = true;
   };
 
