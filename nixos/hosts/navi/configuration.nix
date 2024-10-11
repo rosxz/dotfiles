@@ -1,4 +1,10 @@
 { config, lib, pkgs, sshKeys, user, profiles, ... }:
+let
+  hostAddress = "192.168.1.81";
+  gatewayAddress = "192.168.1.1";
+  netmask = "255.255.255.0"; # /24
+  interface = "enp5s0";
+in
 {
   imports = with profiles; [
     types.desktop # type of machine
@@ -51,16 +57,12 @@
 
   services.gnome.gnome-keyring.enable = true;
   security.pam.services.sddm.enableGnomeKeyring = true; # seems like a sddm issue
+  networking.interfaces.${interface}.wakeOnLan.enable = true;
 
   ## Remote ZFS Decryption
   boot = {
     # Set up static IPv4 address in the initrd.
-    kernelParams = let
-      hostAddress = "192.168.1.81";
-      gatewayAddress = "192.168.1.1";
-      netmask = "255.255.255.0"; # /24
-      interface = "enp5s0";
-    in [ "ip=${hostAddress}::${gatewayAddress}:${netmask}::${interface}:none" ];
+    kernelParams = [ "ip=${hostAddress}::${gatewayAddress}:${netmask}::${interface}:none" ];
 
     initrd = {
       # Switch this to your ethernet's kernel module.
