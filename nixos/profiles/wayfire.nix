@@ -15,6 +15,8 @@ let
 
 in
 {
+  modules.labels.display = "wayland";
+
   programs.wayfire = {
     enable = true;
     plugins = with pkgs.wayfirePlugins; [
@@ -44,9 +46,5 @@ in
     #swayidle
     #swaybg
     qt6.qtwayland
-
-    ## stupid wallpaper software
-    # mpvpaper # videos as background # eventually use profiles for laptop only
-    swww # (animated) images as background # p efficient and not resource hogging
   ];
 }

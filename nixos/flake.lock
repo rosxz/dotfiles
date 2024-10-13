@@ -120,22 +120,6 @@
         "type": "github"
       }
     },
-    "impermanence": {
-      "locked": {
-        "lastModified": 1727649413,
-        "narHash": "sha256-FA53of86DjFdeQzRDVtvgWF9o52rWK70VHGx0Y8fElQ=",
-        "owner": "nix-community",
-        "repo": "impermanence",
-        "rev": "d0b38e550039a72aff896ee65b0918e975e6d48e",
-        "type": "github"
-      },
-      "original": {
-        "owner": "nix-community",
-        "ref": "master",
-        "repo": "impermanence",
-        "type": "github"
-      }
-    },
     "nixos-mailserver": {
       "inputs": {
         "blobs": "blobs",
@@ -192,6 +176,22 @@
         "type": "indirect"
       }
     },
+    "nixpkgs-hyprland": {
+      "locked": {
+        "lastModified": 1718233523,
+        "narHash": "sha256-BoH6kD2aj4yO6irAQOGyeB4ofVQhxowefgSpXvzYSUY=",
+        "owner": "nixos",
+        "repo": "nixpkgs",
+        "rev": "3e2aca0b97ed1c88fa784a368270b4cd223efe1d",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nixos",
+        "repo": "nixpkgs",
+        "rev": "3e2aca0b97ed1c88fa784a368270b4cd223efe1d",
+        "type": "github"
+      }
+    },
     "nixpkgs-unstable": {
       "locked": {
         "lastModified": 1728492678,
@@ -212,9 +212,9 @@
       "inputs": {
         "agenix": "agenix",
         "home-manager": "home-manager_2",
-        "impermanence": "impermanence",
         "nixos-mailserver": "nixos-mailserver",
         "nixpkgs": "nixpkgs",
+        "nixpkgs-hyprland": "nixpkgs-hyprland",
         "nixpkgs-unstable": "nixpkgs-unstable"
       }
     },

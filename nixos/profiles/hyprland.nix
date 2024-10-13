@@ -30,54 +30,34 @@ let
   };
 in
 {
+  modules.labels.display = "wayland";
+
   programs = {
     hyprland = {
+      package = pkgs.pinnedHyrpland.hyprland;
       enable = true;
-      nvidiaPatches = true;
     };
-
-    light.enable = true;
     dconf.enable = true;
   };
 
   # import wm config
   home-manager.users.${user} = {
-    imports = with profiles.home; [ hyprland ];
-  };
-
-  services.xserver = {
-    enable = true;
-    desktopManager = {
-      xterm.enable = false;
-      xfce = {
-        enable = false;
-        noDesktop = true;
-        enableXfwm = false;
-      };
-    };
-    displayManager = {
-      gdm = {
-        enable = true;
-        autoSuspend = false;
-        wayland = true;
-      };
-    };
-    # displayManager = {
-    #    defaultSession = "none+i3";
+    imports = with profiles.home; [ ];
   };
 
   services.dbus.enable = true;
-  xdg.portal = {
-    enable = true;
-    wlr.enable = true;
-    # gtk portal needed to make gtk apps happy
-    extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
-  };
-  environment.sessionVariables.GTK_USE_PORTAL = "1"; # /NixOS/nixpkgs/pull/179204
+  #xdg.portal = {
+  #  enable = true;
+  #  wlr.enable = true;
+  #  # gtk portal needed to make gtk apps happy
+  #  extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
+  #};
+  #environment.sessionVariables.GTK_USE_PORTAL = "1"; # /NixOS/nixpkgs/pull/179204
 
   environment.systemPackages = with pkgs; [
     dbus-hyprland-environment
     glib
     qt6.qtwayland
+    kitty
   ];
 }

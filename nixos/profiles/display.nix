@@ -35,6 +35,12 @@ in
     };
   };
 
+  services.displayManager.gdm = {
+    enable = true;
+    autoSuspend = lib.mkDefault false;
+    wayland = config.modules.labels.display == "wayland";
+  };
+
   # environment.sessionVariables.QT_STYLE_OVERRIDE = lib.mkForce "adwaita-dark";
 
   # Enable sound with pipewire.
@@ -56,51 +62,48 @@ in
   services.gvfs.enable = true; # Mount, trash, and other functionalities
   services.tumbler.enable = true; # Thumbnail support for images
 
-  services.xserver = {
-    enable = true;
-    displayManager = {
-      gdm = {
-        enable = true;
-        autoSuspend = lib.mkDefault false;
-        wayland = lib.mkDefault true;
-      };
-    };
-  };
+  ### PACKAGES
+  environment.systemPackages = let
+    common = with pkgs; [
+      # tools
+      networkmanagerapplet
+      alacritty
+      pavucontrol
+      mpv
+      pamixer
+	    brightnessctl
+	    xarchiver # thunar
+      configure-gtk
+      trashy
+      xdg-utils # for opening default programs when clicking links
 
-  environment.systemPackages = with pkgs; [
-    # wayland specific
-    wayland
-    xwayland
-    wl-clipboard # wl-copy and wl-paste for copy/paste from stdin / stdout
-    wlogout
-
-    # tools
-    networkmanagerapplet
-    alacritty
-    pavucontrol
-    mpv
-    pamixer
-	  brightnessctl
-	  xarchiver # thunar
-    configure-gtk
-    trashy
-
-    # |_> wayland specific tools
-	  grim
-	  slurp
-    imv
-    firefox-wayland
-    waybar
-    wofi
-    mako
-    xdg-utils # for opening default programs when clicking links
-    swww # stupid wallpaper software
-
-    # theming
-    kora-icon-theme
-    bibata-cursors-translucent
-    adwaita-qt
-    dracula-theme # gtk theme
-    gnome3.adwaita-icon-theme  # default gnome cursors
-  ];
+      # theming
+      kora-icon-theme
+      bibata-cursors-translucent
+      adwaita-qt
+      dracula-theme # gtk theme
+      gnome3.adwaita-icon-theme  # default gnome cursors
+    ];
+    displayPackages = with pkgs; if config.modules.labels.display == "wayland" then
+      [
+        wayland
+        xwayland
+        wl-clipboard # wl-copy and wl-paste for copy/paste from stdin / stdout
+        wlogout
+          # tools
+	      grim
+	      slurp
+        imv
+        firefox-wayland
+        waybar
+        wofi
+        mako
+        swww # stupid wallpaper software
+      ]
+    else [
+        feh
+        flameshot
+        firefox-bin
+      ];
+  in common ++ displayPackages;
 }

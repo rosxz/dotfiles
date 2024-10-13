@@ -8,7 +8,7 @@ in
 {
   imports = with profiles; [
     types.desktop # type of machine
-    sway # window manager
+    i3
     polkit
     work
     wireguard
@@ -46,7 +46,7 @@ in
   };
 
   users.users.${user} = {
-    extraGroups = [ "qemu-libvirtd" "input" ];
+    extraGroups = [ "qemu-libvirtd" "input" ]; # "seat"
     openssh.authorizedKeys.keys = with sshKeys; lib.mkForce [ user_ryuujin user_xiaomi ];
   };
 
