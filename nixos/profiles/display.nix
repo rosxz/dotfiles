@@ -35,10 +35,9 @@ in
     };
   };
 
-  services.displayManager.gdm = {
+  services.displayManager.sddm = {
     enable = true;
-    autoSuspend = lib.mkDefault false;
-    wayland = config.modules.labels.display == "wayland";
+    wayland.enable = config.modules.labels.display == "wayland";
   };
 
   # environment.sessionVariables.QT_STYLE_OVERRIDE = lib.mkForce "adwaita-dark";

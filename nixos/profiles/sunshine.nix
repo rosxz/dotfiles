@@ -26,10 +26,8 @@ EndSection
       xf86videovesa
     ];
     displayManager.autoLogin = {
-      autoLogin = {
-        user = "${user}";
-        enable = true;
-      };
+      user = "${user}";
+      enable = true;
     };
   };
 

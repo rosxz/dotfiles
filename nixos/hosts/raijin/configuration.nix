@@ -2,7 +2,7 @@
 
   imports = with profiles; [
     types.desktop
-    gnome # !!
+    flavors.gnome # !!
     work
     entertainment
     polkit

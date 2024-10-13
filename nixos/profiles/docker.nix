@@ -1,8 +1,6 @@
 { config, pkgs, lib, user, ... }: {
 
-  users.users.${user} = {
-    extraGroups = [ "docker" ];
-  };
+  users.users.${user}.extraGroups = [ "docker" ];
 
   networking.firewall.trustedInterfaces = [ "docker0" ];
 

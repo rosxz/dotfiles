@@ -1,6 +1,5 @@
 { self, user, config, pkgs, ... }:
 {
-  virtualisation.docker.enable = true;
   virtualisation.libvirtd = {
     enable = true;
     qemu = {
@@ -19,5 +18,5 @@
   programs.dconf.enable = true; # virt-manager requires dconf to remember settings
   environment.systemPackages = with pkgs; [ virt-manager ];
 
-  users.users.${user}.extraGroups = [ "docker" "libvirtd" ];
+  users.users.${user}.extraGroups = [ "libvirtd" ];
 }

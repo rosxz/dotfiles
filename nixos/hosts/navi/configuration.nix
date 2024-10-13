@@ -8,12 +8,13 @@ in
 {
   imports = with profiles; [
     types.desktop # type of machine
-    i3
+    flavors.sway
     polkit
     work
     wireguard
     dev
     entertainment
+    sunshine
     ./hardware-configuration.nix
   ];
 

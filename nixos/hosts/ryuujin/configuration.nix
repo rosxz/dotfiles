@@ -2,7 +2,7 @@
 {
   imports = with profiles; [
     types.laptop # type of machine
-    sway # window manager
+    flavors.sway # window manager
     work
     wireguard
     polkit
