@@ -1,5 +1,7 @@
 { config, pkgs, lib, ... }:
 {
+  modules.labels.display = "wayland";
+
   services.xserver.desktopManager.gnome.enable = true;
   services.gnome.gnome-remote-desktop.enable = true;
   services.dbus.enable = true;

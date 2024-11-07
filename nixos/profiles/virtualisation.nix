@@ -1,6 +1,5 @@
 { self, user, config, pkgs, ... }:
 {
-  virtualisation.docker.enable = true;
   virtualisation.libvirtd = {
     enable = true;
     qemu = {

@@ -15,13 +15,15 @@ let
 
 in
 {
+  modules.labels.display = "wayland";
+
   programs = {
     sway = {
       enable = true;
       wrapperFeatures.gtk = true;
     };
 
-    light.enable = true;
+    light.enable = config.modules.labels.type == "laptop";
     dconf.enable = true;
   };
 
@@ -29,19 +31,6 @@ in
   home-manager.users.${user} = {
     imports = with profiles.home; [ sway waybar ];
   };
-
-  #services.xserver = {
-  #  desktopManager = {
-  #    xterm.enable = false;
-  #    xfce = {
-  #      enable = false;
-  #      noDesktop = true;
-  #      enableXfwm = false;
-  #    };
-  #  };
-  #  # displayManager = {
-  #  #    defaultSession = "none+i3";
-  #};
 
   services.dbus.enable = true;
   xdg.portal = {
@@ -60,5 +49,6 @@ in
     swayidle
     swaybg
     qt6.qtwayland
+    wayvnc
   ];
 }

@@ -62,6 +62,7 @@ in {
       overlays = [
         (final: prev: {
           unstable = import inputs.nixpkgs-unstable args;
+          pinnedHyrpland = import inputs.nixpkgs-hyprland args;
         })
       ] ++ lib.attrValues overlays;
     });

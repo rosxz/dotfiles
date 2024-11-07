@@ -14,7 +14,8 @@
     nixos-mailserver.url = "gitlab:simple-nixos-mailserver/nixos-mailserver/nixos-24.05";
     nixos-mailserver.inputs.nixpkgs.follows = "nixpkgs";
 
-    impermanence.url = "github:nix-community/impermanence/master";
+    # impermanence.url = "github:nix-community/impermanence/master";
+    nixpkgs-hyprland.url = "github:nixos/nixpkgs/3e2aca0b97ed1c88fa784a368270b4cd223efe1d";
   };
 
   outputs = { self, ... }@inputs:
@@ -51,7 +52,7 @@
       };
       extraModules = [
         inputs.agenix.nixosModules.age
-        inputs.impermanence.nixosModules.impermanence
+        # inputs.impermanence.nixosModules.impermanence
         inputs.home-manager.nixosModules.home-manager
         # inputs.programs-sqlite.nixosModules.programs-sqlite
         inputs.nixos-mailserver.nixosModule

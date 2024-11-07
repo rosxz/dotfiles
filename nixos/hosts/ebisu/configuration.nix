@@ -2,7 +2,7 @@
 {
   imports = with profiles; [
     types.laptop # type of machine
-    gnome # window manager
+    flavors.gnome # window manager
     work
     docker
     polkit

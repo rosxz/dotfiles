@@ -1,4 +1,4 @@
-{ config, pkgs, lib, ... }:
+{ config, pkgs, user, lib, ... }:
 
 let
   configure-gtk = pkgs.writeTextFile {
@@ -18,8 +18,17 @@ let
   };
 in
 {
+  modules.labels.display = "xorg";
+
   environment.pathsToLink = [ "/libexec" ]; # links /libexec from derivations to /run/current-system/sw
 
+  services.xrdp = {
+    enable = true;
+    # TODO get session executable without string regex :)
+    defaultWindowManager = builtins.head (builtins.elemAt (builtins.split ".+Exec=([^\n]+)"
+      (builtins.head config.services.xserver.displayManager.sessionPackages).text) 1);
+    openFirewall = true;
+  };
   services.xserver = {
     enable = true;
     desktopManager = {
@@ -30,18 +39,6 @@ in
         enableXfwm = false;
       };
     };
-    displayManager = {
-      defaultSession = "xfce+i3";
-      gdm = {
-        enable = true;
-        autoSuspend = true;
-        wayland = false;
-      };
-    };
-    # displayManager = {
-    #    defaultSession = "none+i3";
-    #};
-
     windowManager.i3 = {
       enable = true;
       extraPackages = with pkgs; [
@@ -50,26 +47,24 @@ in
         i3lock-fancy-rapid #default i3 screen locker
      ];
     };
+    displayManager = {
+      #lightdm.enable = true;
+      defaultSession = "xfce+i3";
+      #defaultSession = "none+i3";
+    };
   };
 
-  services.xserver.screenSection = ''
-    Option         "metamodes" "nvidia-auto-select +0+0 {ForceFullCompositionPipeline=On}"
-    Option         "AllowIndirectGLXProtocol" "off"
-    Option         "TripleBuffer" "on"
-  '';
+  #services.xserver.screenSection = ''
+  #  Option         "metamodes" "nvidia-auto-select +0+0 {ForceFullCompositionPipeline=On}"
+  #  Option         "AllowIndirectGLXProtocol" "off"
+  #  Option         "TripleBuffer" "on"
+  #'';
 
+  xdg.portal.enable = true;
   environment.systemPackages = with pkgs; [
     configure-gtk
     glib # gsettings
-    dracula-theme # gtk theme
-    gnome3.adwaita-icon-theme  # default gnome cursors
-    xdg-utils # for opening default programs when clicking links
 
     rofi
-    firefox
-    feh
-
-    kora-icon-theme
-    bibata-cursors-translucent
   ];
 }
