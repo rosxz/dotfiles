@@ -14,7 +14,7 @@
 
   services.jellyfin = {
     enable = true;
-    package = with pkgs; unstable.jellyfin;
+    # package = with pkgs; unstable.jellyfin;
     openFirewall = true;
   };
   users.users.jellyfin = {
