@@ -4,12 +4,12 @@
   # Packages that should be installed to the user profile.
   home.packages = with pkgs; [
     page
-    unstable.kdenlive
+    # unstable.kdenlive
     zathura
     man-pages
     # libreoffice-qt
-    krita
-    xournalpp
+    # krita
+    # xournalpp
     libqalculate
 
     patchelf
@@ -18,6 +18,7 @@
     # godot_4
     # aseprite-unfree
     # blender
+    devenv
   ];
 
   programs.direnv.enable = true;

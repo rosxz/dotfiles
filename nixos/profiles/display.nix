@@ -68,7 +68,6 @@ in
       networkmanagerapplet
       alacritty
       pavucontrol
-      mpv
       pamixer
 	    brightnessctl
 	    xarchiver # thunar
@@ -99,10 +98,13 @@ in
         mako
         swww # stupid wallpaper software
       ]
-    else [
+    else
+      [
         feh
         flameshot
         firefox-bin
       ];
-  in common ++ displayPackages;
+    langLearnPackages = with pkgs; if !config.modules.labels.langlearn then
+      [ mpv ] else [];
+  in common ++ displayPackages ++ langLearnPackages;
 }

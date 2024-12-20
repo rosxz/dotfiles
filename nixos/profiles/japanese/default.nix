@@ -1,10 +1,14 @@
 { config, inputs, lib, pkgs, ... }:
 {
+  modules.labels.langlearn = true;
+
   fonts = {
     packages = with pkgs; [
       source-han-sans
       source-han-sans-japanese
       source-han-serif-japanese
+      corefonts
+      vistafonts
     ];
     fontconfig.defaultFonts = {
       serif = [ "Source Han Serif" ];
@@ -30,21 +34,25 @@
   };
   environment.variables.QT_PLUGIN_PATH = [ "${pkgs.fcitx5-with-addons}/${pkgs.qt6.qtbase.qtPluginPrefix}" ];
 
-  environment.systemPackages = with pkgs; [
+  environment.systemPackages = with pkgs; let
+    customMpv = (pkgs.mpv-unwrapped.override {
+      ffmpeg = pkgs.ffmpeg_5-full;
+    });
+    mpvWithScripts = pkgs.wrapMpv customMpv {
+      scripts = [ pkgs.mpvScripts.mpvacious ];
+    };
+  in
+  [
     unstable.anki-bin
     tagainijisho
     unstable.goldendict-ng
     qolibri
     manga-ocr
-    #(mpv-unwrapped.wrapper {
-    #  scripts = [ pkgs.mpvScripts.mpvacious ];
-    #  mpv = (mpv-unwrapped.override {
-    #    ffmpeg_5 = pkgs.ffmpeg_5-full;
-    #  });
-    #})
+    jellyfin-mpv-shim # edit config to use ext_mpv
+    mpvWithScripts
   ];
+
+  home-manager.users.crea = {
+    xdg.configFile."mpv/script-opts/subs2srs.conf".text = builtins.readFile ./subs2srs.conf;
+  };
 }
-# -- MPV shenanigans --
-# change ffmpeg on unwrapped
-#  call the wrapper on unwrapped
-#   change scripts on wrapped

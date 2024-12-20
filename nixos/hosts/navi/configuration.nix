@@ -14,7 +14,6 @@ in
     wireguard
     dev
     entertainment
-    sunshine
     ./hardware-configuration.nix
   ];
 
@@ -51,7 +50,10 @@ in
     openssh.authorizedKeys.keys = with sshKeys; lib.mkForce [ user_ryuujin user_xiaomi ];
   };
 
-  services.printing.enable = true;
+  services.printing = {
+    enable = true;
+    drivers = [ pkgs.epson-escpr ];
+  };
   # services.fprintd = {
   #   enable = true;
   # };
@@ -108,7 +110,7 @@ in
   };
 
   environment.systemPackages = with pkgs; [
-    qbittorrent
+    unstable.qbittorrent
     yt-dlp
     python3
     xsettingsd
