@@ -20,7 +20,8 @@ in
   fonts = {
     packages = with pkgs; [
       noto-fonts
-      noto-fonts-cjk
+      noto-fonts-cjk-sans
+      noto-fonts-cjk-serif
       noto-fonts-emoji
       liberation_ttf
       fira-code
@@ -42,8 +43,6 @@ in
 
   # environment.sessionVariables.QT_STYLE_OVERRIDE = lib.mkForce "adwaita-dark";
 
-  # Enable sound with pipewire.
-  sound.enable = true;
   hardware.pulseaudio.enable = false;
   security.rtkit.enable = true;
   services.pipewire = {
@@ -60,6 +59,7 @@ in
   ];
   services.gvfs.enable = true; # Mount, trash, and other functionalities
   services.tumbler.enable = true; # Thumbnail support for images
+  programs.file-roller.enable = true; # Alternative to Xarchiver for thunar
 
   ### PACKAGES
   environment.systemPackages = let
@@ -68,10 +68,8 @@ in
       networkmanagerapplet
       alacritty
       pavucontrol
-      mpv
       pamixer
 	    brightnessctl
-	    xarchiver # thunar
       configure-gtk
       trashy
       xdg-utils # for opening default programs when clicking links
@@ -81,7 +79,7 @@ in
       bibata-cursors-translucent
       adwaita-qt
       dracula-theme # gtk theme
-      gnome3.adwaita-icon-theme  # default gnome cursors
+      adwaita-icon-theme  # default gnome cursors
     ];
     displayPackages = with pkgs; if config.modules.labels.display == "wayland" then
       [
@@ -99,10 +97,13 @@ in
         mako
         swww # stupid wallpaper software
       ]
-    else [
+    else
+      [
         feh
         flameshot
         firefox-bin
       ];
-  in common ++ displayPackages;
+    langLearnPackages = with pkgs; if !config.modules.labels.langlearn then
+      [ mpv ] else [];
+  in common ++ displayPackages ++ langLearnPackages;
 }

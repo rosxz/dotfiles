@@ -1,4 +1,8 @@
 { config, pkgs, user, ... }: {
+  # Notes regarding this setup:
+  # Works with Xorg (i3) and Wayland (sway)
+  # Need to refresh the WM after changing resolution (if doing it manually)
+
   # services.seatd.enable = true;
 
   # amdgpu.virtual_display reference:

@@ -11,10 +11,8 @@ in
     flavors.sway
     polkit
     work
-    wireguard
     dev
     entertainment
-    sunshine
     ./hardware-configuration.nix
   ];
 
@@ -27,7 +25,7 @@ in
 
   zramSwap.enable = true;
   boot.supportedFilesystems = [ "zfs" ];
-  boot.kernelPackages = config.boot.zfs.package.latestCompatibleLinuxPackages;
+  # boot.kernelPackages = config.boot.zfs.package.latestCompatibleLinuxPackages;
   networking.hostId = "0bf65e23"; # For example: head -c 8 /etc/machine-id
   services.zfs.autoScrub.enable = true;
 
@@ -51,7 +49,10 @@ in
     openssh.authorizedKeys.keys = with sshKeys; lib.mkForce [ user_ryuujin user_xiaomi ];
   };
 
-  services.printing.enable = true;
+  services.printing = {
+    enable = true;
+    drivers = [ pkgs.epson-escpr ];
+  };
   # services.fprintd = {
   #   enable = true;
   # };
@@ -108,7 +109,7 @@ in
   };
 
   environment.systemPackages = with pkgs; [
-    qbittorrent
+    unstable.qbittorrent
     yt-dlp
     python3
     xsettingsd

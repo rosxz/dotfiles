@@ -13,6 +13,12 @@ with lib; {
       default = "wayland";
       example = default;
     };
+    langlearn = mkOption rec {
+      type = types.bool;
+      description = "Whether should change packages for lang learning";
+      default = false;
+      example = default;
+    };
   };
 
   config = {
@@ -24,6 +30,10 @@ with lib; {
       {
         assertion = lib.assertOneOf "display type" config.modules.labels.display ["wayland" "xorg"];
         message = "Host '${config.networking.hostname}' display type must be one of wayland or xorg";
+      }
+      {
+        assertion = lib.assertOneOf "lang learn mode" config.modules.labels.langlearn [true false];
+        message = "Host '${config.networking.hostname}' lang learn mode must be one of true or false";
       }
     ];
   };

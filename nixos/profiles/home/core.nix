@@ -4,12 +4,12 @@
   # Packages that should be installed to the user profile.
   home.packages = with pkgs; [
     page
-    unstable.kdenlive
+    # unstable.kdenlive
     zathura
     man-pages
     # libreoffice-qt
-    krita
-    xournalpp
+    # krita
+    # xournalpp
     libqalculate
 
     patchelf
@@ -18,6 +18,7 @@
     # godot_4
     # aseprite-unfree
     # blender
+    devenv
   ];
 
   programs.direnv.enable = true;
@@ -59,7 +60,7 @@ CanonicalizeMaxDots 0
 #  ForwardAgent no
 #  RequestTTY yes
 
-Match canonical host="*.rnl.tecnico.ulisboa.pt"
+Match canonical host "*.rnl.tecnico.ulisboa.pt"
   User root
   ServerAliveInterval 60
 

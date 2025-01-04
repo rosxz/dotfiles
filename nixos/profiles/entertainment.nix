@@ -7,9 +7,13 @@
     moonlight-qt
     steam-run
     protontricks
-    lutris
     wine-wayland
+    waypipe
+    steamtinkerlaunch
     # unstable.nexusmods-app # in the future maybe
+    unstable.lutris
+    unstable.pcsx2
+    lime3ds
   ];
   programs.steam.enable = true;
   # Waydroid
