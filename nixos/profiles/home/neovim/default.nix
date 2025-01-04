@@ -207,12 +207,8 @@ require 'colorizer'.setup ({ user_default_options = { names = false; }})
 
           -- python lsp setup
           lsp_config.pyright.setup(lsp_setup)
-
-          -- dafny lsp setup
-          lsp_config.dafny.setup(lsp_setup)
 '';
     }
-    vim-loves-dafny
     rust-tools-nvim # TODO Change to Rustaceanvim
     lsp_extensions-nvim
     copilot-vim
@@ -439,7 +435,7 @@ require('gitsigns').setup{
 
     home.file = files;
 
-    home.packages = [ pkgs.dafny pkgs.pyright ];
+    home.packages = [ pkgs.pyright ];
 
     home.sessionVariables = {
       EDITOR = "nvim";

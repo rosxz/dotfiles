@@ -56,13 +56,12 @@ in {
   inherit rakeLeaves;
 
   mkPkgs = overlays:
-    let args = { inherit system; config.allowUnfree = true; config.permittedInsecurePackages = [ "electron-24.8.6" ]; };
+    let args = { inherit system; config.allowUnfree = true; config.permittedInsecurePackages = [ ]; };
     in
     import inputs.nixpkgs (args // {
       overlays = [
         (final: prev: {
           unstable = import inputs.nixpkgs-unstable args;
-          pinnedHyrpland = import inputs.nixpkgs-hyprland args;
         })
       ] ++ lib.attrValues overlays;
     });

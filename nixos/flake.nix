@@ -2,20 +2,20 @@
   description = "My messy NixOS configuration";
 
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-24.05";
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-24.11";
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
 
-    home-manager.url = "github:nix-community/home-manager/release-24.05";
+    home-manager.url = "github:nix-community/home-manager/release-24.11";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
 
     agenix.url = "github:ryantm/agenix/main";
     agenix.inputs.nixpkgs.follows = "nixpkgs";
 
-    nixos-mailserver.url = "gitlab:simple-nixos-mailserver/nixos-mailserver/nixos-24.05";
-    nixos-mailserver.inputs.nixpkgs.follows = "nixpkgs";
+    #nixos-mailserver.url = "gitlab:simple-nixos-mailserver/nixos-mailserver/nixos-24.05";
+    #nixos-mailserver.inputs.nixpkgs.follows = "nixpkgs";
 
     # impermanence.url = "github:nix-community/impermanence/master";
-    nixpkgs-hyprland.url = "github:nixos/nixpkgs/3e2aca0b97ed1c88fa784a368270b4cd223efe1d";
+    # nixpkgs-hyprland.url = "github:nixos/nixpkgs/3e2aca0b97ed1c88fa784a368270b4cd223efe1d"; # for sunshine
   };
 
   outputs = { self, ... }@inputs:
@@ -55,7 +55,7 @@
         # inputs.impermanence.nixosModules.impermanence
         inputs.home-manager.nixosModules.home-manager
         # inputs.programs-sqlite.nixosModules.programs-sqlite
-        inputs.nixos-mailserver.nixosModule
+        # inputs.nixos-mailserver.nixosModule
       ];
     };
   in

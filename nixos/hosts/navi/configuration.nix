@@ -11,7 +11,6 @@ in
     flavors.sway
     polkit
     work
-    wireguard
     dev
     entertainment
     ./hardware-configuration.nix
@@ -26,7 +25,7 @@ in
 
   zramSwap.enable = true;
   boot.supportedFilesystems = [ "zfs" ];
-  boot.kernelPackages = config.boot.zfs.package.latestCompatibleLinuxPackages;
+  # boot.kernelPackages = config.boot.zfs.package.latestCompatibleLinuxPackages;
   networking.hostId = "0bf65e23"; # For example: head -c 8 /etc/machine-id
   services.zfs.autoScrub.enable = true;
 

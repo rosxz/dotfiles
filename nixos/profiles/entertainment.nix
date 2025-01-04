@@ -11,8 +11,9 @@
     waypipe
     steamtinkerlaunch
     # unstable.nexusmods-app # in the future maybe
+    unstable.lutris
     unstable.pcsx2
-    unstable.lime3ds
+    lime3ds
   ];
   programs.steam.enable = true;
   # Waydroid

@@ -17,12 +17,17 @@
   };
 
   i18n.inputMethod = {
-    enabled = "fcitx5";
-    fcitx5.addons = with pkgs; [
-      fcitx5-mozc
-      fcitx5-gtk
-      fcitx5-configtool
-    ];
+    enable = true;
+    type = "fcitx5";
+    fcitx5 = {
+      addons = with pkgs; [
+        fcitx5-mozc
+        fcitx5-gtk
+        fcitx5-configtool
+      ];
+      waylandFrontend = config.modules.labels.display == "wayland";
+      # TODO quickPhrase
+    };
   };
 
   environment.sessionVariables = rec {
@@ -36,14 +41,16 @@
 
   environment.systemPackages = with pkgs; let
     customMpv = (pkgs.mpv-unwrapped.override {
-      ffmpeg = pkgs.ffmpeg_5-full;
+      ffmpeg = pkgs.ffmpeg-full;
     });
-    mpvWithScripts = pkgs.wrapMpv customMpv {
+    # wrapMpv = callPackage pkgs.mpv-unwrapped.wrapper {  };
+    mpvWithScripts = pkgs.mpv-unwrapped.wrapper {
+      mpv = customMpv;
       scripts = [ pkgs.mpvScripts.mpvacious ];
     };
   in
   [
-    unstable.anki-bin
+    anki-bin
     tagainijisho
     unstable.goldendict-ng
     qolibri

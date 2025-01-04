@@ -60,7 +60,7 @@ CanonicalizeMaxDots 0
 #  ForwardAgent no
 #  RequestTTY yes
 
-Match canonical host="*.rnl.tecnico.ulisboa.pt"
+Match canonical host "*.rnl.tecnico.ulisboa.pt"
   User root
   ServerAliveInterval 60
 

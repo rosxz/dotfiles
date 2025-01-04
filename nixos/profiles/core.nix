@@ -76,9 +76,8 @@
     shellAliases = {
       poweroff = "poweroff --no-wall";
       reboot = "reboot --no-wall";
-      update = "nix flake update";
-      rebuild = ''sudo nixos-rebuild switch --flake "github:rosxz/dotfiles?dir=nixos"
-      '';
+      rebuild = ''sudo nixos-rebuild switch --flake "github:rosxz/dotfiles?dir=nixos"'';
+      tr = ''trash'';
       ssh = "TERM=xterm-256color ssh";
       ls = "eza --color=always --icons --group-directories-first";
     };
