@@ -14,7 +14,7 @@ services.restic.backups.STORAGE = {
   extraBackupArgs = [ "--compression=max" ];
   backupPrepareCommand = ''
    #!/bin/sh
-   ${pkgs.mount}/bin/mount /dev/sda1 /mnt/Backup
+   ${pkgs.mount}/bin/mount /dev/disk/by-label/BACKUP /mnt/Backup
   '';
   # ${pkgs.transmission}/bin/transmission-remote -N /var/lib/secrets/transmission/.netrc -t all --stop
   backupCleanupCommand = ''

@@ -14,7 +14,7 @@ with lib;
       description = lib.mdDoc ''
         A list of drive device names to be affected
         by the service. Leave unset to target all
-        external drives..
+        external drives.
       '';
       example = [ "sda sdb" ];
     };
