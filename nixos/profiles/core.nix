@@ -80,6 +80,7 @@
       tr = ''trash'';
       ssh = "TERM=xterm-256color ssh";
       ls = "eza --color=always --icons --group-directories-first";
+      nix="noglob nix";
     };
     interactiveShellInit = ''
    export ZSH=${pkgs.oh-my-zsh}/share/oh-my-zsh/

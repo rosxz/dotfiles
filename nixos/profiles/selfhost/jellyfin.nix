@@ -1,7 +1,7 @@
 { pkgs, lib,config, ... }:
 {
   # 1. enable vaapi on OS-level
-  hardware.opengl = {
+  hardware.graphics = {
     enable = true;
     extraPackages = with pkgs; [
       intel-media-driver

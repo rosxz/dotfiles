@@ -16,8 +16,8 @@
     invidious
     # homer
     ## arrs
-    sonarr
-    radarr
+    #sonarr
+    #radarr
     bazarr
     prowlarr
     rtorrent

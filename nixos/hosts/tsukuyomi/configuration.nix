@@ -13,7 +13,7 @@
 
   modules.services.hd-idle = {
     enable = true;
-    drives = [ "sda" ];
+    drives = [ "/dev/disk/by-label/BACKUP" ];
   };
   hardware.cpu.intel.updateMicrocode = true;
 

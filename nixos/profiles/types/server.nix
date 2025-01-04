@@ -24,9 +24,6 @@
   };
   services.fstrim.enable = true; # SSDs are the new normal
 
-  # Enable touchpad support (enabled default in most desktopManager).
-  services.xserver.libinput.enable = true;
-
   nix.settings = {
     trusted-users = [ "${user}" "root" ];
     allowed-users = [ "@wheel" ];
