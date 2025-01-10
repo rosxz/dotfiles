@@ -29,10 +29,10 @@
     };
 
   # Start Unmounted: IDK why yet, but disk is being continuously written to and read from while mounted ??!
-  fileSystems."/mnt/Backup" = 
-    { device = "/dev/disk/by-label/BACKUP";
-      fsType = "ext4";
-    };
+  #fileSystems."/mnt/Backup" = 
+  #  { device = "/dev/disk/by-label/BACKUP";
+  #    fsType = "ext4";
+  #  };
 
   swapDevices = [ { device = "/.swapfile"; } ];
 
