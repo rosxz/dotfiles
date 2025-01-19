@@ -11,11 +11,9 @@
     agenix.url = "github:ryantm/agenix/main";
     agenix.inputs.nixpkgs.follows = "nixpkgs";
 
-    #nixos-mailserver.url = "gitlab:simple-nixos-mailserver/nixos-mailserver/nixos-24.05";
-    #nixos-mailserver.inputs.nixpkgs.follows = "nixpkgs";
-
-    # impermanence.url = "github:nix-community/impermanence/master";
+    # impermanence.url = "github:nix-community/impermanence/master"; # cool homeserver/vps thing
     # nixpkgs-hyprland.url = "github:nixos/nixpkgs/3e2aca0b97ed1c88fa784a368270b4cd223efe1d"; # for sunshine
+    nixpkgs-transmission405.url = "github:nixos/nixpkgs/bf16ab6fce7e0e6e463685723116548c94754bb3"; # last transsmission version without announce bug
   };
 
   outputs = { self, ... }@inputs:
@@ -29,8 +27,10 @@
       inherit inputs pkgs system;
       lib = final;
     });
-    overlays = (lib.my.mkOverlays ./overlays) // { agenix = inputs.agenix.overlays.default; };
-    pkgs = lib.my.mkPkgs overlays;
+
+    customPins = { unstable = inputs.nixpkgs-unstable; transmission405 = inputs.nixpkgs-transmission405; }; # need instancing a new nixpkgs
+    overlays = (lib.my.mkOverlays ./overlays) // { agenix = inputs.agenix.overlays.default; }; # legacyPackages, follows nixpkgs
+    pkgs = lib.my.mkPkgs overlays customPins;
 
     # TODO remove from secrets.nix or here
     sshKeys = {

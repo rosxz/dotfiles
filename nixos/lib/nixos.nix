@@ -55,15 +55,12 @@ let
 in {
   inherit rakeLeaves;
 
-  mkPkgs = overlays:
+  mkPkgs = overlays: customPins:
     let args = { inherit system; config.allowUnfree = true; config.permittedInsecurePackages = [ ]; };
     in
     import inputs.nixpkgs (args // {
-      overlays = [
-        (final: prev: {
-          unstable = import inputs.nixpkgs-unstable args;
-        })
-      ] ++ lib.attrValues overlays;
+      overlays = lib.attrValues overlays
+      ++ lib.mapAttrsToList (name: flake: (final: prev: { ${name} = import flake args;})) customPins;
     });
 
   mkOverlays = overlaysDir:
