@@ -49,8 +49,9 @@
     hashedPassword = "$6$g3erPleT4pElaQQe$fDIA/dckjSAADHRtjQt3RGrLmFE6TjZ5acdaRSTOBWA/8OuQlnDGr0FZUfGGqxJlS0vJDPDtpPzm6pJo7i96j0";
     extraGroups = [ "networkmanager" "video" "scanner" "wheel" ];
     shell = pkgs.zsh;
-    openssh.authorizedKeys.keys = with sshKeys; [
-     user_xiaomi user_navi user_ryuujin user_ebisu ];
+    openssh.authorizedKeys.keys = with sshKeys.users; [
+      xiaomi navi ryuujin ebisu
+    ];
   };
   users.users.root.hashedPassword = "*"; # Disable root user
   users.mutableUsers = false;

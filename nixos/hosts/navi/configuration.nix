@@ -46,7 +46,7 @@ in
 
   users.users.${user} = {
     extraGroups = [ "qemu-libvirtd" "input" ]; # "seat"
-    openssh.authorizedKeys.keys = with sshKeys; lib.mkForce [ user_ryuujin user_xiaomi ];
+    openssh.authorizedKeys.keys = with sshKeys; lib.mkForce [ users.ryuujin users.xiaomi ];
   };
 
   services.printing = {
