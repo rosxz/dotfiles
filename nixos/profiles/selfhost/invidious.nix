@@ -19,13 +19,14 @@
   services.invidious = {
     package = pkgs.unstable.invidious;
     enable = true;
+    sig-helper.enable = true;
     settings = {
         db = {
             user = "invidious";
             dbname = "invidious";
 	};
 	continue = true;
-	local = false;
+	local = true;
 	check_tables = true;
 	https_only = true;
 	use_quic = true;
