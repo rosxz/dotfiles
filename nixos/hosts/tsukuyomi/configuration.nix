@@ -11,10 +11,10 @@
 
   system.autoUpgrade.enable = true;
 
-  #modules.services.hd-idle = {
-  #  enable = true;
-  #  drives = [ "/dev/disk/by-label/BACKUP" ];
-  #};
+  modules.services.hd-idle = {
+    enable = true;
+    drives = [ "/dev/disk/by-label/BACKUP" ];
+  };
   hardware.cpu.intel.updateMicrocode = true;
 
   networking = {

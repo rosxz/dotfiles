@@ -13,7 +13,7 @@
     jellyfin
     nextcloud
     postgresql
-    invidious
+    # invidious # not using until the new helper comes out
     # homer
     ## arrs
     #sonarr
