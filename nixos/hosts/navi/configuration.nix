@@ -8,9 +8,8 @@ in
 {
   imports = with profiles; [
     types.desktop # type of machine
-    flavors.sway
+    flavors.xfce
     polkit
-    work
     dev
     entertainment
     ./hardware-configuration.nix
@@ -107,6 +106,12 @@ in
       };
     };
   };
+
+  hardware.bluetooth = {
+    enable = true;
+    powerOnBoot = false;
+  };
+  services.blueman.enable = true;
 
   environment.systemPackages = with pkgs; [
     unstable.qbittorrent

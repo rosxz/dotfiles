@@ -29,7 +29,7 @@ in
 
   # import wm config
   home-manager.users.${user} = {
-    imports = with profiles.home; [ sway waybar ];
+    imports = with profiles.home; [ sway waybar wofi ];
   };
 
   services.dbus.enable = true;
