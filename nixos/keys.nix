@@ -6,6 +6,7 @@
     ryuujin = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICKTj6ug2eor2EDMVGebzUWgfAQdXlcQZ9rjZ/EeDp9Y root@ryuujin";
     hachiman = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIN5sIZ/tykBmj5CgfZSvxlYL+27eBC74kp9qNw5UkPK7 root@hachiman";
     navi = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMEmRCjtyx60uB7opTk7l1Plk8YVEzpSspEzf6gVgi2L root@navi";
+    omigawa = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOMvfEOAKwgBiH9NMJv2O+9SakuFaqN9bNTh4cqL267D root@omigawa";
   };
   users = {
     tsukuyomi = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILW5ZVdVaKMVlau1wp/JGJpdpE6JUxJ07DEYHi9qOLC8 crea@tsukuyomi"; # Tsukuyomi (HP Homeserver)
@@ -14,5 +15,6 @@
     ryuujin = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIB0Y66xC+lCLENxktcVwGYacISi8A+KEbijg7N+w5HcF crea@ryuujin"; # Ryuujin (T490s Laptop)
     navi = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIC36CNRkhRvwygw8dGAHE7ThT5kw2RjuX/X5MzUIfFSU crea@navi"; # NAVI (Home Desktop)
     xiaomi = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIK6yNVUz9RnIFibmEb2cpdrypr2k2KPffMQpmIn0gbHb u0_a243@localhost"; # Xiaomi 10
+    omigawa = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIG+OvXy9eGWukjjQmZwpKkoUUkPcbcS/l8kl1WKOLan7 crea@omigawa"; # Toshiba Satellite T-135
   };
 }
