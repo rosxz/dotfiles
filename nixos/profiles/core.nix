@@ -50,7 +50,7 @@
     extraGroups = [ "networkmanager" "video" "scanner" "wheel" ];
     shell = pkgs.zsh;
     openssh.authorizedKeys.keys = with sshKeys.users; [
-      xiaomi navi ryuujin ebisu
+      xiaomi navi ryuujin ebisu omigawa
     ];
   };
   users.users.root.hashedPassword = "*"; # Disable root user
