@@ -1,4 +1,4 @@
-{ config, pkgs, lib, ... }:
+{ config, pkgs, lib, self, sshKeys, ... }:
 
 let
   cfg = config.modules.distributed_builds;
@@ -27,7 +27,9 @@ let
       hashedPassword = "*"; # Disable password login
       isSystemUser = true;
       openssh.authorizedKeys.keys = [ sshKeys.builder ];
+      group = "builders";
     };
+    users.groups.builders = {};
     # Allows builder to run nix-build
     nix.settings = {
       trusted-users = [ "builder" ];
@@ -54,15 +56,15 @@ with lib;
     };
   };
 
-  config = mkIf cfg.enable {
-    assertions = [
-      {
-        assertion = lib.assertOneOf "distributed_builds type" cfg.type ["remote" "local"];
-        message = "distributed_builds type must be one of remote or local";
-      }
-    ];
+  config = mkIf cfg.enable (mkMerge [
+    { assertions = [
+        {
+          assertion = lib.assertOneOf "distributed_builds type" cfg.type ["remote" "local"];
+          message = "distributed_builds type must be one of remote or local";
+        }
+    ];}
 
     (mkIf (cfg.type == "local") localConfig)
     (mkIf (cfg.type == "remote") remoteConfig)
-  };
+  ]);
 }

@@ -17,4 +17,5 @@
     xiaomi = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIK6yNVUz9RnIFibmEb2cpdrypr2k2KPffMQpmIn0gbHb u0_a243@localhost"; # Xiaomi 10
     omigawa = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIG+OvXy9eGWukjjQmZwpKkoUUkPcbcS/l8kl1WKOLan7 crea@omigawa"; # Toshiba Satellite T-135
   };
+  builder = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIN9lxdx0lq+Q7XWr7VW9B1uUWVePVuBB3tTLke40+qiz builder@builder"; # Distributed Builds Client Key
 }
