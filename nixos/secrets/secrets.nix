@@ -16,5 +16,5 @@ in
   "transmission-secrets.age".publicKeys = [ hosts.tsukuyomi ] ++ [ users.tsukuyomi users.ryuujin ];
   "nordigen-id.age".publicKeys = [ hosts.tsukuyomi ] ++ [ users.tsukuyomi users.ryuujin ];
   "nordigen-key.age".publicKeys = [ hosts.tsukuyomi ] ++ [ users.tsukuyomi users.ryuujin ];
-  "builder-key.age".publicKeys = [ hosts.ryuujin hosts.omigawa hosts.navi ] ++ [ users.ryuujin users.omigawa users.navi ];
+  "builder-key.age".publicKeys = [ hosts.omigawa hosts.ryuujin ] ++ [ users.omigawa users.ryuujin ];
 }
