@@ -9,26 +9,25 @@
   users.groups.media = { };
 
   imports = with profiles.selfhost; [
+    # polaris
     nginx
     jellyfin
     nextcloud
     postgresql
-    # invidious # not using until the new helper comes out
-    # homer
-    ## arrs
-    #sonarr
-    #radarr
     bazarr
     prowlarr
     rtorrent
     transmission
     betanin
     calibre
-    thelounge
-    ## finance
+    restic ##### Backups
+    #thelounge
+    #invidious # not using until the new helper comes out
+    #homer
+    #sonarr
+    #radarr
+    ##### finance
     # firefly
     # firefly-data-importer
-    ## backups
-    restic
   ];
 }

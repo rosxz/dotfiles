@@ -10,7 +10,7 @@ services.restic.backups.STORAGE = {
   paths = [ "/mnt/Storage/Torrents" "/mnt/Storage/nextcloud" ];
   passwordFile = config.age.secrets.restic-pass.path;
   initialize = true;
-  pruneOpts = [ "--keep-weekly 1" ];
+  pruneOpts = [ "--keep-last 5" ];
   extraBackupArgs = [ "--compression=max" ];
   # backupPrepareCommand = '''';
   # ${pkgs.transmission}/bin/transmission-remote -N /var/lib/secrets/transmission/.netrc -t all --stop

@@ -55,7 +55,7 @@
       useACMEHost = "moniz.pt";
       locations."/".proxyPass = "http://127.0.0.1:8096";
     };
-
+    
 #    "inv.moniz.pt" = {
 #      forceSSL = true;
 #      useACMEHost = "moniz.pt";

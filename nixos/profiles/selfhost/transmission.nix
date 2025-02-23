@@ -2,8 +2,8 @@
 let
   domain = "transmission.moniz.pt";
   # /tmp/transcodes would be cool but apparmor has restrictions
-  downloadDir = "/mnt/Storage/Torrents/";
-  transcodeDir = "/mnt/Storage/Torrents/Transcodes/"; # needs to be a subdir
+  downloadDir = "/mnt/Storage/Torrents";
+  transcodeDir = "/mnt/Storage/Torrents/Transcodes"; # needs to be a subdir
 in
 {
   age.secrets.transmission-secrets = {
@@ -49,7 +49,7 @@ in
 
 	    ${pkgs.transmission}/bin/transmission-remote -t $TR_TORRENT_HASH --move ${downloadDir}/Music
 
-            ln -s "${downloadDir}Music/$TR_TORRENT_NAME" /tmp/$TR_TORRENT_HASH # Hopefuly this filename-guessing works
+            ln -s "${downloadDir}/Music/$TR_TORRENT_NAME" /tmp/$TR_TORRENT_HASH # Hopefuly this filename-guessing works
 	    ${pkgs.whatmp3}/bin/whatmp3 -nrz --V0 -o ${transcodeDir} /tmp/$TR_TORRENT_HASH
 
 	    ${pkgs.curl}/bin/curl \
