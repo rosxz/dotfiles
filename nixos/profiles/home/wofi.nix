@@ -7,7 +7,8 @@
       allow-images = true;
       allow-markup = true;
       gtk_dark = true;
-      key_expand = "L_ALT";
+      key_expand = "Alt_L";
+      run-always_parse_args = true;
     };
     style =
     ''

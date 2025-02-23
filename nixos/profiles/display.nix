@@ -59,7 +59,6 @@ in
   ];
   services.gvfs.enable = true; # Mount, trash, and other functionalities
   services.tumbler.enable = true; # Thumbnail support for images
-  programs.file-roller.enable = true; # Alternative to Xarchiver for thunar
 
   ### PACKAGES
   environment.systemPackages = let
@@ -73,6 +72,7 @@ in
       configure-gtk
       trashy
       xdg-utils # for opening default programs when clicking links
+      xarchiver
 
       # theming
       kora-icon-theme
@@ -93,7 +93,6 @@ in
         imv
         firefox-wayland
         waybar
-        wofi
         mako
         swww # stupid wallpaper software
       ]

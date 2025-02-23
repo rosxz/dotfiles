@@ -37,6 +37,7 @@ in
 
         keybindings = let
           modifier = "Mod4";
+          apprun = "wofi -G --show run";
           recordScript = pkgs.writeTextFile {
             name = "recordScript";
             text = ''
@@ -49,6 +50,7 @@ in
           "${modifier}+Escape" = "exec ${lockCommand}";
           "${modifier}+Shift+Escape" = "exec systemctl suspend";
           "${modifier}+c" = "kill";
+          "${modifier}+x" = "exec ${apprun}";
 
           # Screenshots
           "Print" =
