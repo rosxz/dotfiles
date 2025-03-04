@@ -40,26 +40,31 @@
   environment.variables.QT_PLUGIN_PATH = [ "${pkgs.fcitx5-with-addons}/${pkgs.qt6.qtbase.qtPluginPrefix}" ];
 
   environment.systemPackages = with pkgs; let
-    customMpv = (pkgs.mpv-unwrapped.override {
+    # omigawa lacks "recent" CPU instruction sets (AVX, SSE?)
+    customMpv = if config.networking.hostName == "omigawa" then
+    (pkgs.mpv-unwrapped) else (pkgs.mpv-unwrapped.override {
       ffmpeg = pkgs.ffmpeg-full;
     });
-    # wrapMpv = callPackage pkgs.mpv-unwrapped.wrapper {  };
     mpvWithScripts = pkgs.mpv-unwrapped.wrapper {
       mpv = customMpv;
       scripts = [ pkgs.mpvScripts.mpvacious ];
     };
   in
   [
-    anki-bin
     tagainijisho
     unstable.goldendict-ng
     qolibri
     manga-ocr
     jellyfin-mpv-shim # edit config to use ext_mpv
     mpvWithScripts
-  ];
+  ] ++ (if config.networking.hostName == "omigawa" then [
+    anki
+  ] else [ anki-bin ]);
 
-  home-manager.users.crea = {
+  home-manager.users.crea = lib.recursiveUpdate {
     xdg.configFile."mpv/script-opts/subs2srs.conf".text = builtins.readFile ./subs2srs.conf;
-  };
+    xdg.configFile."mpv/input.conf".text = builtins.readFile ./input.conf;
+  } (if config.networking.hostName == "omigawa" then {
+    xdg.configFile."mpv/mpv.conf".text = builtins.readFile ./mpv.conf;
+  } else {});
 }
