@@ -66,6 +66,7 @@ Host *.rnl.tecnico.ulisboa.pt *.rnl.ist.utl.pt
   home.file.".config/gtk-3.0/settings.ini".text = ''
   [Settings]
   gtk-cursor-theme-name=Bibata_Ghost
+  gtk-menu-images=1
   '';
   home.file.".icons/default".source = "${pkgs.bibata-cursors-translucent}/share/icons/Bibata_Ghost";
 }

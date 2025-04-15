@@ -25,7 +25,8 @@ let
     # Adds dumb builder user, accessible only through ssh, host keys of clients
     users.users.builder = {
       hashedPassword = "*"; # Disable password login
-      isSystemUser = true;
+      isNormalUser = true;
+      createHome = false;
       openssh.authorizedKeys.keys = [ sshKeys.builder ];
       group = "builders";
     };

@@ -82,6 +82,8 @@
       ssh = "TERM=xterm-256color ssh";
       ls = "eza --color=always --icons --group-directories-first";
       nix="noglob nix";
+      nixos="noglob nixos";
+      nix-alien=''nix run "github:thiagokokada/nix-alien#nix-alien" -- '';
     };
     interactiveShellInit = ''
    export ZSH=${pkgs.oh-my-zsh}/share/oh-my-zsh/

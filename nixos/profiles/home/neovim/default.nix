@@ -207,6 +207,18 @@ require 'colorizer'.setup ({ user_default_options = { names = false; }})
 
           -- python lsp setup
           lsp_config.pyright.setup(lsp_setup)
+
+          -- Nix lsp setup
+          lsp_config.nil_ls.setup({
+            settings = {
+               ['nil'] = {
+                 formatting = {
+                   command = { "${pkgs.nixfmt-rfc-style}/bin/nixfmt" },
+                 },
+               },
+            },
+            cmd = { "${pkgs.nil}/bin/nil" },
+          });
 '';
     }
     rust-tools-nvim # TODO Change to Rustaceanvim

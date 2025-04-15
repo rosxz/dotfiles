@@ -16,7 +16,13 @@
     "iommu=pt"
     "iommu=1"
     "video=efifb:off"
+    "mce=off" # ****
   ];
+  # BAD, navi's ryzen 3600 L3 CACHE is not stable/working correctly, this prevents immediate reboot
+  boot.kernel.sysctl = { #****
+    "kernel.panic" = 0;
+    "kernel.panic_on_oops" = 0;
+  };
   boot.extraModulePackages = [ ];
 
   fileSystems."/" =

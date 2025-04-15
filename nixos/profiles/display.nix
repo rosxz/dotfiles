@@ -15,6 +15,7 @@ let
         gsettings set $gnome_schema cursor-theme 'Bibata_Ghost'
         '';
   };
+  isWayland = config.modules.labels.display == "wayland";
 in
 {
   fonts = {
@@ -38,7 +39,7 @@ in
 
   services.displayManager.sddm = {
     enable = true;
-    wayland.enable = config.modules.labels.display == "wayland";
+    wayland.enable = isWayland;
   };
 
   # environment.sessionVariables.QT_STYLE_OVERRIDE = lib.mkForce "adwaita-dark";
@@ -76,12 +77,13 @@ in
 
       # theming
       kora-icon-theme
+      mate.mate-icon-theme-faenza
       bibata-cursors-translucent
       adwaita-qt
       dracula-theme # gtk theme
       adwaita-icon-theme  # default gnome cursors
     ];
-    displayPackages = with pkgs; if config.modules.labels.display == "wayland" then
+    displayPackages = with pkgs; if isWayland then
       [
         wayland
         xwayland
@@ -91,18 +93,22 @@ in
 	      grim
 	      slurp
         imv
-        firefox-wayland
         waybar
         mako
-        swww # stupid wallpaper software
+        # swww # stupid wallpaper software
       ]
     else
       [
         feh
         flameshot
-        firefox-bin
       ];
     langLearnPackages = with pkgs; if !config.modules.labels.langlearn then
       [ mpv ] else [];
   in common ++ displayPackages ++ langLearnPackages;
+
+  programs.firefox = {
+    enable = true;
+    languagePacks = [ "en-GB" "ja" "pt-PT" ];
+    nativeMessagingHosts.packages = [ pkgs.ff2mpv ];
+  };
 }

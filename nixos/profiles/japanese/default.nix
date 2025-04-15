@@ -1,4 +1,4 @@
-{ config, inputs, lib, pkgs, ... }:
+{ config, inputs, lib, user, pkgs, ... }:
 {
   modules.labels.langlearn = true;
 
@@ -51,9 +51,9 @@
     };
   in
   [
-    tagainijisho
-    unstable.goldendict-ng
-    qolibri
+    # tagainijisho
+    # goldendict-ng
+    # qolibri
     manga-ocr
     jellyfin-mpv-shim # edit config to use ext_mpv
     mpvWithScripts

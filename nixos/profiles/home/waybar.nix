@@ -308,9 +308,9 @@ window#waybar.chromium {
       layer = "top";
       position = "bottom";
       height = 34;
-      modules-left = ["idle_inhibitor" "clock" "sway/mode" "sway/workspaces"];
+      modules-left = ["clock" "sway/mode" "sway/workspaces"];
       modules-center = [];
-      modules-right = ["pulseaudio" "backlight" "cpu" "temperature#cpu" "memory" "battery" "tray"];
+      modules-right = ["pulseaudio" "backlight" "cpu" "temperature#cpu" "temperature#gpu" "memory" "battery" "tray"];
 
       "sway/workspaces" = {
         disable-scroll = true;
@@ -342,6 +342,7 @@ window#waybar.chromium {
 	    };
 	    "memory"= {
 	    	"format"= " {used:4.2f}/{total:4.2f} GiB";
+	    	"on-click"= "alacritty --command htop";
 	    };
 	    "temperature#cpu"= {
 	    	# "thermal-zone"= 2,

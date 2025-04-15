@@ -9,6 +9,7 @@ in
   imports = with profiles; [
     types.desktop # type of machine
     flavors.xfce
+    docker
     polkit
     dev
     entertainment
@@ -19,6 +20,12 @@ in
     imports = with profiles.home; [ core neovim gammastep ];
     home.stateVersion = "23.11";
   };
+
+  modules.distributed_builds = {
+    enable = true;
+    type = "remote";
+  };
+  virtualisation.waydroid.enable = true;
 
   services.xserver.videoDrivers = [ "amdgpu" ];
 
@@ -44,7 +51,7 @@ in
   };
 
   users.users.${user} = {
-    extraGroups = [ "qemu-libvirtd" "input" ]; # "seat"
+    extraGroups = [ "qemu-libvirtd" "input" "adbusers" "wireshark" ]; # "seat"
     openssh.authorizedKeys.keys = with sshKeys; lib.mkForce [ users.ryuujin users.xiaomi ];
   };
 
@@ -119,6 +126,7 @@ in
     python3
     xsettingsd
     home-manager
+    boxbuddy
   ];
 
   system.stateVersion = "23.11"; # Did you read the comment?

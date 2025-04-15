@@ -85,12 +85,12 @@ in {
       })
     ];
 
-  mkHost = name: { modulesDir, profilesDir, config, extraArgs, extraModules, ... } @ args: lib.nixosSystem {
+  mkHost = name: { modulesDir, profilesDir, config, specialArgs, extraArgs, extraModules, ... } @ args: lib.nixosSystem {
     inherit system pkgs lib;
     specialArgs =
     let profiles = rakeLeaves profilesDir; in {
       inherit profiles extraArgs;
-    }; # Perchance a bit uggy, should touch up later!!
+    } // args.specialArgs; # Perchance a bit uggy, should touch up later!!
     modules = [
       config
       { networking.hostName = lib.mkForce name; }
