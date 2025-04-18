@@ -15,7 +15,7 @@
   };
 
   modules.distributed_builds = {
-    enable = true;
+    enable = false;
     type = "local";
     servers = [ "navi" ];
   };

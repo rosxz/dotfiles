@@ -2,7 +2,7 @@ let
   keys = import ../keys.nix;
   hosts = keys.hosts;
   users = keys.users;
-  allUsers = with keys.users; [ tsukuyomi ebisu raijin ryuujin navi ];
+  allUsers = with keys.users; [ tsukuyomi ebisu ryuujin navi ];
 in
 {
   "restic-pass.age".publicKeys = [ hosts.tsukuyomi users.tsukuyomi users.ryuujin ];

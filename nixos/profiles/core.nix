@@ -27,14 +27,6 @@
   };
   console.keyMap = lib.mkDefault "pt-latin1";
 
-  # networking.search = [ "rnl.tecnico.ulisboa.pt" ];
-  # security.pki.certificateFiles = [
-  #   (builtins.fetchurl {
-  #     url = "https://rnl.tecnico.ulisboa.pt/ca/cacert/cacert.pem";
-  #     sha256 = "020vnbvjly6kl0m6sj4aav05693prai10ny7hzr7n58xnbndw3j2";
-  #   })
-  # ];
-
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
   # Everything follows inputs

@@ -3,10 +3,8 @@
   imports = with profiles; [
     types.laptop # type of machine
     flavors.gnome # window manager
-    work
     docker
     polkit
-    gdt
     entertainment
     ./hardware-configuration.nix
   ];

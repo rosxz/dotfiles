@@ -5,7 +5,7 @@
   nix = {
     distributedBuilds = true;
     buildMachines = [{
-      hostName = "raijin.rnl.tecnico.ulisboa.pt";
+      hostName = "navi";
       sshUser = "crea";
       sshKey = "/etc/ssh/ssh_host_ed25519_key";
       systems = [ "x86_64-linux" ];
