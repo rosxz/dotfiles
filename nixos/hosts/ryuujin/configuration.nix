@@ -3,12 +3,8 @@
   imports = with profiles; [
     types.laptop # type of machine
     flavors.sway # window manager
-    work
-    wireguard
     polkit
-    gdt
     docker
-    dev
     entertainment
     ./hardware-configuration.nix
   ];
@@ -16,6 +12,12 @@
   home-manager.users.crea = {
     imports = with profiles.home; [ core neovim gammastep ];
     home.stateVersion = "23.05";
+  };
+
+  modules.distributed_builds = {
+    enable = true;
+    type = "local";
+    servers = [ "navi" ];
   };
 
   boot.supportedFilesystems = [ "zfs" ];
@@ -53,9 +55,6 @@
 	  python3
 	  xsettingsd
 	  home-manager
-    webcord-vencord
-    gimp
-    inkscape
   ];
 
   system.stateVersion = "22.11"; # Did you read the comment?

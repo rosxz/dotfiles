@@ -47,7 +47,7 @@
     });
     mpvWithScripts = pkgs.mpv-unwrapped.wrapper {
       mpv = customMpv;
-      scripts = [ pkgs.mpvScripts.mpvacious ];
+      scripts = with pkgs.mpvScripts; [ mpvacious quality-menu ]; #uosc thumbfast
     };
   in
   [
@@ -61,10 +61,10 @@
     anki
   ] else [ anki-bin ]);
 
-  home-manager.users.crea = lib.recursiveUpdate {
+  home-manager.users.crea = {
     xdg.configFile."mpv/script-opts/subs2srs.conf".text = builtins.readFile ./subs2srs.conf;
     xdg.configFile."mpv/input.conf".text = builtins.readFile ./input.conf;
-  } (if config.networking.hostName == "omigawa" then {
     xdg.configFile."mpv/mpv.conf".text = builtins.readFile ./mpv.conf;
-  } else {});
+  };
+  #lib.recursiveUpdate {
 }
