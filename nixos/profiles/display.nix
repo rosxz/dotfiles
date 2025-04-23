@@ -1,4 +1,4 @@
-{ config, lib, pkgs, profiles, ... }:
+{ config, lib, pkgs, profiles, user, ... }:
 let
   configure-gtk = pkgs.writeTextFile {
       name = "configure-gtk";
@@ -44,7 +44,6 @@ in
 
   # environment.sessionVariables.QT_STYLE_OVERRIDE = lib.mkForce "adwaita-dark";
 
-  hardware.pulseaudio.enable = false;
   security.rtkit.enable = true;
   services.pipewire = {
     enable = true;

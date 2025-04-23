@@ -12,6 +12,9 @@
     agenix.url = "github:ryantm/agenix/main";
     agenix.inputs.nixpkgs.follows = "nixpkgs";
 
+    musnix.url = "github:musnix/musnix/master";
+    musnix.inputs.nixpkgs.follows = "nixpkgs";
+
     nixpkgs-transmission405.url = "github:nixos/nixpkgs/bf16ab6fce7e0e6e463685723116548c94754bb3"; # last transsmission version without announce bug
   };
 
@@ -43,6 +46,7 @@
         root = ./.;
       };
       extraModules = [
+        inputs.musnix.nixosModules.musnix
         inputs.agenix.nixosModules.age
         inputs.home-manager.nixosModules.home-manager
       ];

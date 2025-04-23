@@ -2,7 +2,8 @@
 {
   imports = with profiles; [
     types.laptop # type of machine
-    flavors.gnome # window manager
+    flavors.i3 # window manager
+    audio
     docker
     polkit
     entertainment
@@ -32,6 +33,5 @@
 	  python3
 	  xsettingsd
 	  home-manager
-	  (discord.override { nss = pkgs.nss_latest; withOpenASAR = true; }) # unlatest breaks nss_latest fix for firefox, but has openasar
   ];
 }
