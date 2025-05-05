@@ -12,6 +12,7 @@
     # polaris
     nginx
     jellyfin
+    #gonic
     nextcloud
     postgresql
     bazarr
@@ -20,7 +21,9 @@
     transmission
     betanin
     calibre
-    restic ##### Backups
+    restic
+  ];
+  #unused
     #thelounge
     #invidious # not using until the new helper comes out
     #homer
@@ -29,5 +32,4 @@
     ##### finance
     # firefly
     # firefly-data-importer
-  ];
 }

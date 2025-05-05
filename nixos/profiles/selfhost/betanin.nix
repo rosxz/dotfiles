@@ -10,7 +10,7 @@ in {
   };
 
   virtualisation.oci-containers.containers.betanin = {
-    image = "sentriz/betanin:v0.5.5";
+    image = "ghcr.io/rosxz/betanin:latest";
     autoStart = true;
     ports = [ "9393:9393" ];
     volumes = [ 

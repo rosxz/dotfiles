@@ -10,6 +10,7 @@ in
   "nextcloud-admin-pass.age".publicKeys = [ hosts.tsukuyomi ] ++ [ users.tsukuyomi users.ryuujin ];
   "invidious-extra-settings.age".publicKeys = [ hosts.tsukuyomi ] ++ [ users.tsukuyomi users.ryuujin ];
   "invidious-db-pass.age".publicKeys = [ hosts.tsukuyomi ] ++ [ users.tsukuyomi users.ryuujin ];
+  "invidious-companion-key.age".publicKeys = [ hosts.tsukuyomi ] ++ [ users.tsukuyomi users.ryuujin ];
   "wireguard-rnl-private.age".publicKeys = [ hosts.ryuujin hosts.navi ] ++ [ users.ryuujin users.navi ];
   "betanin-api-key.age".publicKeys = [ hosts.tsukuyomi ] ++ [ users.tsukuyomi users.ryuujin ];
   "firefly-env.age".publicKeys = [ hosts.tsukuyomi ] ++ allUsers;
