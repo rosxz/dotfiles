@@ -24,8 +24,8 @@
     restic
   ];
   #unused
+    # invidious # not using until the new helper comes out # still borked
     #thelounge
-    #invidious # not using until the new helper comes out
     #homer
     #sonarr
     #radarr

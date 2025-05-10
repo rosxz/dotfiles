@@ -22,9 +22,7 @@ in {
   users.groups.invidious = {};
 
   services.invidious = {
-    package = (pkgs.invidious.overrideAttrs {
-      patches = [];
-    });
+    package = pkgs.unstable.invidious;
     enable = true;
     settings = {
         db = {
@@ -35,6 +33,7 @@ in {
 	  private_url = "http://127.0.0.1:8282";
 	  public_url = "http://100.83.228.83:9393";
 	};
+	domain = domain;
 	continue = true;
 	local = true;
 	check_tables = true;
@@ -77,7 +76,7 @@ in {
   ###### Companion
 
   virtualisation.oci-containers.containers.invidious-companion = {
-    image = "quay.io/invidious/invidious-companion:latest";
+    image = "quay.io/invidious/invidious-companion:master-626f421";
     autoStart = true;
     user = "10001:10001";
     ports = [ "127.0.0.1:8282:8282/tcp" ];
