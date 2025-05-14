@@ -31,8 +31,11 @@
 
   # Everything follows inputs
   nix.registry.nixpkgs.flake = inputs.nixpkgs;
-  nix.nixPath = [ "nixpkgs=/etc/channels/nixpkgs" "nixos-config=/etc/nixos/configuration.nix" "/nix/var/nix/profiles/per-user/root/channels" ];
+  nix.nixPath = [ "nixpkgs=/etc/channels/nixpkgs" "unstable=/etc/channels/unstable"
+    "nixos-config=/etc/nixos/configuration.nix" "/nix/var/nix/profiles/per-user/root/channels" ];
   environment.etc."channels/nixpkgs".source = inputs.nixpkgs.outPath;
+  nix.registry.unstable.flake = inputs.nixpkgs-unstable;
+  environment.etc."channels/unstable".source = inputs.nixpkgs-unstable.outPath;
 
   # users.users.root.openssh.authorizedKeys.keys = lib.mkDefault (lib.mapAttrsToList (name: value: value) sshKeys);
   users.users.crea = {
@@ -130,6 +133,8 @@ D /var/tmp 1777 root root 30d
   ''; # DIRENV
 
   environment.systemPackages = with pkgs; [
+    comma
+
     neovim
     stow
     fzf
@@ -161,10 +166,10 @@ D /var/tmp 1777 root root 30d
   };
 
   documentation = {
-    dev.enable = true;
+    dev.enable = false;
     man = {
       enable = true;
-      generateCaches = true;
+      generateCaches = false;
     };
   };
 

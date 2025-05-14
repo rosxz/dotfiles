@@ -63,6 +63,15 @@ in {
       ++ lib.mapAttrsToList (name: flake: (final: prev: { ${name} = import flake args;})) customPins;
     });
 
+  mkCustomPins = inputs: let len = -1; in
+  lib.mapAttrs'
+    (n: v: {
+      name = builtins.substring 4 len n;
+      value = v;
+    })
+    (lib.my.filterPins inputs);
+  filterPins = inputs: lib.filterAttrs (n: v: (builtins.match "pin-(.*)" n) != null) inputs;
+
   mkOverlays = overlaysDir:
     lib.mapAttrsRecursive
     (_: module: import module {inherit rakeLeaves inputs;})

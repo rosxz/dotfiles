@@ -32,7 +32,7 @@
   # Enable touchpad support (enabled default in most desktopManager).
   services.libinput.enable = true;
 
-  powerManagement = { powertop.enable = true; };
+  powerManagement = { powertop.enable = false; };
   services.auto-cpufreq.enable = true;
   services.tlp = {
     enable = true;
@@ -76,7 +76,7 @@
       # Time window #2 duration
       PL2_Duration_S: 0.002
       # Max allowed temperature before throttling
-      Trip_Temp_C: 85
+      Trip_Temp_C: 80
       # Set cTDP to normal=0, down=1 or up=2 (EXPERIMENTAL)
       cTDP: 1
 
@@ -93,7 +93,7 @@
       # Time window #2 duration
       PL2_Duration_S: 0.002
       # Max allowed temperature before throttling
-      Trip_Temp_C: 95
+      Trip_Temp_C: 90
       # Set HWP energy performance hints to 'performance' on high load (EXPERIMENTAL)
       HWP_Mode: True
       # Set cTDP to normal=0, down=1 or up=2 (EXPERIMENTAL)

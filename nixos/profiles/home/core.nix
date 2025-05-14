@@ -12,7 +12,7 @@
   ];
 
   programs.man = {
-    generateCaches = true;
+    generateCaches = false;
   };
 
   programs.direnv.enable = true;
