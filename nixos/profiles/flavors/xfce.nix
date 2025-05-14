@@ -12,6 +12,20 @@ let
   systemctl --user start pipewire pipewire-media-session xdg-desktop-portal xdg-desktop-portal-wlr
       '';
   };
+  # FOR XFCE PANEL GENMON PLUGIN
+  workspaces-sway = pkgs.writeTextFile {
+    name = "workspaces-sway.sh";
+    executable = true;
+    text = ''
+#!/bin/sh
+
+GENMON=$(${pkgs.xfce.xfconf}/bin/xfconf-query -c xfce4-panel -l -v | ${pkgs.busybox}/bin/awk -F'[-/]' '/workspaces/ {print $4}')
+
+${pkgs.sway}/bin/swaymsg -t subscribe -m '["workspace"]' | while read -r line; do
+  ${pkgs.xfce.xfce4-panel}/bin/xfce4-panel --plugin-event=genmon-$GENMON:refresh:bool:true
+done
+    '';
+  };
 in
 {
   modules.labels.display = "wayland";
@@ -19,8 +33,15 @@ in
   imports = [
     {  disabledModules = [ "services/x11/desktop-managers/xfce.nix" ]; }
     # (unstable + "/nixos/modules/services/x11/desktop-managers/xfce.nix")
+    profiles.flavors.misc.xfce
     profiles.flavors.sway
   ];
+
+  # Append to extraConfig
+  home.users.${user}.wayland.windowManager.sway.extraConfig = lib.mkAfter ''
+     exec xfce4-session
+     exec ${workspaces-sway}
+  '';
 
   modules.services.xfce = {
     enable = true;

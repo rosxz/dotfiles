@@ -318,7 +318,7 @@ in
 {
 
     programs.neovim = {
-      package = pkgs.unstable.neovim-unwrapped;
+      package = pkgs.neovim-unwrapped;
       enable = true;
       viAlias = true;
       vimAlias = true;

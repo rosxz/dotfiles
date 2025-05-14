@@ -1,21 +1,6 @@
 { config, pkgs, lib, toggles, ... }:
 let
   lockCommand = "${pkgs.swaylock-effects}/bin/swaylock --screenshots --clock --indicator --indicator-radius 100 --indicator-thickness 7 --effect-blur 7x5 --effect-vignette 0.5:0.5 --ring-color bb00cc --key-hl-color 880033 --line-color 00000000 --inside-color 00000088 --separator-color 00000000 --grace 2 --fade-in 0.2";
-
-  # FOR XFCE PANEL GENMON PLUGIN
-  workspaces-sway = pkgs.writeTextFile {
-    name = "workspaces-sway.sh";
-    executable = true;
-    text = ''
-#!/bin/sh
-
-GENMON=$(${pkgs.xfce.xfconf}/bin/xfconf-query -c xfce4-panel -l -v | ${pkgs.busybox}/bin/awk -F'[-/]' '/workspaces/ {print $4}')
-
-${pkgs.sway}/bin/swaymsg -t subscribe -m '["workspace"]' | while read -r line; do
-  ${pkgs.xfce.xfce4-panel}/bin/xfce4-panel --plugin-event=genmon-$GENMON:refresh:bool:true
-done
-    '';
-  };
 in
 {
   home.packages = [   ];
@@ -106,10 +91,8 @@ in
         exec nm-applet --indicator
         exec swayidle -w before-sleep $lock
         exec blueman-applet
-        exec xfce4-session
-        exec ${workspaces-sway}
+        exec ${pkgs.wluma}/bin/wluma
       ''; # TODO test home.username ? says its undefined
-      # TODO move the 2 last lines to xfce config
 
       extraSessionCommands = ''
         # Needed for GNOME Keyring's SSH integration.

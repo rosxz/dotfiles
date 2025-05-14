@@ -55,6 +55,7 @@
 	  python3
 	  xsettingsd
 	  home-manager
+    wluma
   ];
 
   system.stateVersion = "22.11"; # Did you read the comment?
