@@ -16,13 +16,13 @@
     "iommu=pt"
     "iommu=1"
     "video=efifb:off"
-    "mce=off" # ****
   ];
+    #"mce=off" # ****
   # BAD, navi's ryzen 3600 L3 CACHE is not stable/working correctly, this prevents immediate reboot
-  boot.kernel.sysctl = { #****
-    "kernel.panic" = 0;
-    "kernel.panic_on_oops" = 0;
-  };
+  #boot.kernel.sysctl = { #****
+  #  "kernel.panic" = 0;
+  #  "kernel.panic_on_oops" = 0;
+  #};
   boot.extraModulePackages = [ ];
 
   fileSystems."/" =
@@ -35,6 +35,19 @@
       fsType = "vfat";
       options = [ "fmask=0022" "dmask=0022" ];
     };
+
+  fileSystems."/mnt/optical" = {
+    device = "/dev/sr0";       # The device to mount
+    fsType = "auto";          # Filesystem type, 'auto' tries to detect it.
+    options = [
+      "ro"                    # Mount read-only
+      "user"                  # Allow non-root users to mount/unmount
+      "noauto"                # Do not mount automatically at boot
+      "unhide"                # This is an old option, often for hidden FAT partitions.
+      "nofail"
+      "nobootwait"
+    ];
+  };
 
   swapDevices = [ ];
 

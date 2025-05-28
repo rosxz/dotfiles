@@ -11,8 +11,8 @@ in
     flavors.xfce
     docker
     polkit
-    dev
     entertainment
+    virtualisation
     ./hardware-configuration.nix
   ];
 
@@ -127,6 +127,7 @@ in
     xsettingsd
     home-manager
     boxbuddy
+    vesktop
   ];
 
   system.stateVersion = "23.11"; # Did you read the comment?

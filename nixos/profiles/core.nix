@@ -34,15 +34,15 @@
   nix.nixPath = [ "nixpkgs=/etc/channels/nixpkgs" "unstable=/etc/channels/unstable"
     "nixos-config=/etc/nixos/configuration.nix" "/nix/var/nix/profiles/per-user/root/channels" ];
   environment.etc."channels/nixpkgs".source = inputs.nixpkgs.outPath;
-  nix.registry.unstable.flake = inputs.nixpkgs-unstable;
-  environment.etc."channels/unstable".source = inputs.nixpkgs-unstable.outPath;
+  nix.registry.unstable.flake = inputs.pin-unstable;
+  environment.etc."channels/unstable".source = inputs.pin-unstable.outPath;
 
   # users.users.root.openssh.authorizedKeys.keys = lib.mkDefault (lib.mapAttrsToList (name: value: value) sshKeys);
   users.users.crea = {
     isNormalUser = true;
     description = "Martim Moniz";
     hashedPassword = "$6$g3erPleT4pElaQQe$fDIA/dckjSAADHRtjQt3RGrLmFE6TjZ5acdaRSTOBWA/8OuQlnDGr0FZUfGGqxJlS0vJDPDtpPzm6pJo7i96j0";
-    extraGroups = [ "networkmanager" "video" "scanner" "wheel" ];
+    extraGroups = [ "networkmanager" "cdrom" "video" "scanner" "wheel" ];
     shell = pkgs.zsh;
     openssh.authorizedKeys.keys = with sshKeys.users; [
       xiaomi navi ryuujin ebisu omigawa
@@ -76,8 +76,6 @@
       tr = ''trash'';
       ssh = "TERM=xterm-256color ssh";
       ls = "eza --color=always --icons --group-directories-first";
-      nix="noglob nix";
-      nixos="noglob nixos";
       nix-alien=''nix run "github:thiagokokada/nix-alien#nix-alien" -- '';
     };
     interactiveShellInit = ''
@@ -92,6 +90,7 @@
    setopt INC_APPEND_HISTORY
    autoload -U compinit && compinit
    unsetopt menu_complete
+   setopt no_bare_glob_qual
    setopt completealiases
    source $ZSH/oh-my-zsh.sh
    eval "$(direnv hook zsh)"
@@ -138,6 +137,7 @@ D /var/tmp 1777 root root 30d
     neovim
     stow
     fzf
+    zsh-syntax-highlighting
     eza
     gettext
     git

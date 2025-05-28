@@ -95,6 +95,7 @@ in
         waybar
         mako
         # swww # stupid wallpaper software
+        waypipe
       ]
     else
       [

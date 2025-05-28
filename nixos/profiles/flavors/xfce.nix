@@ -31,14 +31,14 @@ in
   modules.labels.display = "wayland";
 
   imports = [
-    {  disabledModules = [ "services/x11/desktop-managers/xfce.nix" ]; }
+    # moved this to the module
+    #{  disabledModules = [ "services/x11/desktop-managers/xfce.nix"];}
     # (unstable + "/nixos/modules/services/x11/desktop-managers/xfce.nix")
-    profiles.flavors.misc.xfce
     profiles.flavors.sway
   ];
 
   # Append to extraConfig
-  home.users.${user}.wayland.windowManager.sway.extraConfig = lib.mkAfter ''
+  home-manager.users.${user}.wayland.windowManager.sway.extraConfig = lib.mkAfter ''
      exec xfce4-session
      exec ${workspaces-sway}
   '';
@@ -48,9 +48,8 @@ in
     enableWaylandSession = true;
     enableScreensaver = false;
     enableXfwm = false;
-    waylandSessionCompositor = "sway";
+    # waylandSessionCompositor = "sway";
   };
-  # environment.xfce.excludePackages = [ pkgs.hicolor-icon-theme ];
 
   environment.systemPackages = with pkgs; [
     xfce.xfce4-taskmanager
