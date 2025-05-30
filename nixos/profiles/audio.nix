@@ -33,7 +33,13 @@ in
     };
   };
 
+  environment.pathsToLink = [ "/lib/vst2" "/lib/vst3" "/lib/clap" "lib/lv2" ];
+  environment.variables = {
+    #LV2_PATH = "/run/current-system/sw/lib/lv2";
+  };
+
   environment.systemPackages = with pkgs; [
     libjack2 jack2 qjackctl jack_capture
+    drumgizmo sfizz
   ];
 }
