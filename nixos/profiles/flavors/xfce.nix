@@ -31,9 +31,6 @@ in
   modules.labels.display = "wayland";
 
   imports = [
-    # moved this to the module
-    #{  disabledModules = [ "services/x11/desktop-managers/xfce.nix"];}
-    # (unstable + "/nixos/modules/services/x11/desktop-managers/xfce.nix")
     profiles.flavors.sway
   ];
 
@@ -43,7 +40,7 @@ in
      exec ${workspaces-sway}
   '';
 
-  modules.services.xfce = {
+  services.xserver.xfce = {
     enable = true;
     enableWaylandSession = true;
     enableScreensaver = false;

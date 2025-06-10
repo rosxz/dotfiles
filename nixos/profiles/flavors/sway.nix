@@ -29,8 +29,7 @@ in
 
   # import wm config
   home-manager.users.${user} = {
-    imports = with profiles.home; [ sway wofi ] ++
-      (if config.modules.services ? xfce then [] else [waybar]);
+    imports = with profiles.home; [ sway wofi waybar ]; # remove waybar if xfce
   };
 
   services.displayManager.defaultSession = "sway";

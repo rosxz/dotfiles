@@ -54,7 +54,7 @@
     # tagainijisho
     # goldendict-ng
     # qolibri
-    manga-ocr
+    python312Packages.manga-ocr
     jellyfin-mpv-shim # edit config to use ext_mpv
     mpvWithScripts
   ] ++ (if config.networking.hostName == "omigawa" then [
