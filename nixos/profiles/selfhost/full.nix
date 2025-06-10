@@ -20,7 +20,7 @@
     rtorrent
     transmission
     betanin
-    calibre
+    #calibre # Broken in 25.05 in mysterious ways
     restic
   ];
   #unused

@@ -27,6 +27,7 @@
   };
   console.keyMap = lib.mkDefault "pt-latin1";
 
+  system.rebuild.enableNg = true;
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
   # Everything follows inputs
@@ -134,6 +135,7 @@ D /var/tmp 1777 root root 30d
   environment.systemPackages = with pkgs; [
     comma
 
+    bat
     neovim
     stow
     fzf

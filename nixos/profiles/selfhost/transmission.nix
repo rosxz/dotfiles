@@ -27,7 +27,7 @@ in
   services.transmission = {
 	enable = true;
 	group = "media";
-	package = pkgs.pin-transmission405.transmission_4;
+	package = pkgs.transmission405.transmission_4;
 	openFirewall = true;
 	openPeerPorts = true;
 	settings = {
