@@ -37,10 +37,11 @@ in
     };
   };
 
-  services.displayManager.sddm = {
-    enable = true;
-    wayland.enable = isWayland;
-  };
+  #services.displayManager.sddm = {
+  #  enable = ! config.programs.hyprland.enable;
+  #  wayland.enable = isWayland;
+  #};
+  services.displayManager.ly.enable = true;
 
   # environment.sessionVariables.QT_STYLE_OVERRIDE = lib.mkForce "adwaita-dark";
 
@@ -65,7 +66,7 @@ in
     common = with pkgs; [
       # tools
       networkmanagerapplet
-      alacritty
+      xfce.xfce4-terminal
       pavucontrol
       pamixer
 	    brightnessctl
@@ -91,16 +92,17 @@ in
           # tools
 	      grim
 	      slurp
+        #(flameshot.override { enableWlrSupport = true; })
         imv
         waybar
         mako
         # swww # stupid wallpaper software
         waypipe
+
       ]
     else
       [
         feh
-        flameshot
       ];
     langLearnPackages = with pkgs; if !config.modules.labels.langlearn then
       [ mpv ] else [];

@@ -41,7 +41,7 @@
       profilesDir = ./profiles;
       hostsDir = ./hosts;
       # for importing unstable modules iirc
-      specialArgs.unstable = inputs.nixpkgs-unstable;
+      specialArgs.unstable = inputs.pin-unstable;
       extraArgs = {
         inherit self sshKeys user system inputs nixosConfigurations;
         root = ./.;

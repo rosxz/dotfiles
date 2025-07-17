@@ -32,7 +32,7 @@ let
   ];
   commonPlugins = with pkgs.unstable.vimPlugins; [
     nvim-web-devicons
-    vim-markdown-composer
+    # vim-markdown-composer
     copilot-vim
     {
       plugin = lualine-nvim;

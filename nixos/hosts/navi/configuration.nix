@@ -8,7 +8,7 @@ in
 {
   imports = with profiles; [
     types.desktop # type of machine
-    flavors.xfce
+    flavors.hyprland
     docker
     polkit
     entertainment
@@ -129,6 +129,16 @@ in
     boxbuddy
     vesktop
   ];
+
+  #services.ollama = {
+  #  enable = true;
+  #  loadModels = [
+  #    "deepseek-r1:1.5b"
+  #    "llama3:8b"
+  #  ];
+  #  acceleration = "rocm";
+  #};
+  #services.nextjs-ollama-llm-ui.enable = true;
 
   system.stateVersion = "23.11"; # Did you read the comment?
 }

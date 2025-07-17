@@ -23,7 +23,6 @@
     name = "Visual Studio Code";
     exec = ''env NIXOS_OZONE_WL=1 code'';
   };
-
   programs.vscode = {
     enable = true;
     package = with pkgs; unstable.vscode;
@@ -33,13 +32,42 @@
     ];
   };
 
+  programs.ssh.enable = true;
+
   dconf.settings = {
     "org/gnome/mutter" = {
       experimental-features = [ "scale-monitor-framebuffer" ];
     };
   };
 
-  programs.ssh.enable = true;
+  # XDG Defaults
+  xdg.mimeApps = {
+    enable = true;
+    defaultApplications = {
+      "text/plain" = "nvim.desktop";
+      "text/x-shellscript" = "nvim.desktop";
+      "text/x-python" = "nvim.desktop";
+      "text/*" = "nvim.desktop";
+      "application/pdf" = "zathura.desktop";
+      "x-scheme-handler/http" = "firefox.desktop";
+      "x-scheme-handler/https" = "firefox.desktop";
+      "x-scheme-handler/about" = "firefox.desktop";
+      "x-scheme-handler/unknown" = "firefox.desktop";
+      "image/*" = "imv.desktop";
+      "video/*" = "mpv.desktop";
+      "x-scheme-handler/terminal" = "xfce4-terminal.desktop";
+      "inode/directory" = "thunar.desktop";
+      # archives / compressed files
+      "application/x-7z-compressed" = "xarchiver.desktop";
+      "application/x-rar" = "xarchiver.desktop";
+      "application/x-xz" = "xarchiver.desktop";
+      "application/x-bzip2" = "xarchiver.desktop";
+      "application/x-gzip" = "xarchiver.desktop";
+      "application/x-tar" = "xarchiver.desktop";
+      "application/zip" = "xarchiver.desktop";
+      "application/x-iso9660-image" = "xarchiver.desktop";
+    };
+  };
 
   home.file.".config/gtk-3.0/settings.ini".text = ''
   [Settings]

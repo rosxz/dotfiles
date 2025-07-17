@@ -65,6 +65,18 @@
   };
   programs.mosh.enable = true;
   programs.ssh.startAgent = true;
+  programs.nix-index = {
+    enable = true;
+    enableZshIntegration = config.programs.zsh.enable;
+  };
+  programs.command-not-found.enable = false;
+
+#  xdg.terminal-exec = {
+#    enable = true;
+#    settings = {
+#      default = [ "alacritty.desktop" ];
+#    };
+#  };
 
   programs.zsh = {
     enable = true;
@@ -95,6 +107,7 @@
    setopt completealiases
    source $ZSH/oh-my-zsh.sh
    eval "$(direnv hook zsh)"
+   source ${pkgs.nix-index}/etc/profile.d/command-not-found.sh
     '';
    # setopt SHARE_HISTORY
     promptInit = "source ${pkgs.zsh-powerlevel10k}/share/zsh-powerlevel10k/powerlevel10k.zsh-theme";

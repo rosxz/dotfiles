@@ -1,6 +1,7 @@
 { config, pkgs, lib, user, ... }:
 {
   programs.waybar.enable = true;
+  programs.waybar.systemd.enable = true;
   programs.waybar.style = ''
 @define-color bg #282a36;
 @define-color fg #f8f8f2;
@@ -302,21 +303,20 @@ window#waybar.chromium {
 	background-color: #51a37a;
 }*/
   '';
-  programs.waybar.systemd.enable = true;
   programs.waybar.settings = {
     mainBar = {
       layer = "top";
       position = "bottom";
       height = 34;
-      modules-left = ["clock" "sway/mode" "sway/workspaces"];
+      modules-left = ["clock" "hyprland/mode" "hyprland/workspaces"];
       modules-center = [];
       modules-right = ["pulseaudio" "backlight" "cpu" "temperature#cpu" "temperature#gpu" "memory" "battery" "tray"];
 
-      "sway/workspaces" = {
+      "hyprland/workspaces" = {
         disable-scroll = true;
         all-outputs = true;
       };
-	    "sway/mode"= {
+	    "hyprland/mode"= {
 	    	"format"= "{}";
 	    };
 	    "idle_inhibitor"= {
