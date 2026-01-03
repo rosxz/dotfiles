@@ -9,12 +9,19 @@
   ];
   services.logrotate.checkConfig = false; ## FIXME: fix this workaround 
 
+  ### ZFS
+  boot.supportedFilesystems = [ "zfs" ];
+  # swappiness=>This keeps the "real" RAM free for application level
+  boot.kernelParams = [ "vm.swappiness=150" "zfs.zfs_arc_max=4294967296" ];
+  zramSwap = {
+    enable = true;
+    memoryPercent = 15; # Limits zram to ~1.2GB
+  };
+  services.zfs.autoScrub.enable = true;
+  ###
+
   system.autoUpgrade.enable = true;
 
-  modules.services.hd-idle = {
-    enable = true;
-    drives = [ "/dev/disk/by-label/BACKUP" ];
-  };
   hardware.cpu.intel.updateMicrocode = true;
 
   networking = {
@@ -56,7 +63,7 @@
 
   users.users.${user} = {
     extraGroups = [ "docker" "media" "qemu-libvirtd" ];
-    hashedPassword = lib.mkForce "$6$WU1epwfq/D/h8Lny$Tcqfptb0ji/ZRIhB4uHzh1GISz3JegWVb1ZB0ZqfIzF5Vp/FzFVorqwi5npwRxCwzsSpOdLK5tdnlrB2pdz44/";
+    hashedPassword = lib.mkForce "$6$XXsj27JDo9EMVuj8$WGpN9hZtFUIIqj3buEYHDlOOIvlEVU.xGt/Qzel53momoesHkkjNwUwmm6a2AFDWlZI7R66vYpxipDtQC/N320";
   };
 
   environment.systemPackages = with pkgs; [

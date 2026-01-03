@@ -23,16 +23,50 @@
       fsType = "vfat";
     };
   
-  fileSystems."/mnt/Storage" =
-    { device = "/dev/disk/by-label/STORAGE";
-      fsType = "ext4";
+  ## USB ZFS DAS
+  systemd.services.import-usb-das = {
+    description = "Import USB DAS ZFS pool by ID";
+    after = [ "local-fs.target" ];
+    wantedBy = [ "multi-user.target" ];
+    serviceConfig = {
+      Type = "oneshot";
+      RemainAfterExit = true;
     };
-
-  # Start Unmounted: IDK why yet, but disk is being continuously written to and read from while mounted ??!
-  #fileSystems."/mnt/Backup" = 
-  #  { device = "/dev/disk/by-label/BACKUP";
-  #    fsType = "ext4";
-  #  };
+    script = ''
+      sleep 3
+      # Attempt import using the specific ID and path that works
+      if ! ${pkgs.zfs}/bin/zpool list | grep -q "storage-pool"; then
+        ${pkgs.zfs}/bin/zpool import -d /dev/disk/by-path 9882993164348068333 storage-pool
+        ${pkgs.zfs}/bin/zfs mount storage-pool || true
+      fi
+    '';
+  };
+  systemd.services.das-heartbeat = {
+    description = "Keep USB zraid pool awake";
+    # Only start if the ZFS pool is actually mounted
+    after = [ "import-usb-das.service" ];
+    serviceConfig = {
+      Type = "oneshot";
+      User = "root";
+    };
+    script = ''
+      # Check if pool is healthy before touching
+      if ${pkgs.zfs}/bin/zpool status storage-pool | grep -q "ONLINE"; then
+        ${pkgs.coreutils}/bin/touch /storage-pool/.keepalive
+        # Optional: Force a sync to ensure it hits the physical platters
+        ${pkgs.coreutils}/bin/sync -f /storage-pool/.keepalive
+      fi
+    '';
+  };
+  systemd.timers.das-heartbeat = {
+    wantedBy = [ "timers.target" ];
+    timerConfig = {
+      OnBootSec = "2m";
+      OnUnitActiveSec = "5m"; # Beats the 10-minute Orico sleep timer
+      Unit = "das-heartbeat.service";
+    };
+  };
+  ##
 
   swapDevices = [ { device = "/.swapfile"; } ];
 

@@ -2,7 +2,7 @@
 
 let
   domain = "calibre.moniz.pt";
-  library = "/mnt/Storage/Shared/Books/Calibre";
+  library = "/storage-pool/Shared/Books/Calibre";
 in {
   services = {
     nginx.virtualHosts.${domain} = {

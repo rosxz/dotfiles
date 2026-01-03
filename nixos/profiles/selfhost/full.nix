@@ -15,15 +15,17 @@
     #gonic
     nextcloud
     postgresql
-    bazarr
-    prowlarr
+    #bazarr
+    #prowlarr
     rtorrent
     transmission
     betanin
     #calibre # Broken in 25.05 in mysterious ways
-    restic
+    # Arrs
+    #sonarr
   ];
   #unused
+    #restic
     # invidious # not using until the new helper comes out # still borked
     #thelounge
     #homer

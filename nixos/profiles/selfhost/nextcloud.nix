@@ -35,8 +35,8 @@ in {
         inherit calendar contacts notes tasks; #memories
       };
 
-      # home = "/mnt/Storage/nextcloud";
-      # datadir = "/mnt/Storage/nextcloud";
+      # home = "/storage-pool/nextcloud";
+      # datadir = "/storage-pool/nextcloud";
       # TODO: problem with permissions in mnt/external storage, quick fix was to make a symbolic link
       # to it instead from var lib
 

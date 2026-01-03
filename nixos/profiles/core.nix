@@ -39,10 +39,10 @@
   environment.etc."channels/unstable".source = inputs.pin-unstable.outPath;
 
   # users.users.root.openssh.authorizedKeys.keys = lib.mkDefault (lib.mapAttrsToList (name: value: value) sshKeys);
-  users.users.crea = {
+  users.users.${user} = {
     isNormalUser = true;
     description = "Martim Moniz";
-    hashedPassword = "$6$g3erPleT4pElaQQe$fDIA/dckjSAADHRtjQt3RGrLmFE6TjZ5acdaRSTOBWA/8OuQlnDGr0FZUfGGqxJlS0vJDPDtpPzm6pJo7i96j0";
+    hashedPassword = lib.mkDefault "$6$g3erPleT4pElaQQe$fDIA/dckjSAADHRtjQt3RGrLmFE6TjZ5acdaRSTOBWA/8OuQlnDGr0FZUfGGqxJlS0vJDPDtpPzm6pJo7i96j0";
     extraGroups = [ "networkmanager" "cdrom" "video" "scanner" "wheel" ];
     shell = pkgs.zsh;
     openssh.authorizedKeys.keys = with sshKeys.users; [

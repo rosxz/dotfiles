@@ -8,7 +8,7 @@
 # Array of locations Polaris should scan to find music files
 [[mount_dirs]]
 # Directory to scan
-source = "/mnt/Storage/Shared/Music"
+source = "/storage-pool/Shared/Music"
 # User-facing name for this directory (must be unique)
 name = "My Music 🎧️"
 

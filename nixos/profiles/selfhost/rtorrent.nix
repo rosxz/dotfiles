@@ -7,7 +7,7 @@
   	openFirewall = true;
   	# configText
   	# dataDir
-  	downloadDir = "/mnt/Storage/Torrents";
+  	downloadDir = "/storage-pool/Torrents";
   };
 
   modules.services.flood = {

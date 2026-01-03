@@ -2,8 +2,8 @@
 let
   domain = "transmission.moniz.pt";
   # /tmp/transcodes would be cool but apparmor has restrictions
-  downloadDir = "/mnt/Storage/Torrents";
-  transcodeDir = "/mnt/Storage/Torrents/Transcodes"; # needs to be a subdir
+  downloadDir = "/storage-pool/Torrents";
+  transcodeDir = "/storage-pool/Torrents/Transcodes"; # needs to be a subdir
 in
 {
   age.secrets.transmission-secrets = {
