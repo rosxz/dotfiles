@@ -33,10 +33,14 @@
       port = 9101;
       openFirewall = true;
       devices = [ 
-        "/dev/disk/by-id/ata-WDC_WD40EFPX-68C6CN0_WD-WX82D25FJ3SD"
-	"/dev/disk/by-id/usb-WDC_WD40_EFPX-68C6CN0_000000123AE8-0:0"
-	"/dev/disk/by-id/usb-ST6000NM_0115-1YZ110_000000123AE8-0:0"
-	"/dev/disk/by-id/usb-ST4000NM_0035-1V4107_000000123AE8-0:0"
+        "/dev/disk/by-path/pci-0000:00:14.0-usb-0:6.2:1.0-scsi-0:0:0:0"
+        "/dev/disk/by-path/pci-0000:00:14.0-usb-0:6.3.1:1.0-scsi-0:0:0:0"
+        "/dev/disk/by-path/pci-0000:00:14.0-usb-0:6.3.2:1.0-scsi-0:0:0:0"
+        "/dev/disk/by-path/pci-0000:00:14.0-usb-0:6.3.3:1.0-scsi-0:0:0:0"
+        #"/dev/disk/by-id/ata-WDC_WD40EFPX-68C6CN0_WD-WX82D25FJ3SD"
+        #"/dev/disk/by-id/usb-WDC_WD40_EFPX-68C6CN0_000000123AE8-0:0"
+        #"/dev/disk/by-id/usb-ST6000NM_0115-1YZ110_000000123AE8-0:0"
+        #"/dev/disk/by-id/usb-ST4000NM_0035-1V4107_000000123AE8-0:0"
       ];
     };
   };
