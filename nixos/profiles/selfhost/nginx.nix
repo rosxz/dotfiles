@@ -69,6 +69,12 @@
 #    };
 
     # Private
+    "grafana.moniz.pt" = {
+      forceSSL = true;
+      useACMEHost = "moniz.pt";
+      locations."/".proxyPass = "http://100.83.228.83:3000";
+    };
+
     "cloud.moniz.pt" = {
       forceSSL = true;
       useACMEHost = "moniz.pt";

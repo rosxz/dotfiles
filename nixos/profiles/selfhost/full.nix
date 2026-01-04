@@ -9,21 +9,22 @@
   users.groups.media = { };
 
   imports = with profiles.selfhost; [
-    # polaris
+    monitoring
     nginx
     jellyfin
-    #gonic
     nextcloud
     postgresql
-    #bazarr
-    #prowlarr
     rtorrent
     transmission
     betanin
+  ];
+    #gonic
+    #bazarr
+    #prowlarr
     #calibre # Broken in 25.05 in mysterious ways
+    # polaris
     # Arrs
     #sonarr
-  ];
   #unused
     #restic
     # invidious # not using until the new helper comes out # still borked
