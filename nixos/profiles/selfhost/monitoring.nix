@@ -1,5 +1,12 @@
 { pkgs, lib,config, ... }:
 {
+  services.cron = {
+    enable = true;
+    systemCronJobs = [
+      "*/5 * * * *      root    curl https://hc-ping.com/3266303a-f07c-4168-952f-611c1f8da006"
+    ];
+  };
+ 
   # Taken from footvaalvica
   services.prometheus = {
     enable = true;
@@ -12,6 +19,7 @@
             targets = [
               "localhost:${toString config.services.prometheus.exporters.node.port}" 
               "localhost:${toString config.services.prometheus.exporters.smartctl.port}" 
+              "localhost:${toString config.services.prometheus.exporters.zfs.port}" 
             ];
           }
         ];
@@ -42,6 +50,11 @@
         #"/dev/disk/by-id/usb-ST6000NM_0115-1YZ110_000000123AE8-0:0"
         #"/dev/disk/by-id/usb-ST4000NM_0035-1V4107_000000123AE8-0:0"
       ];
+    };
+    zfs = {
+      enable = true;
+      port = 9102;
+      openFirewall = true;
     };
   };
 
