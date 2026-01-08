@@ -28,6 +28,7 @@
     options zfs l2arc_write_max=10000000
     options zfs l2arc_noprefetch=0
   '';
+  boot.kernelParams = [ "zfs.l2arc_rebuild_enabled=1" ];
   systemd.services.import-usb-das = {
     description = "Import USB DAS ZFS pool by ID";
     after = [ "local-fs.target" ];
