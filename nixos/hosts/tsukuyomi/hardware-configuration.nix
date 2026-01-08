@@ -24,6 +24,10 @@
     };
   
   ## USB ZFS DAS
+  boot.extraModprobeConfig = ''
+    options zfs l2arc_write_max=10000000
+    options zfs l2arc_noprefetch=0
+  '';
   systemd.services.import-usb-das = {
     description = "Import USB DAS ZFS pool by ID";
     after = [ "local-fs.target" ];
