@@ -91,6 +91,12 @@
       useACMEHost = "moniz.pt";
       locations."/".proxyPass = "http://100.83.228.83:8384";
     };
+
+    "slskd.moniz.pt" = {
+      forceSSL = lib.mkForce true;
+      useACMEHost = lib.mkForce "moniz.pt";
+      locations."/".proxyPass = lib.mkForce "http://100.83.228.83:5030";
+    };
   };
 
   networking.firewall.allowedTCPPorts = [ 80 443 ];

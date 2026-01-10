@@ -14,6 +14,7 @@
     jellyfin
     nextcloud
     postgresql
+    slskd
     # rtorrent
     transmission
     betanin

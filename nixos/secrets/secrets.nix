@@ -18,4 +18,5 @@ in
   "nordigen-id.age".publicKeys = [ hosts.tsukuyomi ] ++ [ users.tsukuyomi users.ryuujin ];
   "nordigen-key.age".publicKeys = [ hosts.tsukuyomi ] ++ [ users.tsukuyomi users.ryuujin ];
   "builder-key.age".publicKeys = [ hosts.omigawa hosts.ryuujin ] ++ [ users.omigawa users.ryuujin ];
+  "slskd-env-file.age".publicKeys = [ hosts.tsukuyomi ] ++ [ users.tsukuyomi users.ryuujin ];
 }
