@@ -14,7 +14,7 @@ let
     tree-sitter-html
     tree-sitter-javascript
     tree-sitter-markdown
-    tree-sitter-python
+    #tree-sitter-python
     tree-sitter-nix
   ];
   #
@@ -108,8 +108,13 @@ _G.Tabline_timer:start(0,             -- never timeout
       ));
       type = "lua";
       config = ''
--- enable highlighting
-require'nvim-treesitter.configs'.setup { highlight = { enable = true } }
+-- enable highlighting for most, disable for problematic grammars
+require'nvim-treesitter.configs'.setup { 
+  highlight = { 
+    enable = true,
+    disable = { "latex", "python" }  -- disable for grammars with query errors
+  } 
+}
 
 local function define_fdm()
   if (require "nvim-treesitter.parsers".has_parser()) then
@@ -176,52 +181,46 @@ require 'colorizer'.setup ({ user_default_options = { names = false; }})
       type = "lua";
       config = ''
           -- common lsp setup
-          local lsp_config = require'lspconfig'
           local lsp_setup = require'generic_lsp'
 
           -- Rust lsp setup
-          local rt = require("rust-tools")
-
-          local capabilities = lsp_setup.capabilities
-          local on_attach = lsp_setup.on_attach
-          rt.setup({
-            server = {
-              capabilities = capabilities,
-              on_attach = function(_, bufnr)
-                -- Hover actions
-                on_attach(_, bufnr)
-                vim.keymap.set('n', 'K', rt.hover_actions.hover_actions, {silent=true})
-              end,
-              settings = {
-                ["rust-analyzer"] = {
-                  checkOnSave = {
-                    command = "clippy",
-                  },
+          vim.lsp.enable("rust_analyzer")
+          vim.lsp.config("rust_analyzer", {
+            capabilities = lsp_setup.capabilities,
+            on_attach = lsp_setup.on_attach,
+            settings = {
+              ["rust-analyzer"] = {
+                check = {
+                  command = "clippy",
                 },
               },
             },
           })
 
           -- tex lsp setup
-          lsp_config.texlab.setup(lsp_setup)
+          vim.lsp.enable("texlab")
+          vim.lsp.config("texlab", lsp_setup)
 
           -- python lsp setup
-          lsp_config.pyright.setup(lsp_setup)
+          vim.lsp.enable("pyright")
+          vim.lsp.config("pyright", lsp_setup)
 
           -- Nix lsp setup
-          lsp_config.nil_ls.setup({
+          vim.lsp.enable("nil_ls")
+          vim.lsp.config("nil_ls", {
+            capabilities = lsp_setup.capabilities,
+            on_attach = lsp_setup.on_attach,
             settings = {
-               ['nil'] = {
-                 formatting = {
-                   command = { "${pkgs.nixfmt-rfc-style}/bin/nixfmt" },
-                 },
-               },
+              ['nil'] = {
+                formatting = {
+                  command = { "${pkgs.nixfmt-rfc-style}/bin/nixfmt" },
+                },
+              },
             },
             cmd = { "${pkgs.nil}/bin/nil" },
-          });
+          })
 '';
     }
-    rust-tools-nvim # TODO Change to Rustaceanvim
     lsp_extensions-nvim
     copilot-vim
     {

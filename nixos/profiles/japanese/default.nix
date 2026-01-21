@@ -5,10 +5,9 @@
   fonts = {
     packages = with pkgs; [
       source-han-sans
-      source-han-sans-japanese
-      source-han-serif-japanese
+      source-han-serif
       corefonts
-      vistafonts
+      vista-fonts
     ];
     fontconfig.defaultFonts = {
       serif = [ "Source Han Serif" ];
@@ -23,7 +22,7 @@
       addons = with pkgs; [
         fcitx5-mozc
         fcitx5-gtk
-        fcitx5-configtool
+        qt6Packages.fcitx5-configtool
       ];
       waylandFrontend = config.modules.labels.display == "wayland";
       # TODO quickPhrase
@@ -37,7 +36,7 @@
     QT_IM_MODULE = "fcitx";
     XMODIFIERS = "@im=fcitx";
   };
-  environment.variables.QT_PLUGIN_PATH = [ "${pkgs.fcitx5-with-addons}/${pkgs.qt6.qtbase.qtPluginPrefix}" ];
+  environment.variables.QT_PLUGIN_PATH = [ "${pkgs.qt6Packages.fcitx5-with-addons}/${pkgs.qt6.qtbase.qtPluginPrefix}" ];
 
   environment.systemPackages = with pkgs; let
     # omigawa lacks "recent" CPU instruction sets (AVX, SSE?)

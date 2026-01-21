@@ -1,4 +1,4 @@
-{ config, pkgs, lib, toggles, ... }:
+{ config, pkgs, lib, toggles, wallpaper, ... }:
 let
   terminal = "${pkgs.xfce.xfce4-terminal}/bin/xfce4-terminal";
   fileManager = "${pkgs.xfce.thunar}/bin/thunar";
@@ -11,6 +11,15 @@ in
 {
   home.packages = [   ];
 
+  services.hyprpaper = {
+    enable = true;
+    settings = {
+      ipc = "on";
+      splash = false;
+      #preload = [ wallpaper ];
+      #wallpaper = [ ", ${wallpaper}" ];
+    };
+  };
   services.hyprpolkitagent.enable = true;
   wayland.windowManager.hyprland = {
     enable = true;
@@ -22,11 +31,6 @@ in
         force_zero_scaling = true;
       };
       # Programs
-      lockCommand = "${pkgs.swaylock-effects}/bin/swaylock --screenshots --clock --indicator --indicator-radius 100 --indicator-thickness 7 --effect-blur 7x5 --effect-vignette 0.5:0.5 --ring-color bb00cc --key-hl-color 880033 --line-color 00000000 --inside-color 00000088 --separator-color 00000000 --grace 2 --fade-in 0.2";
-      term = "xfce4-terminal";
-      filemanager = "thunar";
-      menu = "wofi -G --allow-images --show drun";
-      apprun = "wofi -G --show run";
       env = [
         # HiDPI
         "GDK_SCALE,2"
@@ -42,6 +46,7 @@ in
         "fcitx5 &"
         "nm-applet --indicator"
         "blueman-applet"
+        "safeeyes"
       ];
       debug.full_cm_proto = true; # FOR GAMESCOPE
       # Styling
@@ -95,8 +100,8 @@ in
         preserve_split = true; # You probably want this
       };
       misc = {
-        force_default_wallpaper = -1; # 0 or 1 dp disable anime mascot wallpapers
-        disable_hyprland_logo = false; # Set to true to disable the Hyprland logo / anime girl
+        force_default_wallpaper = 0; # 0 or 1 dp disable anime mascot wallpapers
+        disable_hyprland_logo = true; # Set to true to disable the Hyprland logo / anime girl
       };
       # https://wiki.hyprland.org/Configuring/Variables/#input
       input = {
@@ -112,7 +117,7 @@ in
         };
       };
       # https://wiki.hyprland.org/Configuring/Variables/#gestures
-      gestures.workspace_swipe = false;
+      #gestures.workspace_swipe = false;
       # See https://wiki.hyprland.org/Configuring/Keywords/#per-device-input-configs for more per-device config
       # BINDINGS
       bindm = [
@@ -122,6 +127,7 @@ in
       ];
       bind =
         [
+          ", PAUSE, exec, hyprfreeze -a"
           # Scroll through existing workspaces with mainMod + scroll
           "$mod, mouse_down, workspace, e+1"
           "$mod, mouse_up, workspace, e-1"

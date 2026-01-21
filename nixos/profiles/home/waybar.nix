@@ -1,4 +1,7 @@
 { config, pkgs, lib, user, ... }:
+let
+  flavor = config.services.displayManager.defaultSession or "hyprland"; # FIX NOT OWRKING IDK WHY
+in
 {
   programs.waybar.enable = true;
   programs.waybar.systemd.enable = true;
@@ -308,15 +311,15 @@ window#waybar.chromium {
       layer = "top";
       position = "bottom";
       height = 34;
-      modules-left = ["clock" "hyprland/mode" "hyprland/workspaces"];
+      modules-left = ["clock" "${flavor}/mode" "${flavor}/workspaces"];
       modules-center = [];
       modules-right = ["pulseaudio" "backlight" "cpu" "temperature#cpu" "temperature#gpu" "memory" "battery" "tray"];
 
-      "hyprland/workspaces" = {
+      "${flavor}/workspaces" = {
         disable-scroll = true;
         all-outputs = true;
       };
-	    "hyprland/mode"= {
+	    "${flavor}/mode"= {
 	    	"format"= "{}";
 	    };
 	    "idle_inhibitor"= {

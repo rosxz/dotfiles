@@ -16,6 +16,7 @@ let
 in
 {
   modules.labels.display = "wayland";
+  services.displayManager.defaultSession = "sway";
 
   programs = {
     sway = {
@@ -31,8 +32,6 @@ in
   home-manager.users.${user} = {
     imports = with profiles.home; [ sway wofi waybar ];
   };
-
-  services.displayManager.defaultSession = "sway";
 
   services.dbus.enable = true;
   xdg.portal = {
@@ -52,5 +51,6 @@ in
     swaybg
     qt6.qtwayland
     wayvnc
+    alacritty
   ];
 }

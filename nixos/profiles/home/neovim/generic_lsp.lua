@@ -1,5 +1,3 @@
-local lsp = require'lspconfig'
-
 local capabilities = require('cmp_nvim_lsp').default_capabilities()
 capabilities.textDocument.completion.completionItem.snippetSupport = true
 capabilities.textDocument.completion.completionItem.resolveSupport = {
@@ -34,4 +32,5 @@ local on_attach = function(client, bufnr)
   -- Use LSP omni-completion in LSP enabled files.
   vim.bo[bufnr].omnifunc = "v:lua.vim.lsp.omnifunc"
 end
+
 return {capabilities = capabilities, on_attach = on_attach}

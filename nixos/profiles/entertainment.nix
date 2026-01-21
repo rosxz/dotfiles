@@ -1,10 +1,12 @@
-{ config, pkgs, inputs, ... }: {
+{ config, pkgs, ... }: {
   # GENERAL ENTERTAINMENT SOFTWARE
   environment.systemPackages = with pkgs; [
-    stremio
+    #stremio
     steam-run
     wine-wayland
+    protontricks
     steamtinkerlaunch
+    unstable.hyprfreeze
     (lutris.override {
       extraPkgs = internalPkgs: [ pkgs.mangohud ];
     })
@@ -16,7 +18,6 @@
     #pcsx2
     #lime3ds
     #mgba
-    #protontricks
     #moonlight-qt
     #jellyfin-media-player
 

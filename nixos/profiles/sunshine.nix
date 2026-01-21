@@ -1,4 +1,4 @@
-{ config, pkgs, user, ... }: {
+{ config, pkgs, user, lib, ... }: {
   # Notes regarding this setup:
   # Works with Xorg (i3) and Wayland (sway)
   # Need to refresh the WM after changing resolution (if doing it manually)
@@ -29,7 +29,14 @@ EndSection
       xf86inputlibinput
       xf86videovesa
     ];
-    displayManager.autoLogin = {
+  };
+  services.displayManager = {
+    ly.enable = lib.mkForce false;
+    sddm = {
+      enable = true;
+      wayland.enable = true;
+    };
+    autoLogin = {
       user = "${user}";
       enable = true;
     };

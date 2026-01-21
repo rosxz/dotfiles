@@ -26,13 +26,29 @@
   programs.vscode = {
     enable = true;
     package = with pkgs; unstable.vscode;
-    extensions = with pkgs; [
-      vscode-extensions.dracula-theme.theme-dracula
-      unstable.vscode-extensions.github.copilot
-    ];
+    mutableExtensionsDir = true;
+    #extensions = with pkgs; [
+    #  #vscode-extensions.dracula-theme.theme-dracula
+    #  #unstable.vscode-extensions.github.copilot
+    #];
   };
 
-  programs.ssh.enable = true;
+  programs.ssh = {
+    enable = true;
+    enableDefaultConfig = false;
+    matchBlocks."*" = {
+      forwardAgent = false;
+      addKeysToAgent = "no";
+      compression = false;
+      serverAliveInterval = 0;
+      serverAliveCountMax = 3;
+      hashKnownHosts = false;
+      userKnownHostsFile = "~/.ssh/known_hosts";
+      controlMaster = "no";
+      controlPath = "~/.ssh/master-%r@%n:%p";
+      controlPersist = "no";
+      };
+  };
 
   dconf.settings = {
     "org/gnome/mutter" = {
@@ -68,6 +84,7 @@
       "application/x-iso9660-image" = "xarchiver.desktop";
     };
   };
+  xdg.configFile."mimeapps.list".force = true;
 
   home.file.".config/gtk-3.0/settings.ini".text = ''
   [Settings]

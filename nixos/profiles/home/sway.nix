@@ -33,6 +33,9 @@ in
           DP-1 = {
             scale = "2";
           };
+          #Virtual-1 = {
+          #  res = "1920x1080";
+          #};
         };
 
         keybindings = let

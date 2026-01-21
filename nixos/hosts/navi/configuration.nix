@@ -4,15 +4,16 @@ let
   gatewayAddress = "192.168.1.1";
   netmask = "255.255.255.0"; # /24
   interface = "enp5s0";
+  #utsushi-net = (pkgs.utsushi.override { withNetworkScan = true; });
 in
 {
   imports = with profiles; [
     types.desktop # type of machine
     flavors.hyprland
     docker
-    polkit
-    entertainment
     virtualisation
+    entertainment
+    #sunshine
     ./hardware-configuration.nix
   ];
 
@@ -21,10 +22,10 @@ in
     home.stateVersion = "23.11";
   };
 
-  modules.distributed_builds = {
-    enable = true;
-    type = "remote";
-  };
+  #modules.distributed_builds = {
+  #  enable = true;
+  #  type = "remote";
+  #};
   virtualisation.waydroid.enable = true;
 
   services.xserver.videoDrivers = [ "amdgpu" ];
@@ -51,14 +52,22 @@ in
   };
 
   users.users.${user} = {
-    extraGroups = [ "qemu-libvirtd" "input" "adbusers" "wireshark" ]; # "seat"
+    extraGroups = [ "qemu-libvirtd" "input" "adbusers" "scanner" "lp"]; # "seat"
     openssh.authorizedKeys.keys = with sshKeys; lib.mkForce [ users.ryuujin users.xiaomi ];
   };
 
-  services.printing = {
-    enable = true;
-    drivers = [ pkgs.epson-escpr ];
-  };
+  #services.printing = {
+  #  enable = true;
+  #  drivers = [ pkgs.epson-escpr ];
+  #};
+  #hardware.sane = {
+  #  enable = true;
+  #  openFirewall = true;
+  #  netConf = "192.168.1.75";
+  #  extraBackends = [ utsushi-net ];
+  #  disabledDefaultBackends = [ "v4l" ];
+  #};
+  #services.udev.packages = [ utsushi-net ];
   # services.fprintd = {
   #   enable = true;
   # };
@@ -127,8 +136,11 @@ in
     xsettingsd
     home-manager
     boxbuddy
+    distrobox
     vesktop
+    unstable.krita
   ];
+  programs.adb.enable = true;
 
   #services.ollama = {
   #  enable = true;

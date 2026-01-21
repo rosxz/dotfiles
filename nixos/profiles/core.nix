@@ -65,6 +65,7 @@
   };
   programs.mosh.enable = true;
   programs.ssh.startAgent = true;
+
   programs.nix-index = {
     enable = true;
     enableZshIntegration = config.programs.zsh.enable;

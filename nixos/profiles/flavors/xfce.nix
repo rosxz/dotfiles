@@ -31,19 +31,18 @@ in
   modules.labels.display = "wayland";
 
   imports = [
-    profiles.flavors.sway
+    # profiles.flavors.sway # disabled sway cause i dont want tiling
   ];
-
   # Append to extraConfig
-  home-manager.users.${user}.wayland.windowManager.sway.extraConfig = lib.mkAfter ''
-     exec xfce4-session
-  '';#exec ${workspaces-sway}
+  #home-manager.users.${user}.wayland.windowManager.sway.extraConfig = lib.mkAfter ''
+  #   exec xfce4-session
+  #'';#exec ${workspaces-sway}
 
   services.xserver.desktopManager.xfce = {
     enable = true;
     enableWaylandSession = true;
     enableScreensaver = false;
-    enableXfwm = false;
+    #enableXfwm = false;
     # waylandSessionCompositor = "sway";
   };
 

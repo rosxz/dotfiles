@@ -27,9 +27,14 @@ let
         gsettings set $gnome_schema cursor-theme 'Bibata_Ghost'
         '';
   };
+  wallpaper = pkgs.fetchurl {
+    url = "https://cloud.moniz.pt/apps/files_sharing/publicpreview/t2dbck7YgJW8zNW?file=/&fileId=408267&x=3840&y=2160";
+    sha256 = "sha256-aTiIs6pQ1gCNphn+Eth2Wusv0Jv/8kjVgSC1uN61zB4=";
+  };
 in
 {
   modules.labels.display = "wayland";
+  services.displayManager.defaultSession = "hyprland";
 
   programs = {
     hyprland = {
@@ -44,6 +49,9 @@ in
   # import wm config
   home-manager.users.${user} = {
     imports = with profiles.home; [ hyprland wofi waybar ];
+  };
+  home-manager.extraSpecialArgs = {
+    inherit wallpaper;
   };
 
   services.dbus.enable = true;
@@ -61,5 +69,6 @@ in
     glib
     qt6.qtwayland
     wayvnc
+    configure-gtk
   ];
 }

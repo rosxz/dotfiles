@@ -23,7 +23,7 @@ in
       noto-fonts
       noto-fonts-cjk-sans
       noto-fonts-cjk-serif
-      noto-fonts-emoji
+      noto-fonts-color-emoji
       liberation_ttf
       fira-code
       fira-code-symbols
@@ -98,7 +98,19 @@ in
         mako
         # swww # stupid wallpaper software
         waypipe
-
+        (safeeyes.overrideAttrs { preFixup = ''
+    makeWrapperArgs+=(
+      "''${gappsWrapperArgs[@]}"
+      --prefix PATH : ${
+        lib.makeBinPath [
+          alsa-utils
+          wlrctl
+          xorg.xprop
+        ]
+      }
+    )
+  '';
+ })
       ]
     else
       [
@@ -108,6 +120,7 @@ in
       [ mpv ] else [];
   in common ++ displayPackages ++ langLearnPackages;
 
+  programs.ssh.startAgent = lib.mkForce false;
   programs.firefox = {
     enable = true;
     languagePacks = [ "en-GB" "ja" "pt-PT" ];
