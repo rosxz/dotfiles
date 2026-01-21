@@ -26,8 +26,8 @@ in
 
   services.transmission = {
 	enable = true;
-	group = "media";
 	package = pkgs.transmission405.transmission_4;
+	group = "media";
 	openFirewall = true;
 	openPeerPorts = true;
 	settings = {
@@ -47,7 +47,7 @@ in
 	  if [[ $TR_TORRENT_NAME =~ .*($QUALITY).* ]] || [[ $TR_TORRENT_TRACKERS =~ .*($TRACKERS).* ]]; then
             echo "INFO: Running music torrent script for $TR_TORRENT_NAME"
 
-	    ${pkgs.transmission}/bin/transmission-remote -t $TR_TORRENT_HASH --move ${downloadDir}/Music
+	    ${pkgs.transmission_4}/bin/transmission-remote -t $TR_TORRENT_HASH --move ${downloadDir}/Music
 
             ln -s "${downloadDir}/Music/$TR_TORRENT_NAME" /tmp/$TR_TORRENT_HASH # Hopefuly this filename-guessing works
 	    ${pkgs.whatmp3}/bin/whatmp3 -nrz --V0 -o ${transcodeDir} /tmp/$TR_TORRENT_HASH

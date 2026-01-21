@@ -1,3 +1,3 @@
 {...}: self: super: rec {
-  vaapiIntel = super.vaapiIntel.overrideAttrs (old: { enableHybridCodec = true; });
+  intel-vaapi-driver = super.intel-vaapi-driver.overrideAttrs (old: { enableHybridCodec = true; });
 }

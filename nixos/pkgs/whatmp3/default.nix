@@ -12,6 +12,8 @@ python3.pkgs.buildPythonApplication rec {
     repo = "whatmp3";
     sha256 = "sha256-WXvXgaUtI4xt2e2hwWCNNEuvn5a+OtEH5TbwgkukLas=";
   };
+  pyproject = true;
+  build-system = [ pkgs.python3Packages.setuptools ];
 
   installPhase = ''install -Dm755 whatmp3.py $out/bin/whatmp3'';
   preFixup = ''
