@@ -54,6 +54,19 @@
       forceSSL = true;
       useACMEHost = "moniz.pt";
       locations."/".proxyPass = "http://127.0.0.1:8096";
+      locations."/".extraConfig = ''
+        proxy_buffering off;
+      '';
+      locations."/socket" = {
+        proxyPass = "http://127.0.0.1:8096";
+	proxyWebsockets = true;
+	extraConfig = ''
+	  proxy_buffering off;
+          proxy_request_buffering off;
+          proxy_read_timeout 3600s;
+          proxy_send_timeout 3600s;
+	'';
+      };
     };
 
 #    "gonic.moniz.pt" = {
