@@ -18,6 +18,7 @@
     # rtorrent
     transmission
     betanin
+    zfs_sync
   ];
     #gonic
     #bazarr

@@ -23,7 +23,15 @@
       fsType = "vfat";
     };
   
+  #fileSystems."/storage-pool" = {
+  #  device = "storage-pool";
+  #  fsType = "zfs";
+  #};
   ## USB ZFS DAS
+  fileSystems."/backup-pool" = {
+    device = "backup-pool";
+    fsType = "zfs";
+  };
   boot.extraModprobeConfig = ''
     options zfs l2arc_write_max=10000000
     options zfs l2arc_noprefetch=0
@@ -41,7 +49,7 @@
       sleep 3
       # Attempt import using the specific ID and path that works
       if ! ${pkgs.zfs}/bin/zpool list | grep -q "storage-pool"; then
-        ${pkgs.zfs}/bin/zpool import -d /dev/disk/by-path 9882993164348068333 storage-pool
+        ${pkgs.zfs}/bin/zpool import -d /dev/disk/by-path 13602346669203890051 storage-pool
         ${pkgs.zfs}/bin/zfs mount storage-pool || true
       fi
     '';

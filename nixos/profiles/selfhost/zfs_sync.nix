@@ -1,59 +1,85 @@
 { self, config, pkgs, lib, ... }: {
 
-services.sanoid = {
-  enable = true;
-  datasets = {
-    "storage-pool" = { # Production (Source)
-      use_template = [ "production" ];
-      recursive = true;
+  services.sanoid = {
+    enable = true;
+    interval = "minutely"; # Important: Runs often to catch exact hourly boundaries
+
+    datasets = {
+      # 1. Production Source
+      "storage-pool" = {
+        use_template = [ "production" ];
+        recursive = true;
+        process_children_only = false;
+      };
+
+      # 2. Exclusions
+      # This prevents snapshots, but we also need to tell Syncoid to skip it (see below)
+      # Needs to be datasets not directories!
+      #"storage-pool/torrents/Games" = {
+      #  use_template = [ "ignore" ];
+      #};
+
+      # 3. Backup Destination (On USB)
+      # We define this here so Sanoid can PRUNE old backups on the USB drive.
+      "backup-pool" = {
+        use_template = [ "backup" ];
+        recursive = true;
+        # We don't want Sanoid to snapshot the backup drive, only prune it.
+        # The 'backup' template handles this, but being explicit helps.
+        process_children_only = false;
+      };
     };
-    "storage-pool/Torrents/Games".use_template = [ "ignore" ];
-    "backup-pool" = { # Backup (Destination)
-      use_template = [ "backup" ];
-      recursive = true;
+
+    templates = {
+      production = {
+        autosnap = true;
+        autoprune = true;
+
+        # Since Syncoid runs hourly, you need these!
+        hourly = 36;
+        daily = 30;
+        monthly = 3;
+      };
+
+      backup = {
+        autosnap = false; # Syncoid puts snapshots here, Sanoid just cleans up.
+        autoprune = true;
+
+        # Backup Retention (Keep more than production)
+        hourly = 48;  # Keep 2 days of hourlies on backup
+        daily = 90;   # Keep 3 months of dailies
+        monthly = 12; # Keep a year of monthlies
+
+        # Monitoring (Optional but good)
+        # Warn if backups stop arriving
+        daily_warn = 48;
+        daily_crit = 72;
+      };
+
+      ignore = {
+        autoprune = false;
+        autosnap = false;
+        monitor = false;
+      };
     };
   };
-  templates = {
-    production = {
-      autosnap = yes;
-      autoprune = yes;
-      daily = 6;
-      monthly = 1;
-    };
-    backup = {
-      autosnap = false;
-      autoprune = true;
-      # Retention
-      daily = 30;
-      monthly = 2;
 
-      # Monitoring Thresholds
-      # Daily (Unit: Hours)
-      daily_warn = 48;   # Warn if no daily snapshot in 2 days
-      daily_crit = 72;   # Critical if no daily snapshot in 3 days
+  services.syncoid = {
+    enable = true;
+    interval = "hourly";
+    # Ensure common args are applied
+    commonArgs = [ "--no-sync-snap" ]; 
 
-      # Monthly (Unit: Days)
-      monthly_warn = 35; # Warn if no monthly snapshot in 35 days
-      monthly_crit = 45; # Critical if no monthly snapshot in 45 days
-    };
-    ignore = {
-      autoprune = false;
-      autosnap = false;
-      monitor = false;
+    commands = {
+      "main-backup" = {
+        source = "storage-pool";
+        # I recommend syncing to a dataset, not the root, for cleanliness.
+        target = "backup-pool";
+        
+        # recursive: Sync all child datasets
+        # exclude: MUST match the Sanoid ignore, or Syncoid will fail trying to find snapshots for Games
+        extraArgs = [ "--recursive" "--exclude=torrents/Games" ];
+      };
     };
   };
-};
-
-services.syncoid = {
-  enable = true;
-  interval = "hourly"; 
-  commands = {
-    "main-backup" = {
-      source = "storage-pool";
-      target = "backup-pool/storage-backup";
-      # --no-sync-snap tells syncoid to use the snapshots Sanoid already made
-      extraArgs = [ "--no-sync-snap" "--recursive" ];
-    };
-  };
-};
 }
