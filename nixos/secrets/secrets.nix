@@ -2,7 +2,7 @@ let
   keys = import ../keys.nix;
   hosts = keys.hosts;
   users = keys.users;
-  allUsers = with keys.users; [ tsukuyomi ebisu ryuujin navi ];
+  allUsers = with keys.users; [ tsukuyomi ryuujin navi ];
 in
 {
   "restic-pass.age".publicKeys = [ hosts.tsukuyomi users.tsukuyomi users.ryuujin ];
@@ -19,4 +19,5 @@ in
   "nordigen-key.age".publicKeys = [ hosts.tsukuyomi ] ++ [ users.tsukuyomi users.ryuujin ];
   "builder-key.age".publicKeys = [ hosts.omigawa hosts.ryuujin ] ++ [ users.omigawa users.ryuujin ];
   "slskd-env-file.age".publicKeys = [ hosts.tsukuyomi ] ++ [ users.tsukuyomi users.ryuujin ];
+  "sygnal-fcm.age".publicKeys = [ hosts.tsukuyomi ] ++ [ users.tsukuyomi users.ryuujin ];
 }

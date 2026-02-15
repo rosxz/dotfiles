@@ -20,6 +20,7 @@
               "localhost:${toString config.services.prometheus.exporters.node.port}" 
               "localhost:${toString config.services.prometheus.exporters.smartctl.port}" 
               "localhost:${toString config.services.prometheus.exporters.zfs.port}" 
+	      "localhost:8000" # TODO make it if else read yaml to get port sygnal
             ];
           }
         ];
