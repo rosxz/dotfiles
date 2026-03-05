@@ -29,11 +29,12 @@ in
       fira-code-symbols
       font-awesome
       ibm-plex
+      nerd-fonts.blex-mono
     ];
     fontconfig.defaultFonts = {
       serif = [ "Noto Serif" ];
       sansSerif = [ "Noto Sans" ];
-      monospace = [ "IBM Plex Mono" ];
+      monospace = [ "BlexMono Nerd Font" "IBM Plex Mono" ];
     };
   };
 
