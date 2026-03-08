@@ -41,19 +41,29 @@ let
 vim.o.laststatus=2
 vim.o.showtabline=2
 vim.o.showmode=false
+
+-- Enable nerd font support
+vim.g.have_nerd_font = true
+
 require'lualine'.setup {
   options = {
     theme = 'auto',
-    section_separators = {left='', right=''},
-    component_separators = {left='', right=''},
+    section_separators = {left='\u{e0b0}', right='\u{e0b2}'},
+    component_separators = {left='\u{e0b1}', right='\u{e0b3}'},
     icons_enabled = true
   },
   sections = {
-    lualine_b = { 'diff' },
+    lualine_a = { 'mode' },
+    lualine_b = { 
+      'branch',
+      {'diff', 
+        symbols = {added = '+', modified = '~', removed = '-'}
+      }
+    },
     lualine_c = {
       {'diagnostics', {
-        sources = {nvim_diagnostic},
-        symbols = {error = ':', warn =':', info = ':', hint = ':'}}},
+        sources = {'nvim_diagnostic'},
+        symbols = {error = 'E:', warn = 'W:', info = 'I:', hint = 'H:'}}},
       {'filename', file_status = true, path = 1}
     },
     lualine_x = { 'encoding', {'filetype', colored = false} },
@@ -66,10 +76,9 @@ require'lualine'.setup {
   },
   tabline = {
     lualine_a = { 'hostname' },
-    lualine_b = { 'branch' },
     lualine_z = { {'tabs', tabs_color = { inactive = "TermCursor", active = "ColorColumn" } } }
   },
-  extensions = { fzf'' + ", fugitive " + ''},
+  extensions = { 'fzf', 'fugitive' },
 }
 if _G.Tabline_timer == nil then
   _G.Tabline_timer = vim.loop.new_timer()
@@ -102,33 +111,9 @@ _G.Tabline_timer:start(0,             -- never timeout
       '';
     }
 
-    {
-      plugin = (nvim-treesitter.withPlugins (
-        plugins: commonGrammars ++ personalGrammars
-      ));
-      type = "lua";
-      config = ''
--- enable highlighting for most, disable for problematic grammars
-require'nvim-treesitter.configs'.setup { 
-  highlight = { 
-    enable = true,
-    disable = { "latex", "python" }  -- disable for grammars with query errors
-  } 
-}
-
-local function define_fdm()
-  if (require "nvim-treesitter.parsers".has_parser()) then
-    -- with treesitter parser
-    vim.wo.foldexpr="nvim_treesitter#foldexpr()"
-    vim.wo.foldmethod="expr"
-  else
-    -- without treesitter parser
-    vim.wo.foldmethod="syntax"
-  end
-end
-vim.api.nvim_create_autocmd({ "FileType" }, { callback = define_fdm })
-            '';
-    }
+    (nvim-treesitter.withPlugins (
+      plugins: commonGrammars ++ personalGrammars
+    ))
 
     vim-signature
 
@@ -322,12 +307,38 @@ in
       viAlias = true;
       vimAlias = true;
       vimdiffAlias = true;
+      extraLuaConfig = ''
+        -- Treesitter configuration
+        local ts_status, ts_configs = pcall(require, 'nvim-treesitter.configs')
+        if ts_status then
+          ts_configs.setup {
+            highlight = {
+              enable = true,
+              disable = { "latex", "python" }  -- disable for grammars with query errors
+            }
+          }
+
+          local function define_fdm()
+            local parser_status, parsers = pcall(require, "nvim-treesitter.parsers")
+            if parser_status and parsers.has_parser() then
+              -- with treesitter parser
+              vim.wo.foldexpr="nvim_treesitter#foldexpr()"
+              vim.wo.foldmethod="expr"
+            else
+              -- without treesitter parser
+              vim.wo.foldmethod="syntax"
+            end
+          end
+          vim.api.nvim_create_autocmd({ "FileType" }, { callback = define_fdm })
+        end
+      '';
       extraConfig = ''
         " sane defaults
         set shiftwidth=4
         set softtabstop=4
         set tabstop=4
-        set noexpandtab
+        " switch to noexpandtab for hard tabs
+        set expandtab
         set encoding=UTF-8
 
         " delete trailing whitespace
@@ -355,6 +366,8 @@ in
         nmap <leader>rg :Rg<cr>
         " fuzzy find Vim commands (like Ctrl-Shift-P in Sublime/Atom/VSC)
         nmap <leader>c :Commands<cr>
+        " Open NERDTree file explorer
+        nmap <leader>n :NERDTreeToggle<cr>
 
         " Keeps undo history over different sessions
         set undofile
@@ -395,7 +408,7 @@ in
         nnoremap <silent> <leader><leader> :nohlsearch<cr>
         nnoremap <silent> <leader>m :silent call jobstart('make')<cr>
 
-        set selection=exclusive
+        set selection=inclusive
 
         set mouse=a
 
@@ -414,12 +427,17 @@ in
         set softtabstop=4
         set tabstop=4
 
+        " Convert leading tabs to 4 spaces
+        command! TabsToSpaces %s/^\t\+/\=repeat(' ', len(submatch(0))*4)/ge
+        nnoremap <leader>ts :TabsToSpaces<CR>
+
         " Avoiding W
         cabbrev W w
         '';
         plugins = commonPlugins ++ personalPlugins ++ (
           with pkgs.unstable.vimPlugins; [
             vim-fugitive
+            nerdtree
             {
               plugin = gitsigns-nvim;
               type = "lua";
