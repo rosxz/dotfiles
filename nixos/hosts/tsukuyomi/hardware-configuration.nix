@@ -28,10 +28,10 @@
   #  fsType = "zfs";
   #};
   ## USB ZFS DAS
-  fileSystems."/backup-pool" = {
-    device = "backup-pool";
-    fsType = "zfs";
-  };
+  #fileSystems."/backup-pool" = {
+  #  device = "backup-pool";
+  #  fsType = "zfs";
+  #};
   boot.extraModprobeConfig = ''
     options zfs l2arc_write_max=10000000
     options zfs l2arc_noprefetch=0

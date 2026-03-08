@@ -11,7 +11,7 @@
     domain = "slskd.moniz.pt";
     environmentFile = config.age.secrets.slskd-env-file.path;
     settings = {
-      shares.directories = [ ];
+      shares.directories = [ "/storage-pool/Shared/Music" "[Torrents]/storage-pool/Torrents/Music" "/storage-pool/Torrents/Unsorted" ];
       directories.downloads = "/storage-pool/Shared/MusicSlsk";
     };
   };
