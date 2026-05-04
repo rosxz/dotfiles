@@ -42,8 +42,8 @@
       port = 9101;
       openFirewall = true;
       devices = [ 
-	"/dev/disk/by-path/pci-0000:00:14.0-usb-0:1:1.0-scsi-0:0:0:0"
-	"/dev/disk/by-path/pci-0000:00:14.0-usb-0:10.2:1.0-scsi-0:0:0:0"
+	"/dev/disk/by-path/pci-0000:00:14.0-usbv3-0:1:1.0-scsi-0:0:0:0"
+	"/dev/disk/by-path/pci-0000:00:14.0-usbv3-0:6.2:1.0-scsi-0:0:0:0"
       ];
     };
     zfs = {

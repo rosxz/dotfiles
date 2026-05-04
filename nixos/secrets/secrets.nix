@@ -20,4 +20,5 @@ in
   "builder-key.age".publicKeys = [ hosts.omigawa hosts.ryuujin ] ++ [ users.omigawa users.ryuujin ];
   "slskd-env-file.age".publicKeys = [ hosts.tsukuyomi ] ++ [ users.tsukuyomi users.ryuujin ];
   "sygnal-fcm.age".publicKeys = [ hosts.tsukuyomi ] ++ [ users.tsukuyomi users.ryuujin ];
+  "dispatcharr-env.age".publicKeys = [ hosts.tsukuyomi ] ++ [ users.tsukuyomi users.ryuujin ];
 }

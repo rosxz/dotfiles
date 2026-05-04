@@ -37,6 +37,8 @@
     options zfs l2arc_noprefetch=0
   '';
   boot.kernelParams = [ "zfs.l2arc_rebuild_enabled=1" ];
+  boot.zfs.devNodes  = "/dev/disk/by-path";
+  boot.zfs.extraPools = [ "backup-pool" ];
   systemd.services.import-usb-das = {
     description = "Import USB DAS ZFS pool by ID";
     after = [ "local-fs.target" ];

@@ -19,7 +19,8 @@
     transmission
     betanin
     zfs_sync
-    sygnal
+    #sygnal
+    dispatcharr
   ];
     #gonic
     #bazarr
