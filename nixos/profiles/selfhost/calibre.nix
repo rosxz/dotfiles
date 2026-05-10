@@ -16,12 +16,6 @@ in {
       '';
     };
 
-    calibre-server = {
-      enable = true;
-      user = "media";
-      libraries = [ library ];
-    };
-
     calibre-web = {
       enable = true;
       user = "media";
