@@ -15,7 +15,8 @@
     nextcloud
     postgresql
     slskd
-    # rtorrent
+    calibre
+    # rtorrent #### TODO!
     transmission
     betanin
     zfs_sync
