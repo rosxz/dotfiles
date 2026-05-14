@@ -33,7 +33,6 @@ let
   commonPlugins = with pkgs.unstable.vimPlugins; [
     nvim-web-devicons
     # vim-markdown-composer
-    copilot-vim
     {
       plugin = lualine-nvim;
       type = "lua";
@@ -54,9 +53,9 @@ require'lualine'.setup {
   },
   sections = {
     lualine_a = { 'mode' },
-    lualine_b = { 
+    lualine_b = {
       'branch',
-      {'diff', 
+      {'diff',
         symbols = {added = '+', modified = '~', removed = '-'}
       }
     },
@@ -207,7 +206,13 @@ require 'colorizer'.setup ({ user_default_options = { names = false; }})
 '';
     }
     lsp_extensions-nvim
-    copilot-vim
+    {
+      plugin = copilot-lua;
+      type = "lua";
+      config = ''
+      require("copilot").setup({})
+      '';
+    }
     {
       plugin = presence-nvim;
       config = ''
@@ -307,6 +312,7 @@ in
       viAlias = true;
       vimAlias = true;
       vimdiffAlias = true;
+      extraPackages = [ pkgs.nodejs ];
       extraLuaConfig = ''
         -- Treesitter configuration
         local ts_status, ts_configs = pcall(require, 'nvim-treesitter.configs')

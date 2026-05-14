@@ -14,6 +14,7 @@
     navi = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIC36CNRkhRvwygw8dGAHE7ThT5kw2RjuX/X5MzUIfFSU crea@navi"; # NAVI (Home Desktop)
     xiaomi = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIK6yNVUz9RnIFibmEb2cpdrypr2k2KPffMQpmIn0gbHb u0_a243@localhost"; # Xiaomi 10
     omigawa = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIG+OvXy9eGWukjjQmZwpKkoUUkPcbcS/l8kl1WKOLan7 crea@omigawa"; # Toshiba Satellite T-135
+    raijin = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIL7tve12K34nhNgVYZ6VgQBRrJs10v+hClpyzpXTIb/n crea@raijin"; # Raijin temp for phone
   };
   builder = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJuknyMlD0ZEMLjNnY1cxGleWpaXd5o9mO9a29ydeqQa crea@omigawa"; # Distributed Builds Client Key
 }

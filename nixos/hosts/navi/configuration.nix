@@ -53,7 +53,7 @@ in
 
   users.users.${user} = {
     extraGroups = [ "qemu-libvirtd" "input" "adbusers" "scanner" "lp"]; # "seat"
-    openssh.authorizedKeys.keys = with sshKeys; lib.mkForce [ users.ryuujin users.xiaomi ];
+    openssh.authorizedKeys.keys = with sshKeys; lib.mkForce [ users.ryuujin users.xiaomi users.raijin ];
   };
 
   #services.printing = {

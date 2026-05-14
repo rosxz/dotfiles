@@ -189,5 +189,10 @@ D /var/tmp 1777 root root 30d
     };
   };
 
+  environment.variables = {
+    EDITOR = "nvim";
+    VISUAL = "nvim";
+  };
+
   system.stateVersion = lib.mkDefault "22.05";
 }
