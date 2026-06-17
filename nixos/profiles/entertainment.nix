@@ -6,7 +6,7 @@
     wine-wayland
     protontricks
     steamtinkerlaunch
-    unstable.hyprfreeze
+    #unstable.wl-freeze
     (lutris.override {
       extraPkgs = internalPkgs: [ pkgs.mangohud ];
     })

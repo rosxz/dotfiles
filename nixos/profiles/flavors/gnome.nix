@@ -3,7 +3,7 @@
   modules.labels.display = "wayland";
   services.displayManager.defaultSession = "gnome";
 
-  services.xserver.desktopManager.gnome.enable = true;
+  services.desktopManager.gnome.enable = true;
   # services.gnome.gnome-remote-desktop.enable = true;
   services.dbus.enable = true;
 

@@ -44,8 +44,8 @@
     (pkgs.mpv-unwrapped) else (pkgs.mpv-unwrapped.override {
       ffmpeg = pkgs.ffmpeg-full;
     });
-    mpvWithScripts = pkgs.mpv-unwrapped.wrapper {
-      mpv = customMpv;
+    mpvWithScripts = pkgs.mpv.override {
+      mpv-unwrapped = customMpv;
       scripts = with pkgs.mpvScripts; [ mpvacious quality-menu ]; #uosc thumbfast
     };
   in
@@ -53,7 +53,7 @@
     # tagainijisho
     # goldendict-ng
     # qolibri
-    python312Packages.manga-ocr
+    python314Packages.manga-ocr
     jellyfin-mpv-shim # edit config to use ext_mpv
     mpvWithScripts
   ] ++ (if config.networking.hostName == "omigawa" then [

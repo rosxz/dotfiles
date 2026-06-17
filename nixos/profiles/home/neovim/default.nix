@@ -129,12 +129,22 @@ _G.Tabline_timer:start(0,             -- never timeout
     vim-commentary
 
     {
-      plugin = base16-nvim;
+      plugin = which-key-nvim;
+      type = "lua";
       config = ''
-      " colorscheme settings
-      set termguicolors
-      set background=dark
-      colorscheme base16-horizon-dark
+        require('which-key').setup({})
+        vim.keymap.set('n', '<leader>?', '<cmd>Maps<CR>', { desc = 'Search keymaps' })
+      '';
+    }
+
+    {
+      plugin = base16-nvim;
+      type = "lua";
+      config = ''
+      -- colorscheme settings
+      vim.opt.termguicolors = true
+      vim.opt.background = 'dark'
+      vim.cmd.colorscheme 'base16-horizon-dark'
       '';
     }
 
@@ -155,6 +165,84 @@ _G.Tabline_timer:start(0,             -- never timeout
       type = "lua";
       config = ''
 require 'colorizer'.setup ({ user_default_options = { names = false; }})
+      '';
+    }
+
+    {
+      plugin = nvim-dap;
+      type = "lua";
+      config = ''
+        local dap = require('dap')
+
+        dap.adapters.codelldb = {
+          type = 'server',
+          port = "''${port}",
+          executable = {
+            command = 'codelldb',
+            args = { '--port', "''${port}" },
+          },
+        }
+
+        dap.configurations.cpp = {
+          {
+            name = 'Launch file',
+            type = 'codelldb',
+            request = 'launch',
+            program = function()
+              return vim.fn.input('Path to executable: ', vim.fn.getcwd() .. '/', 'file')
+            end,
+            cwd = "''${workspaceFolder}",
+            stopOnEntry = false,
+            args = {},
+          },
+        }
+        dap.configurations.c = dap.configurations.cpp
+        dap.configurations.rust = dap.configurations.cpp
+
+        vim.keymap.set('n', '<F5>', function() dap.continue() end)
+        vim.keymap.set('n', '<F10>', function() dap.step_over() end)
+        vim.keymap.set('n', '<F11>', function() dap.step_into() end)
+        vim.keymap.set('n', '<F12>', function() dap.step_out() end)
+        vim.keymap.set('n', '<leader>db', function() dap.toggle_breakpoint() end)
+        vim.keymap.set('n', '<leader>dr', function() dap.repl.open() end)
+      '';
+    }
+
+    {
+      plugin = nvim-dap-ui;
+      type = "lua";
+      config = ''
+        local dap, dapui = require('dap'), require('dapui')
+        dapui.setup()
+
+        dap.listeners.after.event_initialized['dapui_config'] = function()
+          dapui.open()
+        end
+        dap.listeners.before.event_terminated['dapui_config'] = function()
+          dapui.close()
+        end
+        dap.listeners.before.event_exited['dapui_config'] = function()
+          dapui.close()
+        end
+      '';
+    }
+
+    {
+      plugin = nvim-dap-virtual-text;
+      type = "lua";
+      config = ''
+        require('nvim-dap-virtual-text').setup()
+      '';
+    }
+
+    {
+      plugin = overseer-nvim;
+      type = "lua";
+      config = ''
+        require('overseer').setup({
+          strategy = 'terminal',
+          templates = { 'builtin' },
+        })
       '';
     }
   ];
@@ -470,7 +558,10 @@ require('gitsigns').setup{
 
     home.file = files;
 
-    home.packages = [ pkgs.pyright ];
+    home.packages = [
+      pkgs.pyright
+      pkgs.vscode-extensions.vadimcn.vscode-lldb.adapter
+    ];
 
     home.sessionVariables = {
       EDITOR = "nvim";

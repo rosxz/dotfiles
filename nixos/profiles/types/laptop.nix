@@ -33,9 +33,9 @@
   services.libinput.enable = true;
 
   powerManagement = { powertop.enable = false; };
-  services.auto-cpufreq.enable = true;
+  services.auto-cpufreq.enable = config.services.displayManager.defaultSession != "gnome";
   services.tlp = {
-    enable = true;
+    enable = config.services.displayManager.defaultSession != "gnome";
     settings = {
       CPU_SCALING_GOVERNOR_ON_AC = "performance";
       CPU_SCALING_GOVERNOR_ON_BAT = "powersave";
