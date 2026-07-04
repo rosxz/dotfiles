@@ -2,7 +2,7 @@
 {
   imports = with profiles; [
     types.laptop # type of machine
-    flavors.sway # window manager
+    flavors.gnome # window manager
     polkit
     docker
     entertainment
@@ -21,6 +21,7 @@
   };
 
   boot.supportedFilesystems = [ "zfs" ];
+  boot.zfs.forceImportRoot = false;
   networking.hostId = "1dc334bc"; # For example: head -c 8 /etc/machine-id
   services.zfs.autoScrub.enable = true;
 

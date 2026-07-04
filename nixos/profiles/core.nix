@@ -27,7 +27,6 @@
   };
   console.keyMap = lib.mkDefault "pt-latin1";
 
-  system.rebuild.enableNg = true;
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
   # Everything follows inputs
@@ -163,7 +162,7 @@ D /var/tmp 1777 root root 30d
     tmux
     ripgrep
     htop
-    neofetch
+    fastfetch
 
     zip
     unzip
@@ -185,7 +184,7 @@ D /var/tmp 1777 root root 30d
     dev.enable = false;
     man = {
       enable = true;
-      generateCaches = false;
+      cache.enable = false;
     };
   };
 
@@ -193,6 +192,16 @@ D /var/tmp 1777 root root 30d
     EDITOR = "nvim";
     VISUAL = "nvim";
   };
+  services.journald.extraConfig = ''
+    # Limit total log size on disk to 500MB
+    SystemMaxUse=500M
+
+    # Limit a single log file to 100MB before rotating
+    SystemMaxFileSize=100M
+
+    # Keep logs for a maximum of 2 weeks
+    MaxRetentionSec=2week
+  '';
 
   system.stateVersion = lib.mkDefault "22.05";
 }

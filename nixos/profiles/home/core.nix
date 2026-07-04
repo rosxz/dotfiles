@@ -28,8 +28,8 @@
     package = with pkgs; unstable.vscode;
     mutableExtensionsDir = true;
     #extensions = with pkgs; [
-    #  #vscode-extensions.dracula-theme.theme-dracula
-    #  #unstable.vscode-extensions.github.copilot
+    #  vscode-extensions.dracula-theme.theme-dracula
+    #  unstable.vscode-extensions.github.copilot
     #];
   };
 

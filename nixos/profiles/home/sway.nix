@@ -87,6 +87,8 @@ in
       };
 
       extraConfig = ''
+        primary_selection disabled
+
         exec dbus-sway-environment
         exec configure-gtk
 
