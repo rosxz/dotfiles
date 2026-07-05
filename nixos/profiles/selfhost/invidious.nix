@@ -43,29 +43,29 @@ in {
       db = {
         user = "invidious";
         dbname = "invidious";
-	    };
-	    invidious_companion = [{
-	      private_url = "http://127.0.0.1:8282/companion";
+      };
+      invidious_companion = [{
+        private_url = "http://127.0.0.1:8282/companion";
         public_url = "https://inv.moniz.pt/companion";
-	    }];
-	    domain = domain;
+      }];
+      domain = domain;
       external_port = lib.mkForce 443;
-	    continue = true;
+      continue = true;
       local = false;
-	    check_tables = true;
-	    https_only = true;
-	    use_quic = false;
-	    admins = [ "creaai" ];
-	    registration_enabled = false;
-	    statistics_enabled = true;
+      check_tables = true;
+      https_only = true;
+      use_quic = false;
+      admins = [ "creaai" ];
+      registration_enabled = false;
+      statistics_enabled = true;
     };
     domain = domain;
     port = 3001;
     nginx.enable = true;
     extraSettingsFile = config.age.secrets.invidious-extra-settings.path;
     database = {
-    	passwordFile = config.age.secrets.invidious-db-pass.path;
-	    createLocally = false;
+      passwordFile = config.age.secrets.invidious-db-pass.path;
+      createLocally = false;
     };
   };
 

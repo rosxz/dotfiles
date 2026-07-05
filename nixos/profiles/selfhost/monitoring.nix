@@ -1,4 +1,4 @@
-{ pkgs, lib,config, ... }:
+{ self, pkgs, lib, config, ... }:
 {
   services.cron = {
     enable = true;
@@ -53,13 +53,18 @@
     };
   };
 
+  age.secrets.grafana-secret-key.file = "${self}/secrets/grafana-secret-key.age";
+
   services.grafana = {
     enable = true;
-    settings.server = {
-      http_addr = "0.0.0.0";
-      http_port = 3000;
-      root_url = "https://grafana.moniz.pt/";
-      enable_gzip = true;
+    settings = {
+      server = {
+        http_addr = "0.0.0.0";
+        http_port = 3000;
+        root_url = "https://grafana.moniz.pt/";
+        enable_gzip = true;
+      };
+      security.secret_key = config.age.secrets.grafana-secret-key.path;
     };
     provision = {
       enable = true;

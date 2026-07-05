@@ -13,7 +13,6 @@
   };
 
   boot = {
-    kernelPackages = lib.mkDefault pkgs.linuxPackages_hardened;
     kernelParams = [ "quiet" ];
     loader.efi.canTouchEfiVariables = true;
     loader.systemd-boot = {

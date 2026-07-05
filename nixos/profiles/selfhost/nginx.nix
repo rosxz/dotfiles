@@ -32,7 +32,7 @@
     certs."moniz.pt" = {
       domain = "moniz.pt";
       extraDomainNames = [ "*.moniz.pt" ];
-      credentialsFile = /var/lib/secrets/nginx/acme; # TODO
+      environmentFile = /var/lib/secrets/nginx/acme; # TODO
     };
   };
 
