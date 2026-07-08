@@ -9,6 +9,7 @@
   users.groups.media = { };
 
   imports = with profiles.selfhost; [
+    homer
     monitoring
     nginx
     jellyfin
@@ -23,6 +24,7 @@
     zfs_sync
     #sygnal
     dispatcharr
+    firefly-iii
   ];
     #gonic
     #bazarr

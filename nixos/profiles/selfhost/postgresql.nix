@@ -4,11 +4,12 @@
     package = pkgs.postgresql_17;
     enable = true;
     # settings.password_encryption = "scram-sha-256";
-    ensureDatabases = [ "invidious" "nextcloud" "dispatcharr" ];
+    ensureDatabases = [ "invidious" "nextcloud" "dispatcharr" "firefly-iii" ];
     ensureUsers = [
       { name = "invidious"; ensureDBOwnership = true; }
       { name = "nextcloud"; ensureDBOwnership = true; }
       { name = "dispatcharr"; ensureDBOwnership = true; }
+      { name = "firefly-iii"; ensureDBOwnership = true; }
     ];
     authentication = pkgs.lib.mkForce ''
       # TYPE  DATABASE        USER            ADDRESS                 METHOD

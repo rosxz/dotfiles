@@ -5,7 +5,7 @@
   ...
 }: let
   appn = "firefly-iii";
-  domain = "fin.moniz.pt";
+  domain = "firefly.moniz.pt";
 
   # Firefly must be able to store state (storage and bootstrap/cache)
   dataDir = "/var/lib/${appn}";

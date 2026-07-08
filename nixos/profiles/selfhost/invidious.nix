@@ -56,7 +56,7 @@ in {
       https_only = true;
       use_quic = false;
       admins = [ "creaai" ];
-      registration_enabled = false;
+      registration_enabled = true;
       statistics_enabled = true;
     };
     domain = domain;
