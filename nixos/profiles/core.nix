@@ -86,10 +86,10 @@
       poweroff = "poweroff --no-wall";
       reboot = "reboot --no-wall";
       rebuild = ''sudo nixos-rebuild switch --flake "github:rosxz/dotfiles?dir=nixos"'';
-      tr = ''trash'';
       ssh = "TERM=xterm-256color ssh";
       ls = "eza --color=always --icons --group-directories-first";
       nix-alien=''nix run "github:thiagokokada/nix-alien#nix-alien" -- '';
+      vim = "nvim";
     };
     interactiveShellInit = ''
    export ZSH=${pkgs.oh-my-zsh}/share/oh-my-zsh/
