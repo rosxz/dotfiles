@@ -55,7 +55,7 @@ in
   };
 
   programs.thunar.enable = true;
-  programs.thunar.plugins = with pkgs.xfce; [
+  programs.thunar.plugins = with pkgs; [
     thunar-archive-plugin
     thunar-volman
   ];
@@ -67,7 +67,7 @@ in
     common = with pkgs; [
       # tools
       networkmanagerapplet
-      xfce.xfce4-terminal
+      xfce4-terminal
       pavucontrol
       pamixer
 	    brightnessctl
@@ -78,7 +78,7 @@ in
 
       # theming
       kora-icon-theme
-      mate.mate-icon-theme-faenza
+      mate-icon-theme-faenza
       bibata-cursors-translucent
       adwaita-qt
       dracula-theme # gtk theme
@@ -106,7 +106,7 @@ in
         lib.makeBinPath [
           alsa-utils
           wlrctl
-          xorg.xprop
+          xprop
         ]
       }
     )

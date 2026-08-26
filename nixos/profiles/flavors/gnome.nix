@@ -18,7 +18,7 @@
     gnome-photos
     gnome-tour
     cheese # webcam tool
-    gnome-music
+    #gnome-music
     gnome-terminal
     gedit # text editor
     epiphany # web browser
@@ -26,7 +26,7 @@
     evince # document viewer
     gnome-characters
     totem # video player
-    tali # poker game
+    #tali # poker game
     iagno # go game
     hitori # sudoku game
     atomix # puzzle game

@@ -5,11 +5,9 @@
     '';
   });
 
-  xfce = super.xfce.overrideScope (xself: xsuper: {
-    thunar-archive-plugin = xsuper.thunar-archive-plugin.overrideAttrs (old: {
-      postInstall = ''
-        cp ${super.xarchiver}/libexec/thunar-archive-plugin/* $out/libexec/thunar-archive-plugin/
-      '';
-    });
+  thunar-archive-plugin = super.thunar-archive-plugin.overrideAttrs (old: {
+    postInstall = ''
+      cp ${super.xarchiver}/libexec/thunar-archive-plugin/* $out/libexec/thunar-archive-plugin/
+    '';
   });
 }
