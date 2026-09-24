@@ -31,6 +31,8 @@ in
   services.xserver.videoDrivers = [ "amdgpu" ];
 
   zramSwap.enable = true;
+  #services.journald.storage = "persistent";
+  #hardware.rasdaemon.enable = true;
   boot.supportedFilesystems = [ "zfs" ];
   boot.zfs.forceImportRoot = false;
   # boot.kernelPackages = config.boot.zfs.package.latestCompatibleLinuxPackages;
@@ -76,6 +78,17 @@ in
   services.gnome.gnome-keyring.enable = true;
   security.pam.services.sddm.enableGnomeKeyring = true; # seems like a sddm issue
   networking.interfaces.${interface}.wakeOnLan.enable = true;
+  networking.networkmanager.ensureProfiles.profiles.enp5s0 = {
+    connection = {
+      id = "enp5s0";
+      type = "ethernet";
+      interface-name = interface;
+      autoconnect = true;
+      autoconnect-priority = 100;
+    };
+    ipv4.method = "auto";
+    ipv6.method = "auto";
+  };
 
   ## Remote ZFS Decryption
   boot = {
