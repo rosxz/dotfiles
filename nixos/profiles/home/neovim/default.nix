@@ -79,6 +79,7 @@ require'lualine'.setup {
   },
   extensions = { 'fzf', 'fugitive' },
 }
+
 if _G.Tabline_timer == nil then
   _G.Tabline_timer = vim.loop.new_timer()
 else
@@ -94,6 +95,7 @@ _G.Tabline_timer:start(0,             -- never timeout
 
     {
       plugin = delimitMate;
+      type = "viml";
       config = ''
       let delimitMate_expand_cr=2
       let delimitMate_expand_space=1
@@ -102,6 +104,7 @@ _G.Tabline_timer:start(0,             -- never timeout
 
     {
       plugin = vim-illuminate;
+      type = "viml";
       config = ''
       let g:Illuminate_delay = 100
       hi def link LspReferenceText CursorLine
@@ -118,6 +121,7 @@ _G.Tabline_timer:start(0,             -- never timeout
 
     {
       plugin = fzf-vim;
+      type = "viml";
       config = ''
       let $FZF_DEFAULT_OPTS='--layout=reverse'
 
@@ -285,7 +289,7 @@ require 'colorizer'.setup ({ user_default_options = { names = false; }})
             settings = {
               ['nil'] = {
                 formatting = {
-                  command = { "${pkgs.nixfmt-rfc-style}/bin/nixfmt" },
+                  command = { "${pkgs.nixfmt}/bin/nixfmt" },
                 },
               },
             },
@@ -303,6 +307,7 @@ require 'colorizer'.setup ({ user_default_options = { names = false; }})
     }
     {
       plugin = presence-nvim;
+      type = "viml";
       config = ''
       let g:presence_auto_update       = 1
       let g:presence_editing_text      = "Editing %s"
@@ -383,7 +388,7 @@ setlocal expandtab
     "${config.xdg.configHome}/nvim/lua/generic_lsp.lua".source =
       ./generic_lsp.lua;
     "${config.xdg.configHome}/nvim/after/ftplugin/nix.vim".text = ''
-      nnoremap <silent> <leader>tt :silent !${pkgs.nixfmt-rfc-style}/bin/nixfmt %<CR>
+      nnoremap <silent> <leader>tt :silent !${pkgs.nixfmt}/bin/nixfmt %<CR>
     '' + twoSpaceIndentConfig;
   } //
     # languages that should use 2 space indent
@@ -395,13 +400,15 @@ in
 {
 
     programs.neovim = {
-      package = pkgs.neovim-unwrapped;
+      package = pkgs.unstable.neovim-unwrapped;
       enable = true;
       viAlias = true;
       vimAlias = true;
       vimdiffAlias = true;
+      withRuby = false;
+      withPython3 = false;
       extraPackages = [ pkgs.nodejs ];
-      extraLuaConfig = ''
+      initLua = ''
         -- Treesitter configuration
         local ts_status, ts_configs = pcall(require, 'nvim-treesitter.configs')
         if ts_status then
@@ -568,4 +575,3 @@ require('gitsigns').setup{
       MANPAGER = "nvim +Man!";
     };
 }
-

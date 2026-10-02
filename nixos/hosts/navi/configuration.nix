@@ -1,15 +1,15 @@
 { config, lib, pkgs, sshKeys, user, profiles, ... }:
-let
+  let
   hostAddress = "192.168.1.81";
   gatewayAddress = "192.168.1.1";
-  netmask = "255.255.255.0"; # /24
+  prefixLength = 24;
   interface = "enp5s0";
   #utsushi-net = (pkgs.utsushi.override { withNetworkScan = true; });
 in
 {
   imports = with profiles; [
     types.desktop # type of machine
-    flavors.hyprland
+    flavors.gnome
     docker
     virtualisation
     entertainment
@@ -31,7 +31,10 @@ in
   services.xserver.videoDrivers = [ "amdgpu" ];
 
   zramSwap.enable = true;
+  #services.journald.storage = "persistent";
+  #hardware.rasdaemon.enable = true;
   boot.supportedFilesystems = [ "zfs" ];
+  boot.zfs.forceImportRoot = false;
   # boot.kernelPackages = config.boot.zfs.package.latestCompatibleLinuxPackages;
   networking.hostId = "0bf65e23"; # For example: head -c 8 /etc/machine-id
   services.zfs.autoScrub.enable = true;
@@ -75,23 +78,35 @@ in
   services.gnome.gnome-keyring.enable = true;
   security.pam.services.sddm.enableGnomeKeyring = true; # seems like a sddm issue
   networking.interfaces.${interface}.wakeOnLan.enable = true;
+  networking.networkmanager.ensureProfiles.profiles.enp5s0 = {
+    connection = {
+      id = "enp5s0";
+      type = "ethernet";
+      interface-name = interface;
+      autoconnect = true;
+      autoconnect-priority = 100;
+    };
+    ipv4.method = "auto";
+    ipv6.method = "auto";
+  };
 
   ## Remote ZFS Decryption
   boot = {
-    # Set up static IPv4 address in the initrd.
-    kernelParams = [ "ip=${hostAddress}::${gatewayAddress}:${netmask}::${interface}:none" ];
-
     initrd = {
+      # Keep initrd DNS independent from NetworkManager in stage 2.
+      services.resolved.enable = false;
+
       # Switch this to your ethernet's kernel module.
       # You can check what module you're currently using by running: lspci -v
       kernelModules = [ "r8169" ];
 
+      systemd.network.networks."10-${interface}" = {
+        matchConfig.Name = interface;
+        address = [ "${hostAddress}/${toString prefixLength}" ];
+        gateway = [ gatewayAddress ];
+        linkConfig.RequiredForOnline = "routable";
+      };
       network = {
-        # This will use udhcp to get an ip address.
-        # Make sure you have added the kernel module for your network driver to `boot.initrd.availableKernelModules`,
-        # so your initrd can load it!
-        # Static ip addresses might be configured using the ip argument in kernel command line:
-        # https://www.kernel.org/doc/Documentation/filesystems/nfs/nfsroot.txt
         enable = true;
         ssh = {
           enable = true;
@@ -106,21 +121,23 @@ in
           # public ssh key used for login
           authorizedKeys = config.users.users.${user}.openssh.authorizedKeys.keys;
         };
-        # this will automatically load the zfs password prompt on login
-        # and kill the other prompt so boot can continue
-        postCommands = ''
-          cat <<EOF > /root/.profile
-          if pgrep -x "zfs" > /dev/null
-          then
-            zfs load-key -a
-            killall zfs
-          else
-            echo "zfs not running -- maybe the pool is taking some time to load for some unforseen reason."
-          fi
-          EOF
-        '';
       };
     };
+  };
+  # this will automatically load the zfs password prompt on login
+  # and kill the other prompt so boot can continue
+  boot.initrd.systemd.services.zfs-remote-unlock = {
+    description = "Prepare root .profile for ZFS unlocking via SSH";
+    wantedBy = [ "initrd.target" ];
+    before = [ "initrd-root-fs.target" ];
+    unitConfig.DefaultDependencies = false;
+
+    script = ''
+      mkdir -p /var/empty
+      echo "systemd-tty-ask-password-agent --watch" > /var/empty/.profile
+    '';
+
+    serviceConfig.Type = "oneshot";
   };
 
   hardware.bluetooth = {
@@ -139,8 +156,8 @@ in
     distrobox
     vesktop
     unstable.krita
+    android-tools
   ];
-  programs.adb.enable = true;
 
   #services.ollama = {
   #  enable = true;

@@ -1,6 +1,6 @@
 { config, pkgs, lib, toggles, wallpaper, ... }:
 let
-  terminal = "${pkgs.xfce.xfce4-terminal}/bin/xfce4-terminal";
+  terminal = "${pkgs.xfce4-terminal}/bin/xfce4-terminal";
   fileManager = "${pkgs.xfce.thunar}/bin/thunar";
   lockCommand = "${pkgs.swaylock-effects}/bin/swaylock --screenshots --clock --indicator --indicator-radius 100 --indicator-thickness 7 --effect-blur 7x5 --effect-vignette 0.5:0.5 --ring-color bb00cc --key-hl-color 880033 --line-color 00000000 --inside-color 00000088 --separator-color 00000000 --grace 2 --fade-in 0.2";
   menu = "${pkgs.wofi}/bin/wofi -G --allow-images --show drun";
