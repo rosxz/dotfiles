@@ -55,7 +55,7 @@
   services.thinkfan.enable = true;
 
   services.throttled = {
-    enable = true;
+    enable = false;
     extraConfig = ''
       [GENERAL]
       # Enable or disable the script execution

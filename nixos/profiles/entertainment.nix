@@ -6,10 +6,11 @@
     wine-wayland
     protontricks
     steamtinkerlaunch
+    vitrine
     #unstable.wl-freeze
-    (lutris.override {
-      extraPkgs = internalPkgs: [ pkgs.mangohud ];
-    })
+    #(lutris.override {
+    #  extraPkgs = internalPkgs: [ pkgs.mangohud ];
+    #})
   ];
   programs.steam.enable = true;
   programs.gamescope.enable = true;

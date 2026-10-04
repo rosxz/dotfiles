@@ -281,6 +281,21 @@ require 'colorizer'.setup ({ user_default_options = { names = false; }})
           vim.lsp.enable("pyright")
           vim.lsp.config("pyright", lsp_setup)
 
+          -- yaml lsp setup
+          vim.lsp.enable("yamlls")
+          vim.lsp.config("yamlls", {
+            capabilities = lsp_setup.capabilities,
+            on_attach = lsp_setup.on_attach,
+            settings = {
+              yaml = {
+                schemas = {
+                  kubernetes = "k8s-*.{yaml,yml}",
+                  ["http://json.schemastore.org/github-action"] = ".github/action.{yml,yaml}";
+                },
+              },
+            },
+          })
+
           -- Nix lsp setup
           vim.lsp.enable("nil_ls")
           vim.lsp.config("nil_ls", {
@@ -567,6 +582,7 @@ require('gitsigns').setup{
 
     home.packages = [
       pkgs.pyright
+      pkgs.yaml-language-server
       pkgs.vscode-extensions.vadimcn.vscode-lldb.adapter
     ];
 

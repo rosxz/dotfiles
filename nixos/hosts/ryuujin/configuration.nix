@@ -3,6 +3,7 @@
   imports = with profiles; [
     types.laptop # type of machine
     flavors.gnome # window manager
+    virtualisation
     polkit
     docker
     entertainment
@@ -57,6 +58,7 @@
 	  xsettingsd
 	  home-manager
     wluma
+    distrobox
   ];
 
   system.stateVersion = "22.11"; # Did you read the comment?
