@@ -82,13 +82,13 @@ let
 in
 stdenv.mkDerivation (finalAttrs: {
   pname = "vitrine";
-  version = "0.9.2";
+  version = "0.9.4-tray";
 
   src = fetchFromGitHub {
     owner = "rosxz";
     repo = "vitrine";
-    rev = "fc05bda82d31a359ead5ab2ac1008e0b6c54de1c";
-    hash = "sha256-lqNoRiU+ZWXWzXLkg56Jf0S8G5sHpboTvVYGqoNRF/c=";
+    tag = finalAttrs.version;
+    hash = "sha256-TIIyxPzEeLNbtu2ndY6RqeXbjZ2MwQDfal0654fS4q4=";
   };
 
   sourceRoot = "source";
