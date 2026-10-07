@@ -41,6 +41,6 @@ in {
   services.nginx.virtualHosts.${domain} = {
     forceSSL = true;
     useACMEHost = "moniz.pt";
-    locations."/".proxyPass = "http://100.83.228.83:9191";
+    locations."/".proxyPass = "http://127.0.0.1:9191";
   };
 }
