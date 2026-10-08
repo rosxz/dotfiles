@@ -20,7 +20,7 @@ in {
 
   virtualisation.oci-containers.containers = {
     dispatcharr = {
-      image = "ghcr.io/dispatcharr/dispatcharr:latest";
+      image = "ghcr.io/dispatcharr/dispatcharr:0.32.0-20261007014001";
       autoStart = true;
       environment = commonEnv;
       ports = [ "9191:9191" ];
