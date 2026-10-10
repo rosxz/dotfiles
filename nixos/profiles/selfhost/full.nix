@@ -17,7 +17,7 @@
     postgresql
     slskd
     calibre
-    # invidious
+    invidious
     # rtorrent #### TODO!
     transmission
     betanin

@@ -90,7 +90,7 @@ in {
   ###### Companion
 
   virtualisation.oci-containers.containers.invidious-companion = {
-    image = "quay.io/invidious/invidious-companion:master-5652eda";
+    image = "quay.io/invidious/invidious-companion:2026.09.19-bb3b37f";
     #image = "invidious-companion:patched";
     autoStart = true;
     user = "10001:10001";
