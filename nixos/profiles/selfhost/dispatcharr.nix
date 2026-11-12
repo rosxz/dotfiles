@@ -1,6 +1,7 @@
 { self, config, lib, pkgs, ... }:
 
 let
+  version = "0.33.0-20261111220959"; # update here
   domain = "dispatcharr.moniz.pt";
   commonEnv = {
     DISPATCHARR_ENV = "modular";
@@ -20,7 +21,7 @@ in {
 
   virtualisation.oci-containers.containers = {
     dispatcharr = {
-      image = "ghcr.io/dispatcharr/dispatcharr:0.32.0-20261007014001";
+      image = "ghcr.io/dispatcharr/dispatcharr:${version}";
       autoStart = true;
       environment = commonEnv;
       ports = [ "9191:9191" ];
@@ -29,7 +30,7 @@ in {
     };
     # The Background Worker (Celery)
     dispatcharr-worker = {
-      image = "ghcr.io/dispatcharr/dispatcharr:latest";
+      image = "ghcr.io/dispatcharr/dispatcharr:${version}";
       autoStart = true;
       environment = commonEnv;
       volumes = [ "/var/lib/dispatcharr:/data" "/run/postgresql:/run/postgresql" ];
@@ -42,5 +43,18 @@ in {
     forceSSL = true;
     useACMEHost = "moniz.pt";
     locations."/".proxyPass = "http://127.0.0.1:9191";
+    locations."/".extraConfig = ''
+      proxy_buffering off;
+    '';
+    locations."/ws" = {
+      proxyPass = "http://127.0.0.1:9191";
+      proxyWebsockets = true;
+      extraConfig = ''
+        proxy_buffering off;
+        proxy_request_buffering off;
+        proxy_read_timeout 3600s;
+        proxy_send_timeout 3600s;
+      '';
+    };
   };
 }
